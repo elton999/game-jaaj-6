@@ -34,7 +34,7 @@ float4 MainPS(VertexShaderOutput input) : COLOR
 	float angle = atan2(0.5f - input.TextureCoordinates.y, 0.5f - input.TextureCoordinates.x) * 180 / PI;
 
 	if(distance < Radius && distance > Radius - 0.0009f && (angle % 8 >= 2 || angle % 8 <= -2))
-		color = float4(1,1,1,1);
+		color = float4(1,1,1,0.0f);
 	return color;
 }
 

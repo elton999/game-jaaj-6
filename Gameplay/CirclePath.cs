@@ -24,7 +24,6 @@ namespace game_jaaj_6.Gameplay
         {
             this.distance = Vector2.Distance(this.Scene.Players[0].Position, this.PostionOnGround);
             this.distance = MathF.Pow(this.distance / 426, 2);
-            System.Console.WriteLine(this.distance);
             base.Update(gameTime);
         }
 

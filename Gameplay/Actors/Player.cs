@@ -18,6 +18,10 @@ namespace game_jaaj_6.Gameplay.Actors
             this.Scene.AllActors.Add(this);
             this.size = new Point(32, 32);
 
+            this.gravity2D = new Vector2(0, -200);
+            this.velocityDecrecentY = 10000;
+
+
             this._box = new Square();
             this._box.Scene = this.Scene;
             this._box.size = new Point(32, 32);
@@ -25,13 +29,14 @@ namespace game_jaaj_6.Gameplay.Actors
             this._box.Position = this.Position;
             this._box.Start();
 
-            circlePath = new CirclePath();
-            circlePath.Scene = this.Scene;
-            this.Scene.Middleground.Add(circlePath);
-            circlePath.Start();
+            _circlePath = new CirclePath();
+            _circlePath.Scene = this.Scene;
+            this.Scene.Middleground.Add(_circlePath);
+            _circlePath.Start();
         }
 
-        CirclePath circlePath;
+        private CirclePath _circlePath;
+        private bool isMoving = false;
         public override void Update(GameTime gameTime)
         {
             this.Scene.Camera.Target = new Vector2(this.Position.X + this.size.X / 2, this.Position.Y + this.size.Y / 2);
@@ -44,30 +49,47 @@ namespace game_jaaj_6.Gameplay.Actors
             if (Keyboard.GetState().IsKeyUp(Keys.Z))
                 this.cJump = false;
 
+            if (Keyboard.GetState().IsKeyDown(Keys.Left) && !isGrounded)
+                isMoving = true;
+
             this.Jump();
 
             this.SetPositionCirclePath();
-
-            base.Update(gameTime);
         }
 
         private void SetPositionCirclePath()
         {
-            this.circlePath.Position = Vector2.Add(this.LastPostionOnGround, new Vector2(-197, -197));
-            this.circlePath.PostionOnGround = this.LastPostionOnGround;
+            this._circlePath.Position = Vector2.Add(this.LastPostionOnGround, new Vector2(-197, -197));
+            this._circlePath.PostionOnGround = this.LastPostionOnGround;
         }
 
         public Vector2 LastPostionOnGround = Vector2.Zero;
         public override void UpdateData(GameTime gameTime)
         {
-            this.CheckGrounded();
-            base.UpdateData(gameTime);
+            if (isMoving)
+            {
+                
+                float timer = (float)gameTime.TotalGameTime.TotalMilliseconds;
+                var correctPosition = new Vector2(this.Position.X - this.LastPostionOnGround.X, this.Position.Y - this.LastPostionOnGround.Y);
+                //this._box.Rotation = System.MathF.Max(((System.MathF.Atan2(correctPosition.Y, correctPosition.X) * 180 / System.MathF.PI) / 180f), 0);
+                //this._box.Origin = new Vector2(-16, -16);
+                float distance = Vector2.Distance(this.Position, this.LastPostionOnGround);
+                System.Console.WriteLine(this.Rotation);
+                this.Position.Y = this.LastPostionOnGround.Y + System.MathF.Sin(timer * 0.0001f * 30f) * distance;
+                this.Position.X = this.LastPostionOnGround.X + System.MathF.Cos(timer * 0.0001f * 30f) * distance;
+            }
+
+            if (!isMoving)
+            {
+                this.CheckGrounded();
+                base.UpdateData(gameTime);
+            }
         }
 
         private int JumpPressedForce = 0;
         private bool JumpPressed = false;
         private bool JumpPressedBtn = false;
-        private float JumpForce = 500.0f;
+        private float JumpForce = 700.0f;
         private bool isGrounded = false;
         private bool cJump = false;
 
