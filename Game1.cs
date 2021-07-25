@@ -1,15 +1,15 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using UmbrellaToolKit;
 namespace game_jaaj_6
 {
     public class Game1 : Game
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-
-        private Effect CircleEffect;
-        private RenderTarget2D CircleTexture;
+        public AssetManagement AssetManagement;
+        public GameManagement GameManagement;
 
         public Game1()
         {
@@ -32,8 +32,14 @@ namespace game_jaaj_6
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            this.CircleEffect = Content.Load<Effect>("Shaders/circle");
-            this.CircleTexture = new RenderTarget2D(_graphics.GraphicsDevice, 426 * 2, 426 * 2);
+
+            AssetManagement = new AssetManagement();
+            AssetManagement.Set<Gameplay.Actors.Player>("player", "PLAYER");
+
+            GameManagement = new GameManagement();
+            GameManagement.Game = this;
+
+            GameManagement.Start();
         }
 
         protected override void Update(GameTime gameTime)
@@ -41,25 +47,17 @@ namespace game_jaaj_6
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
+            GameManagement.Update(gameTime);
 
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.SetRenderTarget(this.CircleTexture);
-            GraphicsDevice.Clear(Color.Transparent);
-            _spriteBatch.Begin();
-            _spriteBatch.End();
-            GraphicsDevice.SetRenderTarget(null);
-
-            GraphicsDevice.Clear(Color.Black);
-            _spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, this.CircleEffect, null);
-            _spriteBatch.Draw((Texture2D)this.CircleTexture, Vector2.Zero, Color.White);
-            _spriteBatch.End();
-
             base.Draw(gameTime);
+            GraphicsDevice.Clear(Color.BlueViolet);
+            GameManagement.Draw(_spriteBatch);
+
         }
     }
 }

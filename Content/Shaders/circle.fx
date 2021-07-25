@@ -27,7 +27,6 @@ float4 MainPS(VertexShaderOutput input) : COLOR
 	//return tex2D(SpriteTextureSampler,input.TextureCoordinates) * input.Color;
 	float4 color = tex2D(SpriteTextureSampler,input.TextureCoordinates) * input.Color;
 
-
 	float distance = float(pow(0.5f - input.TextureCoordinates.y - 0.2f, 2));
 	distance =  distance + float(pow(0.5f - input.TextureCoordinates.x, 2));
 	float PI = 3.141592653589793f;
