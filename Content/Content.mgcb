@@ -6,10 +6,18 @@
 /platform:DesktopGL
 /config:
 /profile:Reach
-/compress:False
+/compress:True
 
 #-------------------------------- References --------------------------------#
 
+/reference:../../../../umbrella/UmbrellaToolKit.Pipeline/MonoGame.ContentPipeline.UmbrellaToolKit2/MonoGame.ContentPipeline.UmbrellaToolKit2/Game1/Game1/bin/Debug/netstandard2.0/linux-x64/publish/Newtonsoft.Json.dll
+/reference:../../../../umbrella/UmbrellaToolKit.Pipeline/MonoGame.ContentPipeline.UmbrellaToolKit2/MonoGame.ContentPipeline.UmbrellaToolKit2/Game1/Game1/bin/Debug/netstandard2.0/MonoGame.ContentPipeline.UmbrellaToolKit.dll
 
 #---------------------------------- Content ---------------------------------#
+
+#begin Shaders/circle.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:Shaders/circle.fx
 
