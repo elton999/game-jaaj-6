@@ -25,8 +25,13 @@ namespace game_jaaj_6.Gameplay.Actors
             this._box.Position = this.Position;
             this._box.Start();
 
+            circlePath = new CirclePath();
+            circlePath.Scene = this.Scene;
+            this.Scene.Middleground.Add(circlePath);
+            circlePath.Start();
         }
 
+        CirclePath circlePath;
         public override void Update(GameTime gameTime)
         {
             this.Scene.Camera.Target = new Vector2(this.Position.X + this.size.X / 2, this.Position.Y + this.size.Y / 2);
@@ -41,9 +46,16 @@ namespace game_jaaj_6.Gameplay.Actors
 
             this.Jump();
 
+            this.SetPositionCirclePath();
+
             base.Update(gameTime);
         }
 
+        private void SetPositionCirclePath()
+        {
+            this.circlePath.Position = Vector2.Add(this.LastPostionOnGround, new Vector2(-197, -197));
+            this.circlePath.PostionOnGround = this.LastPostionOnGround;
+        }
 
         public Vector2 LastPostionOnGround = Vector2.Zero;
         public override void UpdateData(GameTime gameTime)
@@ -106,7 +118,7 @@ namespace game_jaaj_6.Gameplay.Actors
             this._box.Position = this.Position;
             this._box.Scene = this.Scene;
             this._box.Draw(spriteBatch);
-            base.Draw(spriteBatch);
+            //base.Draw(spriteBatch);
         }
     }
 }
