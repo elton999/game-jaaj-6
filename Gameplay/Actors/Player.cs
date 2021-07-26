@@ -64,26 +64,65 @@ namespace game_jaaj_6.Gameplay.Actors
         }
 
         public Vector2 LastPostionOnGround = Vector2.Zero;
+        float timer = 0;
         public override void UpdateData(GameTime gameTime)
         {
+            //this._box.Rotation += 0.01f;
+            //
             if (isMoving)
             {
-                
-                float timer = (float)gameTime.TotalGameTime.TotalMilliseconds;
+                timer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+
                 var correctPosition = new Vector2(this.Position.X - this.LastPostionOnGround.X, this.Position.Y - this.LastPostionOnGround.Y);
-                //this._box.Rotation = System.MathF.Max(((System.MathF.Atan2(correctPosition.Y, correctPosition.X) * 180 / System.MathF.PI) / 180f), 0);
-                //this._box.Origin = new Vector2(-16, -16);
-                float distance = Vector2.Distance(this.Position, this.LastPostionOnGround);
-                System.Console.WriteLine(this.Rotation);
-                this.Position.Y = this.LastPostionOnGround.Y + System.MathF.Sin(timer * 0.0001f * 30f) * distance;
-                this.Position.X = this.LastPostionOnGround.X + System.MathF.Cos(timer * 0.0001f * 30f) * distance;
+                float angle = System.MathF.Atan2(correctPosition.Y - 16, correctPosition.X - 16) / 180 * System.MathF.PI;
+
+                float newPositionY = this.LastPostionOnGround.Y - _getCosPosition * _distance;
+                float newPositionX = this.LastPostionOnGround.X - _getSinPosition * _distance;
+                this._box.Rotation = angle * 360 / (System.MathF.PI * 2);
+
+                moveY(newPositionY - this.Position.Y, (_) => { RestartGravity(); });
+                moveX(newPositionX - this.Position.X, (_) => { RestartGravity(); });
+
+                this._box.Origin = new Vector2(16, 16);
+                this._box.Position.X = (this.LastPostionOnGround.X - _getSinPosition * _distanceSprite);
+                this._box.Position.Y = (this.LastPostionOnGround.Y - _getCosPosition * _distanceSprite);
             }
 
             if (!isMoving)
             {
+                this._box.Position = this.Position;
                 this.CheckGrounded();
                 base.UpdateData(gameTime);
             }
+        }
+
+        private void RestartGravity()
+        {
+            isMoving = false;
+            this._box.Origin = Vector2.Zero;
+            this._box.Rotation = 0;
+            timer = 0;
+        }
+
+        private float _distance
+        {
+            get => Vector2.Distance(this.Position, this.LastPostionOnGround);
+        }
+
+        private float _distanceSprite
+        {
+            get => Vector2.Distance(Vector2.Add(this.LastPostionOnGround, new Vector2(-16, -16)), this.Position);
+        }
+
+        private float _speed = 80f;
+        private float _getCosPosition
+        {
+            get => System.MathF.Cos(timer * 0.0001f * _speed);
+        }
+
+        private float _getSinPosition
+        {
+            get => System.MathF.Sin(timer * 0.0001f * _speed);
         }
 
         private int JumpPressedForce = 0;
@@ -137,7 +176,7 @@ namespace game_jaaj_6.Gameplay.Actors
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            this._box.Position = this.Position;
+
             this._box.Scene = this.Scene;
             this._box.Draw(spriteBatch);
             //base.Draw(spriteBatch);
