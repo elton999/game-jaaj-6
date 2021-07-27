@@ -11,6 +11,7 @@ namespace game_jaaj_6.Gameplay.Actors
 {
     public class Player : Actor
     {
+        # region start
         private Square _box;
         public override void Start()
         {
@@ -31,6 +32,7 @@ namespace game_jaaj_6.Gameplay.Actors
             this.Scene.Middleground.Add(_circlePath);
             _circlePath.Start();
         }
+        #endregion
 
         private CirclePath _circlePath;
         private bool isMoving = false;
@@ -47,6 +49,7 @@ namespace game_jaaj_6.Gameplay.Actors
             this.SetPositionCirclePath();
         }
 
+        #region input
         private bool cRight = false;
         private bool cLeft = false;
         private void Input()
@@ -74,10 +77,9 @@ namespace game_jaaj_6.Gameplay.Actors
                 this.cLeft = false;
 
             if ((cRight || cLeft) && !isGrounded && this._circlePath.isDistanceEnough)
-            {
                 isMoving = true;
-            }
         }
+        #endregion
 
         private void SetPositionCirclePath()
         {
@@ -90,8 +92,10 @@ namespace game_jaaj_6.Gameplay.Actors
         private Vector2 _moveDirection = new Vector2(1, 0);
         public override void UpdateData(GameTime gameTime)
         {
+
             if (isMoving)
             {
+                this.cJump = false;
                 timer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
 
                 var correctPosition = new Vector2(this.Position.X - this.LastPostionOnGround.X, this.Position.Y - this.LastPostionOnGround.Y);
@@ -121,58 +125,50 @@ namespace game_jaaj_6.Gameplay.Actors
                 if (this.GroundCheck.X == -1)
                 {
                     newPositionX = this.LastPostionOnGround.X + _getCosPosition * _distance;
-                    newPositionY = this.LastPostionOnGround.Y + _getSinPosition * -this._moveDirection.X * _distance;
+                    newPositionY = this.LastPostionOnGround.Y + _getSinPosition * this._moveDirection.X * _distance;
                 }
-
-                this._box.Rotation = angle * 360 / (MathF.PI * 2);
 
                 moveY(newPositionY - this.Position.Y, (_) =>
                 {
                     RestartGravity();
                     CheckWalls();
                 });
-                moveX(newPositionX - this.Position.X, (_) =>
+                if (isMoving)
                 {
-                    RestartGravity();
-                    CheckWalls();
-                });
+                    moveX(newPositionX - this.Position.X, (_) =>
+                    {
+                        RestartGravity();
+                        CheckWalls();
+                    });
+                }
 
+                this._box.Rotation = angle * 360 / (MathF.PI * 2);
                 this._box.Origin = new Vector2(16, 16);
 
-                if (this.GroundCheck.Y == 1)
+                if (this.GroundCheck.Y != 0)
                 {
-                    this._box.Position.X = (this.LastPostionOnGround.X - _getSinPosition * -this._moveDirection.X * _distanceSprite);
-                    this._box.Position.Y = (this.LastPostionOnGround.Y - _getCosPosition * _distanceSprite);
-                }
-                if (this.GroundCheck.Y == -1)
-                {
-                    this._box.Position.X = (this.LastPostionOnGround.X + _getSinPosition * this._moveDirection.X * _distanceSprite);
-                    this._box.Position.Y = (this.LastPostionOnGround.Y + _getCosPosition * _distanceSprite);
+                    float processedDirection = this._moveDirection.X * -this.GroundCheck.Y;
+                    this._box.Position.X = this.LastPostionOnGround.X - _getSinPosition * processedDirection * _distanceSprite * this.GroundCheck.Y;
+                    this._box.Position.Y = this.LastPostionOnGround.Y - _getCosPosition * _distanceSprite * this.GroundCheck.Y;
                 }
 
-                if (this.GroundCheck.X == 1)
+                if (this.GroundCheck.X != 0)
                 {
-                    this._box.Position.X = (this.LastPostionOnGround.X - _getCosPosition * _distanceSprite);
-                    this._box.Position.Y = (this.LastPostionOnGround.Y - _getSinPosition * this._moveDirection.X * _distanceSprite);
-                }
-
-                if (this.GroundCheck.X == -1)
-                {
-                    this._box.Position.X = (this.LastPostionOnGround.X + _getCosPosition * _distanceSprite);
-                    this._box.Position.Y = (this.LastPostionOnGround.Y + _getSinPosition * -this._moveDirection.X * _distanceSprite);
+                    this._box.Position.X = this.LastPostionOnGround.X - _getCosPosition * _distanceSprite * this.GroundCheck.X;
+                    this._box.Position.Y = this.LastPostionOnGround.Y - _getSinPosition * this._moveDirection.X * _distanceSprite * this.GroundCheck.X;
                 }
 
             }
 
             if (!isMoving)
             {
-                this.gravity2D = Vector2.Multiply(this.GroundCheck, this.GravityForce);
                 this._box.Rotation = 0;
                 this._box.Origin = new Vector2(0, 0);
                 this._box.Position = this.Position;
                 this.isGrounded = this.CheckGrounded(this.GroundCheck);
                 base.UpdateData(gameTime);
             }
+            this.gravity2D = Vector2.Multiply(this.GroundCheck, this.GravityForce);
         }
 
         private void RestartGravity()
@@ -194,7 +190,7 @@ namespace game_jaaj_6.Gameplay.Actors
             get => Vector2.Distance(Vector2.Add(this.LastPostionOnGround, new Vector2(-16, -16)), this.Position);
         }
 
-        private float _speed = 20f;
+        private float _speed = 80f;
         private float _getCosPosition
         {
             get => MathF.Cos(timer * 0.0001f * _speed);
@@ -205,6 +201,7 @@ namespace game_jaaj_6.Gameplay.Actors
             get => MathF.Sin(timer * 0.0001f * _speed);
         }
 
+        #region jump
         private int JumpPressedForce = 0;
         private bool JumpPressed = false;
         private bool JumpPressedBtn = false;
@@ -235,14 +232,16 @@ namespace game_jaaj_6.Gameplay.Actors
                 this.JumpPressedForce += 1;
             }
 
-            if (this.isGrounded && !this.JumpPressed)
+            if (this.isGrounded && !this.JumpPressed && !this.isMoving)
             {
                 this.JumpPressed = false;
                 this.JumpPressedForce = 0;
                 this.gravityScale = 1f;
             }
         }
+        #endregion
 
+        #region ground check
         public override bool isRiding(Solid solid)
         {
             if (solid.check(this.size, Vector2.Add(this.Position, GroundCheck)))
@@ -261,7 +260,7 @@ namespace game_jaaj_6.Gameplay.Actors
             return false;
         }
 
-        private Vector2 GroundCheck = new Vector2(0, -1);
+        private Vector2 GroundCheck = new Vector2(0, 1);
         private float GravityForce = 8f;
         private void CheckWalls()
         {
@@ -281,13 +280,13 @@ namespace game_jaaj_6.Gameplay.Actors
             if (CheckGrounded(directionWall))
                 GroundCheck = directionWall;
         }
+        #endregion
 
         public override void Draw(SpriteBatch spriteBatch)
         {
 
             this._box.Scene = this.Scene;
             this._box.Draw(spriteBatch);
-            //base.Draw(spriteBatch);
         }
     }
 }

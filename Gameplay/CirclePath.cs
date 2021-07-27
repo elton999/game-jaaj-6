@@ -19,7 +19,7 @@ namespace game_jaaj_6.Gameplay
         }
 
         public float distance = 0;
-        public bool isDistanceEnough { get => this.distance > 20.0f; }
+        public bool isDistanceEnough { get => this.distance > 40.0f; }
         public Vector2 PostionOnGround;
         public override void Update(GameTime gameTime)
         {
