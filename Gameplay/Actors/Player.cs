@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -72,7 +73,7 @@ namespace game_jaaj_6.Gameplay.Actors
             if (Keyboard.GetState().IsKeyUp(Keys.Left))
                 this.cLeft = false;
 
-            if ((cRight || cLeft) && !isGrounded)
+            if ((cRight || cLeft) && !isGrounded && this._circlePath.isDistanceEnough)
             {
                 isMoving = true;
             }
@@ -94,11 +95,36 @@ namespace game_jaaj_6.Gameplay.Actors
                 timer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
 
                 var correctPosition = new Vector2(this.Position.X - this.LastPostionOnGround.X, this.Position.Y - this.LastPostionOnGround.Y);
-                float angle = System.MathF.Atan2(correctPosition.Y - 16, correctPosition.X - 16) / 180 * System.MathF.PI;
+                float angle = MathF.Atan2(correctPosition.Y - 16, correctPosition.X - 16) / 180 * MathF.PI;
 
-                float newPositionY = this.LastPostionOnGround.Y + _getCosPosition * _distance;
-                float newPositionX = this.LastPostionOnGround.X + _getSinPosition * this._moveDirection.X * _distance;
-                this._box.Rotation = angle * 360 / (System.MathF.PI * 2);
+                float newPositionX = 0;
+                float newPositionY = 0;
+
+                if (this.GroundCheck.Y == 1)
+                {
+                    newPositionX = this.LastPostionOnGround.X - _getSinPosition * -this._moveDirection.X * _distance;
+                    newPositionY = this.LastPostionOnGround.Y - _getCosPosition * _distance;
+                }
+
+                if (this.GroundCheck.Y == -1)
+                {
+                    newPositionX = this.LastPostionOnGround.X + _getSinPosition * this._moveDirection.X * _distance;
+                    newPositionY = this.LastPostionOnGround.Y + _getCosPosition * _distance;
+                }
+
+                if (this.GroundCheck.X == 1)
+                {
+                    newPositionX = this.LastPostionOnGround.X - _getCosPosition * _distance;
+                    newPositionY = this.LastPostionOnGround.Y - _getSinPosition * this._moveDirection.X * _distance;
+                }
+
+                if (this.GroundCheck.X == -1)
+                {
+                    newPositionX = this.LastPostionOnGround.X + _getCosPosition * _distance;
+                    newPositionY = this.LastPostionOnGround.Y + _getSinPosition * -this._moveDirection.X * _distance;
+                }
+
+                this._box.Rotation = angle * 360 / (MathF.PI * 2);
 
                 moveY(newPositionY - this.Position.Y, (_) =>
                 {
@@ -112,8 +138,30 @@ namespace game_jaaj_6.Gameplay.Actors
                 });
 
                 this._box.Origin = new Vector2(16, 16);
-                this._box.Position.X = (this.LastPostionOnGround.X + _getSinPosition * this._moveDirection.X * _distanceSprite);
-                this._box.Position.Y = (this.LastPostionOnGround.Y + _getCosPosition * _distanceSprite);
+
+                if (this.GroundCheck.Y == 1)
+                {
+                    this._box.Position.X = (this.LastPostionOnGround.X - _getSinPosition * -this._moveDirection.X * _distanceSprite);
+                    this._box.Position.Y = (this.LastPostionOnGround.Y - _getCosPosition * _distanceSprite);
+                }
+                if (this.GroundCheck.Y == -1)
+                {
+                    this._box.Position.X = (this.LastPostionOnGround.X + _getSinPosition * this._moveDirection.X * _distanceSprite);
+                    this._box.Position.Y = (this.LastPostionOnGround.Y + _getCosPosition * _distanceSprite);
+                }
+
+                if (this.GroundCheck.X == 1)
+                {
+                    this._box.Position.X = (this.LastPostionOnGround.X - _getCosPosition * _distanceSprite);
+                    this._box.Position.Y = (this.LastPostionOnGround.Y - _getSinPosition * this._moveDirection.X * _distanceSprite);
+                }
+
+                if (this.GroundCheck.X == -1)
+                {
+                    this._box.Position.X = (this.LastPostionOnGround.X + _getCosPosition * _distanceSprite);
+                    this._box.Position.Y = (this.LastPostionOnGround.Y + _getSinPosition * -this._moveDirection.X * _distanceSprite);
+                }
+
             }
 
             if (!isMoving)
@@ -146,23 +194,24 @@ namespace game_jaaj_6.Gameplay.Actors
             get => Vector2.Distance(Vector2.Add(this.LastPostionOnGround, new Vector2(-16, -16)), this.Position);
         }
 
-        private float _speed = 150f;
+        private float _speed = 20f;
         private float _getCosPosition
         {
-            get => System.MathF.Cos(timer * 0.0001f * _speed);
+            get => MathF.Cos(timer * 0.0001f * _speed);
         }
 
         private float _getSinPosition
         {
-            get => System.MathF.Sin(timer * 0.0001f * _speed);
+            get => MathF.Sin(timer * 0.0001f * _speed);
         }
 
         private int JumpPressedForce = 0;
         private bool JumpPressed = false;
         private bool JumpPressedBtn = false;
-        private float JumpForce = 150.0f;
+        private float JumpForce = 1.0f;
         private bool isGrounded = false;
         private bool cJump = false;
+        private Vector2 _Gravity2dTemp;
 
         public void Jump()
         {
@@ -171,15 +220,17 @@ namespace game_jaaj_6.Gameplay.Actors
             {
                 this.JumpPressedBtn = true;
                 this.JumpPressed = true;
+                this._Gravity2dTemp = this.GroundCheck;
             }
 
             this.JumpPressed = !this.cJump ? false : this.JumpPressed;
 
 
-            if (this.JumpPressedBtn && this.JumpPressed && this.JumpPressedForce < 30)
+            if (this.JumpPressedBtn && this.JumpPressed && this.JumpPressedForce < 1)
             {
-                float g = (2 * this.JumpForce) / (System.MathF.Pow(0.5f, 2f));
-                float initJumpVelocity = System.MathF.Sqrt(2f * g * this.JumpForce);
+                this.gravityScale = 0.0001f;
+                float g = (2 * this.JumpForce) / (MathF.Pow(5f, 2f));
+                float initJumpVelocity = MathF.Sqrt(8f * g * this.JumpForce);
                 this.velocity = Vector2.Add(velocity, Vector2.Multiply(this.GroundCheck, -initJumpVelocity));
                 this.JumpPressedForce += 1;
             }
@@ -188,6 +239,7 @@ namespace game_jaaj_6.Gameplay.Actors
             {
                 this.JumpPressed = false;
                 this.JumpPressedForce = 0;
+                this.gravityScale = 1f;
             }
         }
 
