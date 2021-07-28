@@ -17,10 +17,16 @@ namespace game_jaaj_6.Gameplay.Actors.Enemies
             this.tag = "soldier";
             this._box.SquareColor = Color.Purple;
             this._box.Start();
+            this._speed = -0.1f;
         }
 
         public override void UpdateData(GameTime gameTime)
         {
+            float timer = (float)gameTime.ElapsedGameTime.Milliseconds;
+            moveX(timer * this._speed, (_) =>
+            {
+                this._speed = -this._speed;
+            });
             base.UpdateData(gameTime);
         }
 

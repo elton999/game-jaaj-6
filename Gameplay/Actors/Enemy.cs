@@ -17,12 +17,19 @@ namespace game_jaaj_6.Gameplay.Actors
             base.Start();
             this.size = new Point(16, 16);
             this.Scene.AllActors.Add(this);
+
+            this.CreateBox();
+        }
+
+        private void CreateBox()
+        {
             this._box = new Square();
             this._box.Scene = this.Scene;
             this._box.size = new Point(16, 16);
             this._box.Position = this.Position;
-            this._box.SquareColor = Color.Purple;
         }
+
+        protected float _speed = 1f;
 
         public override void UpdateData(GameTime gameTime)
         {

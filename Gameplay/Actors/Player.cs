@@ -20,17 +20,26 @@ namespace game_jaaj_6.Gameplay.Actors
             this.Scene.AllActors.Add(this);
             this.size = new Point(32, 32);
 
-            this._box = new Square();
-            this._box.Scene = this.Scene;
-            this._box.size = new Point(32, 32);
-            this._box.SquareColor = Color.Red;
-            this._box.Position = this.Position;
-            this._box.Start();
+            this.CreateBox();
+            this.CreateCirclePath();
+        }
 
+        private void CreateCirclePath()
+        {
             _circlePath = new CirclePath();
             _circlePath.Scene = this.Scene;
             this.Scene.Middleground.Add(_circlePath);
             _circlePath.Start();
+        }
+
+        private void CreateBox()
+        {
+            _box = new Square();
+            _box.Scene = this.Scene;
+            _box.size = new Point(32, 32);
+            _box.SquareColor = Color.Red;
+            _box.Position = this.Position;
+            _box.Start();
         }
         #endregion
 
