@@ -27,6 +27,8 @@ namespace game_jaaj_6.Gameplay.Actors
         public override void UpdateData(GameTime gameTime)
         {
             this._box.Position = this.Position;
+            if (this.overlapCheckPixel(this.Scene.AllActors[0]))
+                this.Scene.AllActors[0].OnCollision(this.tag);
             base.UpdateData(gameTime);
         }
 

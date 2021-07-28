@@ -14,6 +14,7 @@ namespace game_jaaj_6.Gameplay.Actors.Enemies
         public override void Start()
         {
             base.Start();
+            this.tag = "soldier";
             this._box.SquareColor = Color.Purple;
             this._box.Start();
         }

@@ -111,7 +111,7 @@
       "gridCellsX": 372,
       "gridCellsY": 83,
       "entities": [
-        {"name": "player", "id": 0, "_eid": "17388693", "x": 1864, "y": 496, "originX": 0, "originY": 0}
+        {"name": "player", "id": 0, "_eid": "17388693", "x": 88, "y": 360, "originX": 0, "originY": 0}
       ]
     },
     {
@@ -31181,7 +31181,7 @@
       "gridCellsX": 372,
       "gridCellsY": 83,
       "entities": [
-        {"name": "soldier", "id": 0, "_eid": "47817098", "x": 1952, "y": 408, "originX": 0, "originY": 0},
+        {"name": "soldier", "id": 0, "_eid": "47817098", "x": 1968, "y": 512, "originX": 0, "originY": 0},
         {
           "name": "fish",
           "id": 1,
