@@ -35,6 +35,8 @@ namespace game_jaaj_6
 
             AssetManagement = new AssetManagement();
             AssetManagement.Set<Gameplay.Actors.Player>("player", "PLAYER");
+            AssetManagement.Set<Gameplay.Actors.Enemies.Fish>("fish", "ENEMIES");
+            AssetManagement.Set<Gameplay.Actors.Enemies.Soldier>("soldier", "ENEMIES");
 
             GameManagement = new GameManagement();
             GameManagement.Game = this;

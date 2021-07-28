@@ -1,0 +1,1 @@
+dotnet game_jaaj_6.csproj publish -c Release -r win-x64
