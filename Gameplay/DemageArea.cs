@@ -15,10 +15,6 @@ namespace game_jaaj_6.Gameplay
         public override void Start()
         {
             this.tag = "demage area";
-            this.size = new Point(
-                int.Parse(this.Values["width"]),
-                int.Parse(this.Values["height"])
-            );
             this.gravity2D = new Vector2(0, 0);
             base.Start();
         }
