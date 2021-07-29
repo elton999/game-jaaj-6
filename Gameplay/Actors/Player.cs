@@ -1,5 +1,6 @@
 using System;
 using System.Threading;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -19,9 +20,25 @@ namespace game_jaaj_6.Gameplay.Actors
             this.tag = "Player";
             this.Scene.AllActors.Add(this);
             this.size = new Point(32, 32);
+            this.InitialPosition = this.Position;
+
+            this.Scene.Camera.MoveSpeed = 2.5f;
 
             this.CreateBox();
             this.CreateCirclePath();
+        }
+
+        public void Restart()
+        {
+            this.Position = this.InitialPosition;
+            this.Scene.Camera.Target = this.Position;
+            this.RestartGravity();
+            this.GroundCheck = new Vector2(0, 1);
+        }
+
+        public void Die()
+        {
+            this.Restart();
         }
 
         private void CreateCirclePath()
@@ -47,9 +64,13 @@ namespace game_jaaj_6.Gameplay.Actors
         private bool isMoving = false;
         public override void Update(GameTime gameTime)
         {
-            this.Scene.Camera.Target = new Vector2(this.Position.X + this.size.X / 2, this.Position.Y + this.size.Y / 2);
             if (isGrounded)
                 this.LastPostionOnGround = Vector2.Subtract(this.Position, Vector2.Multiply(GroundCheck, -16f));
+
+            if (this.isMoving)
+                this.Scene.Camera.Target = new Vector2(this.Position.X + this.size.X / 2, this.Position.Y + this.size.Y / 2);
+            else
+                this.Scene.Camera.Target = new Vector2(this.LastPostionOnGround.X + this.size.X / 2, this.LastPostionOnGround.Y + this.size.Y / 2);
 
             this.Jump();
 
@@ -178,6 +199,18 @@ namespace game_jaaj_6.Gameplay.Actors
                 base.UpdateData(gameTime);
             }
             this.gravity2D = Vector2.Multiply(this.GroundCheck, this.GravityForce);
+        }
+
+        private string[] _dangers = new string[3] {
+            "demage area",
+            "fish",
+            "soldier"
+        };
+        public override void OnCollision(string tag)
+        {
+            if (_dangers.Contains(tag))
+                this.Die();
+            base.OnCollision(tag);
         }
 
         private void RestartGravity()
