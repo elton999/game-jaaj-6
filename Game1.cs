@@ -36,6 +36,7 @@ namespace game_jaaj_6
             AssetManagement = new AssetManagement();
             AssetManagement.Set<Gameplay.Actors.Player>("player", "PLAYER");
             AssetManagement.Set<Gameplay.Slider>("slider", "MIDDLEGROUND");
+            AssetManagement.Set<Gameplay.Spike>("spikes", "MIDDLEGROUND");
             AssetManagement.Set<Gameplay.DemageArea>("demage", "MIDDLEGROUND");
             AssetManagement.Set<Gameplay.Actors.Enemies.Fish>("fish", "ENEMIES");
             AssetManagement.Set<Gameplay.Actors.Enemies.Soldier>("soldier", "ENEMIES");

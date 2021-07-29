@@ -79,6 +79,12 @@ namespace game_jaaj_6.Gameplay.Actors
             this.SetPositionCirclePath();
         }
 
+        private void SetPositionCirclePath()
+        {
+            this._circlePath.Position = Vector2.Add(this.LastPostionOnGround, new Vector2(-197, -197));
+            this._circlePath.PostionOnGround = this.LastPostionOnGround;
+        }
+
         #region input
         private bool cRight = false;
         private bool cLeft = false;
@@ -111,12 +117,7 @@ namespace game_jaaj_6.Gameplay.Actors
         }
         #endregion
 
-        private void SetPositionCirclePath()
-        {
-            this._circlePath.Position = Vector2.Add(this.LastPostionOnGround, new Vector2(-197, -197));
-            this._circlePath.PostionOnGround = this.LastPostionOnGround;
-        }
-
+        #region UpdateData
         public Vector2 LastPostionOnGround = Vector2.Zero;
         float timer = 0;
         private Vector2 _moveDirection = new Vector2(1, 0);
@@ -200,11 +201,13 @@ namespace game_jaaj_6.Gameplay.Actors
             }
             this.gravity2D = Vector2.Multiply(this.GroundCheck, this.GravityForce);
         }
+        #endregion
 
-        private string[] _dangers = new string[3] {
+        private string[] _dangers = new string[4] {
             "demage area",
             "fish",
-            "soldier"
+            "soldier",
+            "spikes"
         };
         public override void OnCollision(string tag)
         {
@@ -267,10 +270,12 @@ namespace game_jaaj_6.Gameplay.Actors
 
             if (this.JumpPressedBtn && this.JumpPressed && this.JumpPressedForce < 1)
             {
-                this.gravityScale = 0.0001f;
-                float g = (2 * this.JumpForce) / (MathF.Pow(5f, 2f));
+                this.gravityScale = 0.00003f;
+
+                float g = (2 * this.JumpForce) / (MathF.Pow(6f, 2f));
                 float initJumpVelocity = MathF.Sqrt(8f * g * this.JumpForce);
                 this.velocity = Vector2.Add(velocity, Vector2.Multiply(this.GroundCheck, -initJumpVelocity));
+
                 this.JumpPressedForce += 1;
             }
 

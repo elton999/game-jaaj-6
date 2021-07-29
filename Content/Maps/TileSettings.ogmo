@@ -402,7 +402,7 @@
       "tileY": false,
       "tileSize": {"x": 8, "y": 8},
       "resizeableX": true,
-      "resizeableY": false,
+      "resizeableY": true,
       "rotatable": false,
       "rotationDegrees": 360,
       "canFlipX": false,
