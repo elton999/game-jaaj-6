@@ -13,15 +13,18 @@ namespace game_jaaj_6.Gameplay
         {
             this.tag = "spikes";
             this.InitialPosition = Vector2.Subtract(this.Position, new Vector2(0, 4));
+            this.CreateBox();
+            base.Start();
+        }
 
+        private void CreateBox()
+        {
             this._box = new Square();
             this._box.Scene = this.Scene;
             this._box.size = this.size;
             this._box.SquareColor = Color.DarkRed;
             this._box.Position = this.Position;
             this._box.Start();
-
-            base.Start();
         }
 
         private float _interval = 6000f;

@@ -130,7 +130,7 @@ namespace game_jaaj_6.Gameplay.Actors
                 timer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
 
                 var correctPosition = new Vector2(this.Position.X - this.LastPostionOnGround.X, this.Position.Y - this.LastPostionOnGround.Y);
-                float angle = MathF.Atan2(correctPosition.Y - 16, correctPosition.X - 16) / 180 * MathF.PI;
+
 
                 float newPositionX = 0;
                 float newPositionY = 0;
@@ -159,35 +159,11 @@ namespace game_jaaj_6.Gameplay.Actors
                     newPositionY = this.LastPostionOnGround.Y + _getSinPosition * this._moveDirection.X * _distance;
                 }
 
-                moveY(newPositionY - this.Position.Y, (_) =>
-                {
-                    RestartGravity();
-                    CheckWalls();
-                });
+                moveY(newPositionY - this.Position.Y, SetNewGravity);
                 if (isMoving)
-                {
-                    moveX(newPositionX - this.Position.X, (_) =>
-                    {
-                        RestartGravity();
-                        CheckWalls();
-                    });
-                }
+                    moveX(newPositionX - this.Position.X, SetNewGravity);
 
-                this._box.Rotation = angle * 360 / (MathF.PI * 2);
-                this._box.Origin = new Vector2(16, 16);
-
-                if (this.GroundCheck.Y != 0)
-                {
-                    float processedDirection = this._moveDirection.X * -this.GroundCheck.Y;
-                    this._box.Position.X = this.LastPostionOnGround.X - _getSinPosition * processedDirection * _distanceSprite * this.GroundCheck.Y;
-                    this._box.Position.Y = this.LastPostionOnGround.Y - _getCosPosition * _distanceSprite * this.GroundCheck.Y;
-                }
-
-                if (this.GroundCheck.X != 0)
-                {
-                    this._box.Position.X = this.LastPostionOnGround.X - _getCosPosition * _distanceSprite * this.GroundCheck.X;
-                    this._box.Position.Y = this.LastPostionOnGround.Y - _getSinPosition * this._moveDirection.X * _distanceSprite * this.GroundCheck.X;
-                }
+                this.RotateSprite(correctPosition);
 
             }
 
@@ -200,7 +176,42 @@ namespace game_jaaj_6.Gameplay.Actors
                 base.UpdateData(gameTime);
             }
             this.gravity2D = Vector2.Multiply(this.GroundCheck, this.GravityForce);
+            if (isGrounded && _gravityDown && this.GroundCheck.X != 0)
+            {
+                this.CheckWalls();
+                this.gravity2D = new Vector2(this.gravity2D.X, this.GravityForce * 0.1f);
+            }
+
+            if (!isGrounded && !_gravityDown && this.GroundCheck.X != 0 && !isMoving)
+                this.velocity.Y = 0;
         }
+
+        private void SetNewGravity(string arg = null)
+        {
+            RestartGravity();
+            CheckWalls();
+        }
+
+        private void RotateSprite(Vector2 correctPosition)
+        {
+            float angle = MathF.Atan2(correctPosition.Y - 16, correctPosition.X - 16) / 180 * MathF.PI;
+            this._box.Rotation = angle * 360 / (MathF.PI * 2);
+            this._box.Origin = new Vector2(16, 16);
+
+            if (this.GroundCheck.Y != 0)
+            {
+                float processedDirection = this._moveDirection.X * -this.GroundCheck.Y;
+                this._box.Position.X = this.LastPostionOnGround.X - _getSinPosition * processedDirection * _distanceSprite * this.GroundCheck.Y;
+                this._box.Position.Y = this.LastPostionOnGround.Y - _getCosPosition * _distanceSprite * this.GroundCheck.Y;
+            }
+
+            if (this.GroundCheck.X != 0)
+            {
+                this._box.Position.X = this.LastPostionOnGround.X - _getCosPosition * _distanceSprite * this.GroundCheck.X;
+                this._box.Position.Y = this.LastPostionOnGround.Y - _getSinPosition * this._moveDirection.X * _distanceSprite * this.GroundCheck.X;
+            }
+        }
+
         #endregion
 
         private string[] _dangers = new string[4] {
@@ -219,6 +230,7 @@ namespace game_jaaj_6.Gameplay.Actors
         private void RestartGravity()
         {
             isMoving = false;
+            _gravityDown = false;
             this._box.Origin = new Vector2(0, 0);
             this._box.Rotation = 0;
             this._box.Position = this.Position;
@@ -300,7 +312,11 @@ namespace game_jaaj_6.Gameplay.Actors
         {
             foreach (Solid solid in this.Scene.AllSolids)
                 if (solid.check(this.size, Vector2.Add(this.Position, groundCheck)))
+                {
+                    if (solid.tag.Equals("slider"))
+                        _gravityDown = true;
                     return true;
+                }
 
             if (this.Scene.Grid.checkOverlap(this.size, Vector2.Add(this.Position, groundCheck), this))
                 return true;
@@ -308,9 +324,12 @@ namespace game_jaaj_6.Gameplay.Actors
         }
 
         private Vector2 GroundCheck = new Vector2(0, 1);
+        private bool _gravityDown = false;
         private float GravityForce = 8f;
         private void CheckWalls()
         {
+            _gravityDown = false;
+
             var directionWall = new Vector2(0, 1);
             if (CheckGrounded(directionWall))
                 GroundCheck = directionWall;
