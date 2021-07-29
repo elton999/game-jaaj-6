@@ -15,8 +15,7 @@
       "gridCellsX": 750,
       "gridCellsY": 151,
       "entities": [
-        {"name": "save point", "id": 1, "_eid": "47764636", "x": 2224, "y": 536, "originX": 0, "originY": 0},
-        {"name": "player", "id": 2, "_eid": "17388693", "x": 896, "y": 1048, "originX": 0, "originY": 0}
+        {"name": "player", "id": 2, "_eid": "17388693", "x": 3336, "y": 224, "originX": 0, "originY": 0}
       ]
     },
     {

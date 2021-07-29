@@ -175,7 +175,15 @@ namespace game_jaaj_6.Gameplay.Actors
                 this.isGrounded = this.CheckGrounded(this.GroundCheck);
                 base.UpdateData(gameTime);
             }
+
+
             this.gravity2D = Vector2.Multiply(this.GroundCheck, this.GravityForce);
+
+            this.SliderUpdate();
+        }
+
+        private void SliderUpdate()
+        {
             if (isGrounded && _gravityDown && this.GroundCheck.X != 0)
             {
                 this.CheckWalls();

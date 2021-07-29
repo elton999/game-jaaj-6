@@ -21,8 +21,9 @@ namespace game_jaaj_6.Gameplay
 
         public override void UpdateData(GameTime gameTime)
         {
-            if (this.overlapCheckPixel(this.Scene.AllActors[0]))
-                this.Scene.AllActors[0].OnCollision(this.tag);
+            var player = this.Scene.AllActors[0];
+            if (this.overlapCheck(player))
+                player.OnCollision(this.tag);
         }
     }
 }
