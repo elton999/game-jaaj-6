@@ -51,6 +51,12 @@
 /processorParam:DebugMode=Auto
 /build:Shaders/circle.fx
 
+#begin Shaders/transition.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:Shaders/transition.fx
+
 #begin Sprites/tilemap.png
 /importer:TextureImporter
 /processor:TextureProcessor

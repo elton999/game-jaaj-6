@@ -8,7 +8,7 @@
 #endif
 
 Texture2D SpriteTexture;
-float Radius;
+float radious;
 
 sampler2D SpriteTextureSampler = sampler_state
 {
@@ -24,15 +24,14 @@ struct VertexShaderOutput
 
 float4 MainPS(VertexShaderOutput input) : COLOR
 {
-	float4 color = tex2D(SpriteTextureSampler,input.TextureCoordinates) * input.Color;
-
+	float4 color = float4(0.0f,0.0f,0.0f,1);//tex2D(SpriteTextureSampler,input.TextureCoordinates) * input.Color;
+	
 	float distance = float(pow(0.5f - input.TextureCoordinates.y, 2));
-	distance =  distance + float(pow(0.5f - input.TextureCoordinates.x, 2));
-	float PI = 3.141592653589793f;
-	float angle = atan2(0.5f - input.TextureCoordinates.y, 0.5f - input.TextureCoordinates.x) * 180 / PI;
+	distance =  distance + float(pow(0.5f - input.TextureCoordinates.x, 2) / 0.35f);
+	
+	if(distance < radious)
+		color = float4(0.0f,0.0f,0.0f,0.0f) * 0.0f;	
 
-	if(distance < Radius && distance > Radius - 0.0009f && (angle % 8 >= 2 || angle % 8 <= -2))
-		color = float4(1,1,1,0.0f);
 	return color;
 }
 

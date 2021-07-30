@@ -13,7 +13,17 @@ namespace game_jaaj_6
             this.SceneManagement.MainScene.GameManagement = this;
             this.SceneManagement.MainScene.updateDataTime = 1f / 60f;
 
+            this.CreateTransitionObject();
             this.SetValues();
+        }
+
+        UI.Transition transition;
+        private void CreateTransitionObject()
+        {
+            transition = new UI.Transition();
+            transition.Scene = this.SceneManagement.MainScene;
+            this.SceneManagement.MainScene.UI.Add(transition);
+            transition.Start();
         }
 
         public void SetValues()
@@ -24,6 +34,12 @@ namespace game_jaaj_6
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+            if (this.CurrentGameplayStatus == GameManagement.GameplayStatus.DEATH)
+            {
+                this.CurrentGameplayStatus = GameManagement.GameplayStatus.ALIVE;
+                transition.Close();
+                wait(1f, () => { transition.Open(); });
+            }
             this.SceneManagement.Update(gameTime);
         }
 

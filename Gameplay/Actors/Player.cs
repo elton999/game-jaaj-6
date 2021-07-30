@@ -39,6 +39,7 @@ namespace game_jaaj_6.Gameplay.Actors
         public void Die()
         {
             this.Restart();
+            this.Scene.GameManagement.CurrentGameplayStatus = UmbrellaToolKit.GameManagement.GameplayStatus.DEATH;
         }
 
         private void CreateCirclePath()
@@ -196,11 +197,8 @@ namespace game_jaaj_6.Gameplay.Actors
 
         private void SetNewGravity(string tag)
         {
-            if (tag != "gate" && !this.Scene.GameManagement.Values["key"])
-            {
-                RestartGravity();
-                CheckWalls();
-            }
+            RestartGravity();
+            CheckWalls();
         }
 
         private void RotateSprite(Vector2 correctPosition)
