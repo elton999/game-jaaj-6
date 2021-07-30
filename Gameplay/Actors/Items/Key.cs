@@ -11,5 +11,10 @@ namespace game_jaaj_6.Gameplay.Actors.Items
             this.tag = "key";
             this.gravity2D = new Vector2(0, 0);
         }
+
+        public override void OnGetItem()
+        {
+            this.Scene.GameManagement.Values["key"] = true;
+        }
     }
 }

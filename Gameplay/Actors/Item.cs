@@ -39,6 +39,8 @@ namespace game_jaaj_6.Gameplay.Actors
             }
         }
 
+        public virtual void OnGetItem() { }
+
         private float _speed = 2f;
         private void Animation(GameTime gameTime)
         {

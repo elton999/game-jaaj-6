@@ -194,10 +194,13 @@ namespace game_jaaj_6.Gameplay.Actors
                 this.velocity.Y = 0;
         }
 
-        private void SetNewGravity(string arg = null)
+        private void SetNewGravity(string tag)
         {
-            RestartGravity();
-            CheckWalls();
+            if (tag != "gate" && !this.Scene.GameManagement.Values["key"])
+            {
+                RestartGravity();
+                CheckWalls();
+            }
         }
 
         private void RotateSprite(Vector2 correctPosition)
