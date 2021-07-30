@@ -24,6 +24,9 @@ namespace game_jaaj_6.Gameplay.Actors
 
             this.Scene.Camera.MoveSpeed = 2.5f;
 
+            this.Sprite = this.Scene.Content.Load<Texture2D>("Sprites/player");
+            this.Anima = new AsepriteAnimation(this.Content.Load<AsepriteDefinitions>("Sprites/player_animation"));
+
             this.CreateBox();
             this.CreateCirclePath();
         }
@@ -78,6 +81,8 @@ namespace game_jaaj_6.Gameplay.Actors
             this.Input();
 
             this.SetPositionCirclePath();
+
+            this.Animation(gameTime);
         }
 
         private void SetPositionCirclePath()
@@ -101,6 +106,7 @@ namespace game_jaaj_6.Gameplay.Actors
             {
                 this._moveDirection = new Vector2(1, 0);
                 this.cRight = true;
+                this.spriteEffect = SpriteEffects.None;
             }
             if (Keyboard.GetState().IsKeyUp(Keys.Right))
                 this.cRight = false;
@@ -109,6 +115,7 @@ namespace game_jaaj_6.Gameplay.Actors
             {
                 this._moveDirection = new Vector2(-1, 0);
                 this.cLeft = true;
+                this.spriteEffect = SpriteEffects.FlipHorizontally;
             }
             if (Keyboard.GetState().IsKeyUp(Keys.Left))
                 this.cLeft = false;
@@ -170,8 +177,8 @@ namespace game_jaaj_6.Gameplay.Actors
 
             if (!isMoving)
             {
-                this._box.Rotation = 0;
-                this._box.Origin = new Vector2(0, 0);
+                this.Rotation = 0.0f;
+                this.Origin = new Vector2(0, 0);
                 this._box.Position = this.Position;
                 this.isGrounded = this.CheckGrounded(this.GroundCheck);
                 base.UpdateData(gameTime);
@@ -204,8 +211,8 @@ namespace game_jaaj_6.Gameplay.Actors
         private void RotateSprite(Vector2 correctPosition)
         {
             float angle = MathF.Atan2(correctPosition.Y - 16, correctPosition.X - 16) / 180 * MathF.PI;
-            this._box.Rotation = angle * 360 / (MathF.PI * 2);
-            this._box.Origin = new Vector2(16, 16);
+            this.Rotation = angle * 180 / (MathF.PI * 2);
+            this.Origin = new Vector2(16, 16);
 
             if (this.GroundCheck.Y != 0)
             {
@@ -240,8 +247,8 @@ namespace game_jaaj_6.Gameplay.Actors
         {
             isMoving = false;
             _gravityDown = false;
-            this._box.Origin = new Vector2(0, 0);
-            this._box.Rotation = 0;
+            this.Origin = new Vector2(0, 0);
+            this.Rotation = 0.0f;
             this._box.Position = this.Position;
             timer = 0;
         }
@@ -357,11 +364,33 @@ namespace game_jaaj_6.Gameplay.Actors
         }
         #endregion
 
+        #region animation
+        AsepriteAnimation Anima;
+        public void Animation(GameTime gameTime)
+        {
+            if (this.isMoving)
+                this.Anima.Play(gameTime, "dash");
+            else
+                this.Anima.Play(gameTime, "idle");
+        }
+        #endregion
+
         public override void Draw(SpriteBatch spriteBatch)
         {
 
             this._box.Scene = this.Scene;
-            this._box.Draw(spriteBatch);
+
+            if (!isMoving)
+            {
+                if (this.GroundCheck.X != 0)
+                {
+                    this.Origin = this.GroundCheck.X == -1 ? new Vector2(0, 32) : new Vector2(32, 0);
+                    this.Rotation = -1.55f * this.GroundCheck.X;
+                }
+            }
+
+            this.Body = this.Anima.Body;
+            base.Draw(spriteBatch);
         }
     }
 }
