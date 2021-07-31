@@ -39,7 +39,7 @@ namespace game_jaaj_6
 
         public void SetValues()
         {
-            this.Values.Add("key", true);
+            this.Values.Add("key", false);
         }
 
         public override void Update(GameTime gameTime)

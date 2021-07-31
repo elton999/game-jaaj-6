@@ -18,14 +18,38 @@ namespace game_jaaj_6.Gameplay.Solids
             Anim = new AsepriteAnimation(this.Scene.Content.Load<AsepriteDefinitions>("Sprites/gate_animation"));
         }
 
+        private bool _open = false;
         public override void UpdateData(GameTime gameTime)
         {
-            this.Anim.Play(gameTime, "idle", AsepriteAnimation.AnimationDirection.LOOP);
+            if (_open)
+            {
+                this.Anim.Play(gameTime, "open", AsepriteAnimation.AnimationDirection.FORWARD);
+                if (this.Anim.lastFrame)
+                    this.Destroy();
+            }
+            else
+            {
+                var currentPosition = this.Position;
+                this.Position.X -= 5;
+
+                var player = this.Scene.AllActors[0];
+                if (overlapCheck(player) && this.Scene.GameManagement.Values["key"])
+                {
+                    _open = true;
+                    this.Scene.GameManagement.CurrentStatus = UmbrellaToolKit.GameManagement.Status.PAUSE;
+                }
+
+                this.Position = currentPosition;
+
+                this.Anim.Play(gameTime, "idle", AsepriteAnimation.AnimationDirection.LOOP);
+            }
+
             base.UpdateData(gameTime);
         }
 
         public override void Destroy()
         {
+            this.Scene.GameManagement.CurrentStatus = UmbrellaToolKit.GameManagement.Status.PLAYING;
             base.Destroy();
             this.Scene.AllSolids.Remove(this);
         }

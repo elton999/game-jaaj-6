@@ -78,23 +78,27 @@ namespace game_jaaj_6.Gameplay.Actors
 
         private CirclePath _circlePath;
         public bool isMoving = false;
+        public bool isPaused { get => this.Scene.GameManagement.CurrentStatus == UmbrellaToolKit.GameManagement.Status.PAUSE; }
         public override void Update(GameTime gameTime)
         {
-            if (isGrounded)
-                this.LastPostionOnGround = Vector2.Subtract(this.Position, Vector2.Multiply(GroundCheck, -16f));
+            if (!isPaused)
+            {
+                if (isGrounded)
+                    this.LastPostionOnGround = Vector2.Subtract(this.Position, Vector2.Multiply(GroundCheck, -16f));
 
-            if (this.isMoving)
-                this.Scene.Camera.Target = new Vector2(this.Position.X + this.size.X / 2, this.Position.Y + this.size.Y / 2);
-            else
-                this.Scene.Camera.Target = new Vector2(this.LastPostionOnGround.X + this.size.X / 2, this.LastPostionOnGround.Y + this.size.Y / 2);
+                if (this.isMoving)
+                    this.Scene.Camera.Target = new Vector2(this.Position.X + this.size.X / 2, this.Position.Y + this.size.Y / 2);
+                else
+                    this.Scene.Camera.Target = new Vector2(this.LastPostionOnGround.X + this.size.X / 2, this.LastPostionOnGround.Y + this.size.Y / 2);
 
-            this.Jump();
+                this.Jump();
 
-            this.Input();
+                this.Input();
 
-            this.SetPositionCirclePath();
+                this.SetPositionCirclePath();
 
-            this.Animation(gameTime);
+                this.Animation(gameTime);
+            }
         }
 
         private void SetPositionCirclePath()
@@ -143,63 +147,65 @@ namespace game_jaaj_6.Gameplay.Actors
         private Vector2 _moveDirection = new Vector2(1, 0);
         public override void UpdateData(GameTime gameTime)
         {
-
-            if (isMoving)
+            if (!isPaused)
             {
-                this.cJump = false;
-                timer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-
-                var correctPosition = new Vector2(this.Position.X - this.LastPostionOnGround.X, this.Position.Y - this.LastPostionOnGround.Y);
-
-
-                float newPositionX = 0;
-                float newPositionY = 0;
-
-                if (this.GroundCheck.Y == 1)
-                {
-                    newPositionX = this.LastPostionOnGround.X - _getSinPosition * -this._moveDirection.X * _distance;
-                    newPositionY = this.LastPostionOnGround.Y - _getCosPosition * _distance;
-                }
-
-                if (this.GroundCheck.Y == -1)
-                {
-                    newPositionX = this.LastPostionOnGround.X + _getSinPosition * this._moveDirection.X * _distance;
-                    newPositionY = this.LastPostionOnGround.Y + _getCosPosition * _distance;
-                }
-
-                if (this.GroundCheck.X == 1)
-                {
-                    newPositionX = this.LastPostionOnGround.X - _getCosPosition * _distance;
-                    newPositionY = this.LastPostionOnGround.Y - _getSinPosition * this._moveDirection.X * _distance;
-                }
-
-                if (this.GroundCheck.X == -1)
-                {
-                    newPositionX = this.LastPostionOnGround.X + _getCosPosition * _distance;
-                    newPositionY = this.LastPostionOnGround.Y + _getSinPosition * this._moveDirection.X * _distance;
-                }
-
-                moveY(newPositionY - this.Position.Y, SetNewGravity);
                 if (isMoving)
-                    moveX(newPositionX - this.Position.X, SetNewGravity);
+                {
+                    this.cJump = false;
+                    timer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
 
-                this.RotateSprite(correctPosition);
+                    var correctPosition = new Vector2(this.Position.X - this.LastPostionOnGround.X, this.Position.Y - this.LastPostionOnGround.Y);
 
+
+                    float newPositionX = 0;
+                    float newPositionY = 0;
+
+                    if (this.GroundCheck.Y == 1)
+                    {
+                        newPositionX = this.LastPostionOnGround.X - _getSinPosition * -this._moveDirection.X * _distance;
+                        newPositionY = this.LastPostionOnGround.Y - _getCosPosition * _distance;
+                    }
+
+                    if (this.GroundCheck.Y == -1)
+                    {
+                        newPositionX = this.LastPostionOnGround.X + _getSinPosition * this._moveDirection.X * _distance;
+                        newPositionY = this.LastPostionOnGround.Y + _getCosPosition * _distance;
+                    }
+
+                    if (this.GroundCheck.X == 1)
+                    {
+                        newPositionX = this.LastPostionOnGround.X - _getCosPosition * _distance;
+                        newPositionY = this.LastPostionOnGround.Y - _getSinPosition * this._moveDirection.X * _distance;
+                    }
+
+                    if (this.GroundCheck.X == -1)
+                    {
+                        newPositionX = this.LastPostionOnGround.X + _getCosPosition * _distance;
+                        newPositionY = this.LastPostionOnGround.Y + _getSinPosition * this._moveDirection.X * _distance;
+                    }
+
+                    moveY(newPositionY - this.Position.Y, SetNewGravity);
+                    if (isMoving)
+                        moveX(newPositionX - this.Position.X, SetNewGravity);
+
+                    this.RotateSprite(correctPosition);
+
+                }
+
+                if (!isMoving)
+                {
+                    this.Rotation = 0.0f;
+                    this.Origin = new Vector2(16, 16);
+                    this._box.Position = this.Position;
+                    this.isGrounded = this.CheckGrounded(this.GroundCheck);
+                    base.UpdateData(gameTime);
+                }
+
+                this.SmashEfx();
+
+                this.gravity2D = Vector2.Multiply(this.GroundCheck, this.GravityForce);
+                this.SliderUpdate();
             }
-
-            if (!isMoving)
-            {
-                this.Rotation = 0.0f;
-                this.Origin = new Vector2(16, 16);
-                this._box.Position = this.Position;
-                this.isGrounded = this.CheckGrounded(this.GroundCheck);
-                base.UpdateData(gameTime);
-            }
-
-            this.SmashEfx();
-
-            this.gravity2D = Vector2.Multiply(this.GroundCheck, this.GravityForce);
-            this.SliderUpdate();
 
         }
 
@@ -451,7 +457,7 @@ namespace game_jaaj_6.Gameplay.Actors
                     this.Rotation = -1.55f * this.GroundCheck.X;
                 }
             }
-            else
+            else if (!isPaused)
             {
                 this.Ghost.Frames.Add(this.Body);
                 this.Ghost.Positions.Add(this.Position);
