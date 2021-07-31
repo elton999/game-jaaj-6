@@ -190,16 +190,17 @@ namespace game_jaaj_6.Gameplay.Actors
             if (!isMoving)
             {
                 this.Rotation = 0.0f;
-                this.Origin = new Vector2(0, 0);
+                this.Origin = new Vector2(16, 16);
                 this._box.Position = this.Position;
                 this.isGrounded = this.CheckGrounded(this.GroundCheck);
                 base.UpdateData(gameTime);
             }
 
+            this.SmashEfx();
 
             this.gravity2D = Vector2.Multiply(this.GroundCheck, this.GravityForce);
-
             this.SliderUpdate();
+
         }
 
         private void SliderUpdate()
@@ -272,7 +273,7 @@ namespace game_jaaj_6.Gameplay.Actors
 
         private float _distanceSprite
         {
-            get => Vector2.Distance(Vector2.Add(this.LastPostionOnGround, new Vector2(-16, -16)), this.Position);
+            get => Vector2.Distance(Vector2.Add(this.LastPostionOnGround, new Vector2(-32, -32)), this.Position);
         }
 
         private float _speed = 60f;
@@ -382,9 +383,56 @@ namespace game_jaaj_6.Gameplay.Actors
         {
             if (this.isMoving)
                 this.Anima.Play(gameTime, "dash");
+            else if (!this.isMoving & !this.isGrounded)
+                this.Anima.Play(gameTime, "jump", AsepriteAnimation.AnimationDirection.LOOP);
+            else if (_GroundHit)
+                this.Anima.Play(gameTime, "landing", AsepriteAnimation.AnimationDirection.FORWARD);
             else
-                this.Anima.Play(gameTime, "idle");
+                this.Anima.Play(gameTime, "idle", AsepriteAnimation.AnimationDirection.LOOP);
         }
+
+        #region smashEFX
+        private Vector2 _PositionSmash;
+        private Point _BobySmash;
+        private bool _GroundHit = false;
+        private bool _SmashEFX = false;
+        private bool _last_isgrounded = false;
+        private bool _isJumping { get => !this.isGrounded && !this.isMoving; }
+        public void SmashEfx()
+        {
+            if (!_last_isgrounded && this.isGrounded && !_GroundHit)
+            {
+                _BobySmash.X = -15;
+                _BobySmash.Y = 5;
+                _PositionSmash.X = 3;
+                _PositionSmash.Y = -2;
+                _GroundHit = true;
+                wait(0.5f, () =>
+                {
+                    _BobySmash = new Point(0, 0);
+                    _PositionSmash = new Vector2(0, 0);
+                    _GroundHit = false;
+                });
+            }
+            if (_isJumping && !_SmashEFX)
+            {
+                _SmashEFX = true;
+
+                _BobySmash.X = 2;
+                _BobySmash.Y = -2;
+                _PositionSmash.X = -1;
+                _PositionSmash.Y = 3;
+                wait(0.4f, () =>
+                {
+                    _BobySmash = new Point(0, 0);
+                    _PositionSmash = new Vector2(0, 0);
+                    _SmashEFX = false;
+                });
+            }
+
+            this._last_isgrounded = this.isGrounded;
+        }
+        #endregion
         #endregion
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -397,7 +445,9 @@ namespace game_jaaj_6.Gameplay.Actors
             {
                 if (this.GroundCheck.X != 0)
                 {
-                    this.Origin = this.GroundCheck.X == -1 ? new Vector2(0, 32) : new Vector2(32, 0);
+                    this.Origin = this.GroundCheck.X == -1 ? new Vector2(16, 64 - 16) : this.Origin;
+                    this.Origin = this.GroundCheck.X == 1 ? new Vector2(32, 16) : this.Origin;
+
                     this.Rotation = -1.55f * this.GroundCheck.X;
                 }
             }
@@ -407,10 +457,17 @@ namespace game_jaaj_6.Gameplay.Actors
                 this.Ghost.Positions.Add(this.Position);
                 this.Ghost.Rotations.Add(this.Rotation);
                 this.Ghost.Origins.Add(this.Origin);
+                this.Ghost.SpriteEffects.Add(this.spriteEffect);
             }
 
 
-            base.Draw(spriteBatch);
+            BeginDraw(spriteBatch);
+            spriteBatch.Draw(
+                this.Sprite,
+                new Rectangle((int)(this.Position.X - _PositionSmash.X), (int)(this.Position.Y - _PositionSmash.Y),
+                this.Body.Width - _BobySmash.X, this.Body.Height - _BobySmash.Y),
+                this.Body, this.SpriteColor * this.Transparent, this.Rotation, this.Origin, this.spriteEffect, 0);
+            EndDraw(spriteBatch);
         }
     }
 }

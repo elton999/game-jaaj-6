@@ -14,6 +14,7 @@ namespace game_jaaj_6.Gameplay.Actors
         public List<Vector2> Positions = new List<Vector2>();
         public List<float> Rotations = new List<float>();
         public List<Vector2> Origins = new List<Vector2>();
+        public List<SpriteEffects> SpriteEffects = new List<SpriteEffects>();
         public override void Start()
         {
             this.Effect = this.Scene.Content.Load<Effect>("Shaders/SpriteColor");
@@ -29,6 +30,7 @@ namespace game_jaaj_6.Gameplay.Actors
                 this.Positions.Remove(this.Positions[0]);
                 this.Rotations.Remove(this.Rotations[0]);
                 this.Origins.Remove(this.Origins[0]);
+                this.SpriteEffects.Remove(this.SpriteEffects[0]);
             }
 
             base.UpdateData(gameTime);
@@ -45,6 +47,7 @@ namespace game_jaaj_6.Gameplay.Actors
                 this.Body = this.Frames[i];
                 this.Origin = this.Origins[i];
                 this.Rotation = this.Rotations[i];
+                this.spriteEffect = this.SpriteEffects[i];
 
                 this.Effect.Parameters["transparent"].SetValue(this.Transparent);
                 DrawSprite(spriteBatch);

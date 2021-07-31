@@ -13,19 +13,15 @@ namespace game_jaaj_6.Gameplay.Solids
             base.Start();
             this.Scene.AllSolids.Add(this);
             this.tag = "gate";
-            this.size = new Point(16, 64);
-            this.CreateBox();
+            this.size = new Point(16, 88);
+            this.Sprite = this.Scene.Content.Load<Texture2D>("Sprites/gate");
+            Anim = new AsepriteAnimation(this.Scene.Content.Load<AsepriteDefinitions>("Sprites/gate_animation"));
         }
 
-        protected Square _box;
-        private void CreateBox()
+        public override void UpdateData(GameTime gameTime)
         {
-            this._box = new Square();
-            this._box.Scene = this.Scene;
-            this._box.size = this.size;
-            this._box.Position = this.Position;
-            this._box.SquareColor = Color.Green;
-            this._box.Start();
+            this.Anim.Play(gameTime, "idle", AsepriteAnimation.AnimationDirection.LOOP);
+            base.UpdateData(gameTime);
         }
 
         public override void Destroy()
@@ -34,9 +30,11 @@ namespace game_jaaj_6.Gameplay.Solids
             this.Scene.AllSolids.Remove(this);
         }
 
+        AsepriteAnimation Anim;
         public override void Draw(SpriteBatch spriteBatch)
         {
-            this._box.Draw(spriteBatch);
+            this.Body = this.Anim.Body;
+            this.Origin = new Vector2(9, 0);
             base.Draw(spriteBatch);
         }
     }
