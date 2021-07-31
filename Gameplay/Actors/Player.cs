@@ -30,6 +30,7 @@ namespace game_jaaj_6.Gameplay.Actors
             this.CreateBox();
             this.CreateCirclePath();
             this.CreateGhost();
+            this.CreateDeathFx();
         }
 
         private PlayerGhost Ghost = new PlayerGhost();
@@ -42,18 +43,40 @@ namespace game_jaaj_6.Gameplay.Actors
             Ghost.Start();
         }
 
+        private PlayerDeath DeathFX;
+        private void CreateDeathFx()
+        {
+            DeathFX = new PlayerDeath();
+            DeathFX.Scene = this.Scene;
+            DeathFX.Sprite = this.Sprite;
+            DeathFX.Position = this.Position;
+            this.Scene.Players.Add(DeathFX);
+            DeathFX.Start();
+        }
+
         public void Restart()
         {
             this.Position = this.InitialPosition;
             this.Scene.Camera.Target = this.Position;
             this.RestartGravity();
             this.GroundCheck = new Vector2(0, 1);
+            isDead = false;
         }
 
+        bool isDead = false;
         public void Die()
         {
-            this.Restart();
-            this.Scene.GameManagement.CurrentGameplayStatus = UmbrellaToolKit.GameManagement.GameplayStatus.DEATH;
+            if (!isDead)
+            {
+                isDead = true;
+                this.DeathFX.Play(this.Position);
+                wait(1f, () =>
+                {
+                    this.Scene.GameManagement.CurrentGameplayStatus = UmbrellaToolKit.GameManagement.GameplayStatus.DEATH;
+                });
+                wait(2f, () => { this.Restart(); });
+
+            }
         }
 
         private void CreateCirclePath()
@@ -78,7 +101,7 @@ namespace game_jaaj_6.Gameplay.Actors
 
         private CirclePath _circlePath;
         public bool isMoving = false;
-        public bool isPaused { get => this.Scene.GameManagement.CurrentStatus == UmbrellaToolKit.GameManagement.Status.PAUSE; }
+        public bool isPaused { get => this.Scene.GameManagement.Values["freeze"]; }
         public override void Update(GameTime gameTime)
         {
             if (!isPaused)
@@ -232,19 +255,6 @@ namespace game_jaaj_6.Gameplay.Actors
             float angle = MathF.Atan2(correctPosition.Y - 16, correctPosition.X - 16) / 180 * MathF.PI;
             this.Rotation = angle * 180 / (MathF.PI * 2);
             this.Origin = new Vector2(16, 16);
-
-            if (this.GroundCheck.Y != 0)
-            {
-                float processedDirection = this._moveDirection.X * -this.GroundCheck.Y;
-                this._box.Position.X = this.LastPostionOnGround.X - _getSinPosition * processedDirection * _distanceSprite * this.GroundCheck.Y;
-                this._box.Position.Y = this.LastPostionOnGround.Y - _getCosPosition * _distanceSprite * this.GroundCheck.Y;
-            }
-
-            if (this.GroundCheck.X != 0)
-            {
-                this._box.Position.X = this.LastPostionOnGround.X - _getCosPosition * _distanceSprite * this.GroundCheck.X;
-                this._box.Position.Y = this.LastPostionOnGround.Y - _getSinPosition * this._moveDirection.X * _distanceSprite * this.GroundCheck.X;
-            }
         }
 
         #endregion
@@ -443,37 +453,40 @@ namespace game_jaaj_6.Gameplay.Actors
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-
-            this._box.Scene = this.Scene;
-            this.Body = this.Anima.Body;
-
-            if (!isMoving)
+            if (!isDead)
             {
-                if (this.GroundCheck.X != 0)
+
+                this._box.Scene = this.Scene;
+                this.Body = this.Anima.Body;
+
+                if (!isMoving)
                 {
-                    this.Origin = this.GroundCheck.X == -1 ? new Vector2(16, 64 - 16) : this.Origin;
-                    this.Origin = this.GroundCheck.X == 1 ? new Vector2(32, 16) : this.Origin;
+                    if (this.GroundCheck.X != 0)
+                    {
+                        this.Origin = this.GroundCheck.X == -1 ? new Vector2(16, 64 - 16) : this.Origin;
+                        this.Origin = this.GroundCheck.X == 1 ? new Vector2(32, 16) : this.Origin;
 
-                    this.Rotation = -1.55f * this.GroundCheck.X;
+                        this.Rotation = -1.55f * this.GroundCheck.X;
+                    }
                 }
-            }
-            else if (!isPaused)
-            {
-                this.Ghost.Frames.Add(this.Body);
-                this.Ghost.Positions.Add(this.Position);
-                this.Ghost.Rotations.Add(this.Rotation);
-                this.Ghost.Origins.Add(this.Origin);
-                this.Ghost.SpriteEffects.Add(this.spriteEffect);
-            }
+                else if (!isPaused)
+                {
+                    this.Ghost.Frames.Add(this.Body);
+                    this.Ghost.Positions.Add(this.Position);
+                    this.Ghost.Rotations.Add(this.Rotation);
+                    this.Ghost.Origins.Add(this.Origin);
+                    this.Ghost.SpriteEffects.Add(this.spriteEffect);
+                }
 
 
-            BeginDraw(spriteBatch);
-            spriteBatch.Draw(
-                this.Sprite,
-                new Rectangle((int)(this.Position.X - _PositionSmash.X), (int)(this.Position.Y - _PositionSmash.Y),
-                this.Body.Width - _BobySmash.X, this.Body.Height - _BobySmash.Y),
-                this.Body, this.SpriteColor * this.Transparent, this.Rotation, this.Origin, this.spriteEffect, 0);
-            EndDraw(spriteBatch);
+                BeginDraw(spriteBatch);
+                spriteBatch.Draw(
+                    this.Sprite,
+                    new Rectangle((int)(this.Position.X - _PositionSmash.X), (int)(this.Position.Y - _PositionSmash.Y),
+                    this.Body.Width - _BobySmash.X, this.Body.Height - _BobySmash.Y),
+                    this.Body, this.SpriteColor * this.Transparent, this.Rotation, this.Origin, this.spriteEffect, 0);
+                EndDraw(spriteBatch);
+            }
         }
     }
 }

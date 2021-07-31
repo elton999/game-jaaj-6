@@ -9,7 +9,7 @@ namespace game_jaaj_6
         public override void Start()
         {
             base.Start();
-            this.SceneManagement.CurrentScene = 2;
+            this.SceneManagement.CurrentScene = 4;
             this.SceneManagement.Start();
             this.SceneManagement.MainScene.GameManagement = this;
             this.SceneManagement.MainScene.updateDataTime = 1f / 60f;
@@ -39,7 +39,8 @@ namespace game_jaaj_6
 
         public void SetValues()
         {
-            this.Values.Add("key", false);
+            this.Values.Add("key", true);
+            this.Values.Add("freeze", false);
         }
 
         public override void Update(GameTime gameTime)

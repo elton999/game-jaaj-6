@@ -36,7 +36,7 @@ namespace game_jaaj_6.Gameplay.Solids
                 if (overlapCheck(player) && this.Scene.GameManagement.Values["key"])
                 {
                     _open = true;
-                    this.Scene.GameManagement.CurrentStatus = UmbrellaToolKit.GameManagement.Status.PAUSE;
+                    this.Scene.GameManagement.Values["freeze"] = true;
                 }
 
                 this.Position = currentPosition;
@@ -49,7 +49,7 @@ namespace game_jaaj_6.Gameplay.Solids
 
         public override void Destroy()
         {
-            this.Scene.GameManagement.CurrentStatus = UmbrellaToolKit.GameManagement.Status.PLAYING;
+            this.Scene.GameManagement.Values["freeze"] = false;
             base.Destroy();
             this.Scene.AllSolids.Remove(this);
         }
