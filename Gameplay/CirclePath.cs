@@ -21,6 +21,7 @@ namespace game_jaaj_6.Gameplay
         public float distance = 0;
         public bool isDistanceEnough { get => this.distance > 40.0f; }
         public Vector2 PostionOnGround;
+        public Actors.Player Player;
         public override void Update(GameTime gameTime)
         {
             this.distance = Vector2.Distance(this.Scene.Players[0].Position, this.PostionOnGround);
@@ -34,6 +35,7 @@ namespace game_jaaj_6.Gameplay
             {
                 float distanceEffect = MathF.Pow(this.distance / 426, 2);
                 this.Effect.Parameters["Radius"].SetValue(distanceEffect);
+
                 this.Sprite = (Texture2D)this._RenderTarget;
                 BeginDraw(spriteBatch);
                 DrawSprite(spriteBatch);

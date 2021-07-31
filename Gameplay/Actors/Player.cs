@@ -29,6 +29,17 @@ namespace game_jaaj_6.Gameplay.Actors
 
             this.CreateBox();
             this.CreateCirclePath();
+            this.CreateGhost();
+        }
+
+        private PlayerGhost Ghost = new PlayerGhost();
+        private void CreateGhost()
+        {
+            Ghost = new PlayerGhost();
+            Ghost.Scene = this.Scene;
+            Ghost.Sprite = this.Sprite;
+            this.Scene.Players.Add(Ghost);
+            Ghost.Start();
         }
 
         public void Restart()
@@ -51,6 +62,7 @@ namespace game_jaaj_6.Gameplay.Actors
             _circlePath.Scene = this.Scene;
             this.Scene.Middleground.Add(_circlePath);
             _circlePath.Start();
+            _circlePath.Player = this;
         }
 
         private void CreateBox()
@@ -65,7 +77,7 @@ namespace game_jaaj_6.Gameplay.Actors
         #endregion
 
         private CirclePath _circlePath;
-        private bool isMoving = false;
+        public bool isMoving = false;
         public override void Update(GameTime gameTime)
         {
             if (isGrounded)
@@ -263,7 +275,7 @@ namespace game_jaaj_6.Gameplay.Actors
             get => Vector2.Distance(Vector2.Add(this.LastPostionOnGround, new Vector2(-16, -16)), this.Position);
         }
 
-        private float _speed = 80f;
+        private float _speed = 60f;
         private float _getCosPosition
         {
             get => MathF.Cos(timer * 0.0001f * _speed);
@@ -379,6 +391,7 @@ namespace game_jaaj_6.Gameplay.Actors
         {
 
             this._box.Scene = this.Scene;
+            this.Body = this.Anima.Body;
 
             if (!isMoving)
             {
@@ -388,8 +401,15 @@ namespace game_jaaj_6.Gameplay.Actors
                     this.Rotation = -1.55f * this.GroundCheck.X;
                 }
             }
+            else
+            {
+                this.Ghost.Frames.Add(this.Body);
+                this.Ghost.Positions.Add(this.Position);
+                this.Ghost.Rotations.Add(this.Rotation);
+                this.Ghost.Origins.Add(this.Origin);
+            }
 
-            this.Body = this.Anima.Body;
+
             base.Draw(spriteBatch);
         }
     }

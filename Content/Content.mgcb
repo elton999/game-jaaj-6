@@ -51,6 +51,12 @@
 /processorParam:DebugMode=Auto
 /build:Shaders/circle.fx
 
+#begin Shaders/SpriteColor.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:Shaders/SpriteColor.fx
+
 #begin Shaders/transition.fx
 /importer:EffectImporter
 /processor:EffectProcessor
@@ -73,6 +79,18 @@
 /importer:AsepriteImporter
 /processor:AsepriteProcessor
 /build:Sprites/player_animation.json
+
+#begin Sprites/sky.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/sky.png
 
 #begin Sprites/tilemap.png
 /importer:TextureImporter

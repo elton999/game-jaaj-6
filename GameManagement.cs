@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using UmbrellaToolKit;
 
 namespace game_jaaj_6
 {
@@ -12,9 +13,19 @@ namespace game_jaaj_6
             this.SceneManagement.Start();
             this.SceneManagement.MainScene.GameManagement = this;
             this.SceneManagement.MainScene.updateDataTime = 1f / 60f;
+            this.SceneManagement.MainScene.SetBackgroundColor = new Color(Vector3.Divide(new Vector3(65, 146, 195), 255.0f));
 
             this.CreateTransitionObject();
+            this.CreateParallax();
             this.SetValues();
+        }
+
+        private void CreateParallax()
+        {
+            var clouds = new Parallax.Clouds();
+            clouds.Scene = this.SceneManagement.MainScene;
+            this.SceneManagement.MainScene.Backgrounds.Add(clouds);
+            clouds.Start();
         }
 
         UI.Transition transition;
