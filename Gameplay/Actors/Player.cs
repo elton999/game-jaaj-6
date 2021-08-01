@@ -252,8 +252,8 @@ namespace game_jaaj_6.Gameplay.Actors
 
         private void RotateSprite(Vector2 correctPosition)
         {
-            float angle = MathF.Atan2(correctPosition.Y - 16, correctPosition.X - 16) / 180 * MathF.PI;
-            this.Rotation = angle * 180 / (MathF.PI * 2);
+            float angle = MathF.Atan2(correctPosition.Y - 16, correctPosition.X - 16) / 360 * MathF.PI;
+            this.Rotation = angle * 360 / (MathF.PI * 2);
             this.Origin = new Vector2(16, 16);
         }
 
@@ -467,6 +467,12 @@ namespace game_jaaj_6.Gameplay.Actors
                         this.Origin = this.GroundCheck.X == 1 ? new Vector2(32, 16) : this.Origin;
 
                         this.Rotation = -1.55f * this.GroundCheck.X;
+                    }
+
+                    if (this.GroundCheck.Y == -1)
+                    {
+                        this.Origin = new Vector2(64 - 16, 64 - 16);
+                        this.Rotation = -3.1f;
                     }
                 }
                 else if (!isPaused)
