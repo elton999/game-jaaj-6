@@ -38,12 +38,15 @@ namespace game_jaaj_6
             AssetManagement.Set<Gameplay.Actors.Items.Key>("key", "MIDDLEGROUND");
             AssetManagement.Set<Gameplay.Solids.Gate>("gate", "MIDDLEGROUND");
 
+            AssetManagement.Set<Gameplay.Actors.EndLevel>("endLevel", "FOREGROUND");
+
             AssetManagement.Set<Gameplay.Slider>("slider", "MIDDLEGROUND");
             AssetManagement.Set<Gameplay.Spike>("spikes", "MIDDLEGROUND");
             AssetManagement.Set<Gameplay.DemageArea>("demage", "MIDDLEGROUND");
 
             AssetManagement.Set<Gameplay.Actors.Enemies.Fish>("fish", "ENEMIES");
-            AssetManagement.Set<Gameplay.Actors.Enemies.Soldier>("soldier", "ENEMIES");
+            // TODO: Sprites for enemies
+            //AssetManagement.Set<Gameplay.Actors.Enemies.Soldier>("soldier", "ENEMIES");
 
             GameManagement = new GameManagement();
             GameManagement.Game = this;

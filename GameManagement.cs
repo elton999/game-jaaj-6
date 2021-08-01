@@ -9,7 +9,11 @@ namespace game_jaaj_6
         public override void Start()
         {
             base.Start();
-            this.SceneManagement.CurrentScene = 2;
+            this.restart();
+        }
+
+        public override void restart()
+        {
             this.SceneManagement.Start();
             this.SceneManagement.MainScene.GameManagement = this;
             this.SceneManagement.MainScene.updateDataTime = 1f / 60f;
@@ -39,8 +43,16 @@ namespace game_jaaj_6
 
         public void SetValues()
         {
-            this.Values.Add("key", true);
-            this.Values.Add("freeze", false);
+            if (!this.Values.ContainsKey("key"))
+            {
+                this.Values.Add("key", false);
+                this.Values.Add("freeze", false);
+            }
+            else
+            {
+                this.Values["key"] = false;
+                this.Values["freeze"] = false;
+            }
         }
 
         public override void Update(GameTime gameTime)
@@ -52,12 +64,14 @@ namespace game_jaaj_6
                 transition.Close();
                 wait(1f, () => { transition.Open(); });
             }
-            this.SceneManagement.Update(gameTime);
+            if (this.CurrentStatus != UmbrellaToolKit.GameManagement.Status.LOADING)
+                this.SceneManagement.Update(gameTime);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            this.SceneManagement.Draw(spriteBatch);
+            if (this.CurrentStatus != UmbrellaToolKit.GameManagement.Status.LOADING)
+                this.SceneManagement.Draw(spriteBatch);
             base.Draw(spriteBatch);
         }
     }
