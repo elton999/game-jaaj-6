@@ -21,7 +21,17 @@ namespace game_jaaj_6
 
             this.CreateTransitionObject();
             this.CreateParallax();
+            this.CreateHUD();
             this.SetValues();
+        }
+
+        private void CreateHUD()
+        {
+            var hud = new UI.HUD();
+            hud.Scene = this.SceneManagement.MainScene;
+            hud.Scene.UI.Add(hud);
+            hud.Start();
+
         }
 
         private void CreateParallax()
