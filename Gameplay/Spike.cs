@@ -8,23 +8,13 @@ namespace game_jaaj_6.Gameplay
 {
     public class Spike : Solid
     {
-        private Square _box;
         public override void Start()
         {
             this.tag = "spikes";
             this.InitialPosition = Vector2.Subtract(this.Position, new Vector2(0, 4));
-            this.CreateBox();
+            this.Sprite = this.Scene.Content.Load<Texture2D>("Sprites/tilemap");
+            this.Body = new Rectangle(new Point(32, 16), new Point(8, 8));
             base.Start();
-        }
-
-        private void CreateBox()
-        {
-            this._box = new Square();
-            this._box.Scene = this.Scene;
-            this._box.size = this.size;
-            this._box.SquareColor = Color.DarkRed;
-            this._box.Position = this.Position;
-            this._box.Start();
         }
 
         private float _interval = 6000f;
@@ -36,15 +26,23 @@ namespace game_jaaj_6.Gameplay
             this.Position.Y = MathF.Max(this.InitialPosition.Y - 4, this.Position.Y);
             this.Position.Y = MathF.Min(this.InitialPosition.Y + 4, this.Position.Y);
 
-            if (this.overlapCheck(this.Scene.AllActors[0]))
-                this.Scene.AllActors[0].OnCollision(this.tag);
+            var player = this.Scene.AllActors[0];
+            if (this.check(player.size, player.Position))
+            {
+                player.OnCollision(this.tag);
+            }
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            this._box.Position = this.Position;
-            this._box.Draw(spriteBatch);
-            base.Draw(spriteBatch);
+            BeginDraw(spriteBatch);
+            for (var i = 0; i < (int)(this.size.X / 8); i++)
+            {
+                this.Position.X = this.InitialPosition.X + (8 * i);
+                DrawSprite(spriteBatch);
+            }
+            this.Position.X = this.InitialPosition.X;
+            EndDraw(spriteBatch);
         }
     }
 }

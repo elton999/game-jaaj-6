@@ -1,5 +1,6 @@
 using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace game_jaaj_6.Gameplay.Actors.Enemies
 {
@@ -17,6 +18,8 @@ namespace game_jaaj_6.Gameplay.Actors.Enemies
             this.SetInitialPosition();
 
             this.gravity2D = new Vector2(0, 0);
+            this.Sprite = this.Scene.Content.Load<Texture2D>("Sprites/tilemap");
+            this.Body = new Rectangle(new Point(56, 48), new Point(24, 24));
         }
 
         private void SetInitialPosition()
@@ -31,6 +34,13 @@ namespace game_jaaj_6.Gameplay.Actors.Enemies
             float timer = (float)gameTime.TotalGameTime.TotalSeconds;
             this.Position.Y = this.InitialPosition.Y + MathF.Cos(timer * this._speed) * _distance;
             base.UpdateData(gameTime);
+        }
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            BeginDraw(spriteBatch);
+            DrawSprite(spriteBatch);
+            EndDraw(spriteBatch);
         }
     }
 }
