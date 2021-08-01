@@ -21,8 +21,18 @@ namespace game_jaaj_6
 
             this.CreateTransitionObject();
             this.CreateParallax();
+            this.CreateLevelDisplay();
             this.CreateHUD();
             this.SetValues();
+        }
+
+        private void CreateLevelDisplay()
+        {
+            var levelDisplay = new UI.LevelDisplay();
+            levelDisplay.Scene = this.SceneManagement.MainScene;
+            levelDisplay.Scene.UI.Add(levelDisplay);
+            levelDisplay.Start();
+
         }
 
         private void CreateHUD()

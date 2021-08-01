@@ -25,6 +25,13 @@
 /processorParam:TextureFormat=Compressed
 /build:Kenney_Rocket.spritefont
 
+#begin Kenney_Rocket_Big.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Kenney_Rocket_Big.spritefont
+
 #begin Maps/level_1.json
 /importer:OgmoTileMapImporter
 /processor:OgmoTileMapProcessor
