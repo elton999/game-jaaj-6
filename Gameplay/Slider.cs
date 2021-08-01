@@ -34,7 +34,7 @@ namespace game_jaaj_6.Gameplay
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            this._box.Draw(spriteBatch);
+            //this._box.Draw(spriteBatch);
             base.Draw(spriteBatch);
         }
     }
