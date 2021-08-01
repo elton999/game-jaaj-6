@@ -36,6 +36,7 @@ namespace game_jaaj_6.Gameplay.Actors
             {
                 player.OnCollision(this.tag);
                 this.Destroy();
+                this.OnGetItem();
             }
         }
 

@@ -9,6 +9,7 @@ namespace game_jaaj_6
         public override void Start()
         {
             base.Start();
+            //this.SceneManagement.CurrentScene = 3;
             this.restart();
         }
 
@@ -26,6 +27,16 @@ namespace game_jaaj_6
             this.SetValues();
         }
 
+        private void CreateFinalCredtis()
+        {
+            this.SceneManagement.MainScene.UI.Clear();
+            var credits = new UI.Credits();
+            credits.Scene = this.SceneManagement.MainScene;
+            credits.Scene.UI.Add(credits);
+            credits.Start();
+            this.CurrentStatus = UmbrellaToolKit.GameManagement.Status.PAUSE;
+        }
+
         private void CreateLevelDisplay()
         {
             var levelDisplay = new UI.LevelDisplay();
@@ -41,7 +52,6 @@ namespace game_jaaj_6
             hud.Scene = this.SceneManagement.MainScene;
             hud.Scene.UI.Add(hud);
             hud.Start();
-
         }
 
         private void CreateParallax()
@@ -86,6 +96,9 @@ namespace game_jaaj_6
             }
             if (this.CurrentStatus != UmbrellaToolKit.GameManagement.Status.LOADING)
                 this.SceneManagement.Update(gameTime);
+
+            if (this.CurrentStatus == UmbrellaToolKit.GameManagement.Status.CREDITS)
+                this.CreateFinalCredtis();
         }
 
         public override void Draw(SpriteBatch spriteBatch)

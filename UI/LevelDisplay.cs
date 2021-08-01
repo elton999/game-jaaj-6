@@ -64,7 +64,10 @@ namespace game_jaaj_6.UI
                 }
 
                 if (timer > 500.0f && !AnimationStart && ShowLevel)
+                {
                     AnimationEnd = true;
+                    this.Scene.GameManagement.CurrentStatus = UmbrellaToolKit.GameManagement.Status.PLAYING;
+                }
             }
         }
 

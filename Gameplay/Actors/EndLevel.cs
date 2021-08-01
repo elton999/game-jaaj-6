@@ -11,19 +11,31 @@ namespace game_jaaj_6.Gameplay.Actors
 {
     public class EndLevel : Actor
     {
-
+        bool _isChangingLevel = false;
         public override void UpdateData(GameTime gameTime)
         {
             var player = this.Scene.AllActors[0];
-            if (this.overlapCheck(player))
+            if (this.overlapCheck(player) && !_isChangingLevel)
             {
+                _isChangingLevel = true;
                 int nextScene = this.Scene.GameManagement.SceneManagement.CurrentScene + 1;
                 float updateDataTime = this.Scene.GameManagement.SceneManagement.MainScene.updateDataTime;
-                if (nextScene <= 4)
+                if (nextScene < 5)
                 {
-                    System.Console.WriteLine(nextScene);
-                    this.Scene.GameManagement.SceneManagement.CurrentScene = nextScene;
-                    this.Scene.GameManagement.restart();
+                    this.Scene.GameManagement.CurrentStatus = UmbrellaToolKit.GameManagement.Status.PAUSE;
+                    wait(2.0f, () =>
+                    {
+                        this.Scene.GameManagement.SceneManagement.CurrentScene = nextScene;
+                        this.Scene.GameManagement.restart();
+                    });
+                }
+                else
+                {
+                    this.Scene.GameManagement.CurrentStatus = UmbrellaToolKit.GameManagement.Status.PAUSE;
+                    wait(2.0f, () =>
+                    {
+                        this.Scene.GameManagement.CurrentStatus = UmbrellaToolKit.GameManagement.Status.CREDITS;
+                    });
                 }
             }
         }

@@ -101,7 +101,7 @@ namespace game_jaaj_6.Gameplay.Actors
 
         private CirclePath _circlePath;
         public bool isMoving = false;
-        public bool isPaused { get => this.Scene.GameManagement.Values["freeze"]; }
+        public bool isPaused { get => this.Scene.GameManagement.Values["freeze"] || this.Scene.GameManagement.CurrentStatus == UmbrellaToolKit.GameManagement.Status.PAUSE; }
         public override void Update(GameTime gameTime)
         {
             if (!isPaused)
