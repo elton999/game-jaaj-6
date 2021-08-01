@@ -9,7 +9,6 @@ namespace game_jaaj_6
         public override void Start()
         {
             base.Start();
-            //this.SceneManagement.CurrentScene = 3;
             this.restart();
         }
 
