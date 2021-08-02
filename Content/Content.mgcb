@@ -52,11 +52,6 @@
 /processor:OgmoTileMapProcessor
 /build:Maps/level_4.json
 
-#begin Maps/level_5.json
-/importer:OgmoTileMapImporter
-/processor:OgmoTileMapProcessor
-/build:Maps/level_5.json
-
 #begin Maps/TileSettings.ogmo
 /importer:OgmoImporter
 /processor:OgmoProcessor
@@ -79,6 +74,42 @@
 /processor:EffectProcessor
 /processorParam:DebugMode=Auto
 /build:Shaders/transition.fx
+
+#begin Sound/door.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sound/door.ogg
+
+#begin Sound/explosionCrunch_002.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sound/explosionCrunch_002.ogg
+
+#begin Sound/finish level.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sound/finish level.ogg
+
+#begin Sound/key.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sound/key.ogg
+
+#begin Sound/sfx_thouch_ground.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sound/sfx_thouch_ground.wav
+
+#begin Sound/sfx_wpn_sword1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sound/sfx_wpn_sword1.wav
 
 #begin Sprites/gate.png
 /importer:TextureImporter

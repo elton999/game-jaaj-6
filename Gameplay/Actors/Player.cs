@@ -4,6 +4,7 @@ using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Audio;
 using UmbrellaToolKit;
 using UmbrellaToolKit.Collision;
 using UmbrellaToolKit.Sprite;
@@ -17,10 +18,10 @@ namespace game_jaaj_6.Gameplay.Actors
         public override void Start()
         {
             base.Start();
+            this.InitialPosition = this.Position;
             this.tag = "Player";
             this.Scene.AllActors.Add(this);
             this.size = new Point(32, 32);
-            this.InitialPosition = this.Position;
 
             this.Scene.Camera.MoveSpeed = 2.5f;
 
@@ -31,7 +32,17 @@ namespace game_jaaj_6.Gameplay.Actors
             this.CreateCirclePath();
             this.CreateGhost();
             this.CreateDeathFx();
+
+            DieSound = Content.Load<SoundEffect>("Sound/explosionCrunch_002");
+            HitTheGroundSound = Content.Load<SoundEffect>("Sound/sfx_thouch_ground");
+            DashSound = Content.Load<SoundEffect>("Sound/sfx_wpn_sword1");
+
+            this.Scene.Camera.Position = this.Position;
         }
+
+        SoundEffect DieSound;
+        SoundEffect HitTheGroundSound;
+        SoundEffect DashSound;
 
         private PlayerGhost Ghost = new PlayerGhost();
         private void CreateGhost()
@@ -69,6 +80,7 @@ namespace game_jaaj_6.Gameplay.Actors
             if (!isDead)
             {
                 isDead = true;
+                DieSound.Play();
                 this.DeathFX.Play(this.Position);
                 wait(1f, () =>
                 {
@@ -135,6 +147,8 @@ namespace game_jaaj_6.Gameplay.Actors
         private bool cLeft = false;
         private void Input()
         {
+            if (Keyboard.GetState().IsKeyDown(Keys.R))
+                this.Die();
             if (Keyboard.GetState().IsKeyDown(Keys.Z))
                 this.cJump = true;
 
@@ -159,8 +173,11 @@ namespace game_jaaj_6.Gameplay.Actors
             if (Keyboard.GetState().IsKeyUp(Keys.Left))
                 this.cLeft = false;
 
-            if ((cRight || cLeft) && !isGrounded && this._circlePath.isDistanceEnough)
+            if ((cRight || cLeft) && !isGrounded && this._circlePath.isDistanceEnough && !isMoving)
+            {
+                DashSound.Play();
                 isMoving = true;
+            }
         }
         #endregion
 
@@ -170,6 +187,7 @@ namespace game_jaaj_6.Gameplay.Actors
         private Vector2 _moveDirection = new Vector2(1, 0);
         public override void UpdateData(GameTime gameTime)
         {
+
             if (!isPaused)
             {
                 if (isMoving)
@@ -213,6 +231,8 @@ namespace game_jaaj_6.Gameplay.Actors
 
                     this.RotateSprite(correctPosition);
 
+
+
                 }
 
                 if (!isMoving)
@@ -222,6 +242,9 @@ namespace game_jaaj_6.Gameplay.Actors
                     this._box.Position = this.Position;
                     this.isGrounded = this.CheckGrounded(this.GroundCheck);
                     base.UpdateData(gameTime);
+
+                    if (_distance > 200 && !isDead && !isGrounded)
+                        this.Die();
                 }
 
                 this.SmashEfx();
@@ -423,6 +446,7 @@ namespace game_jaaj_6.Gameplay.Actors
                 _PositionSmash.X = 3;
                 _PositionSmash.Y = -2;
                 _GroundHit = true;
+                HitTheGroundSound.Play();
                 wait(0.5f, () =>
                 {
                     _BobySmash = new Point(0, 0);

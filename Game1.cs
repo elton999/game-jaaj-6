@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Input;
 using UmbrellaToolKit;
 namespace game_jaaj_6
@@ -47,6 +48,13 @@ namespace game_jaaj_6
             AssetManagement.Set<Gameplay.Actors.Enemies.Fish>("fish", "ENEMIES");
             // TODO: Sprites for enemies
             //AssetManagement.Set<Gameplay.Actors.Enemies.Soldier>("soldier", "ENEMIES");
+            Content.Load<SoundEffect>("Sound/explosionCrunch_002");
+            Content.Load<SoundEffect>("Sound/sfx_thouch_ground");
+            Content.Load<SoundEffect>("Sound/sfx_wpn_sword1");
+            Content.Load<SoundEffect>("Sound/door");
+            Content.Load<SoundEffect>("Sound/finish level");
+            Content.Load<SoundEffect>("Sound/key");
+
 
             GameManagement = new GameManagement();
             GameManagement.Game = this;
