@@ -46,8 +46,8 @@ namespace game_jaaj_6.Gameplay.Actors
             {
                 for (var i = 0; i < 8; i++)
                 {
-                    this.Position.X = this.InitialPosition.X + MathF.Cos((timer + (i + 1) * 0.4f) * _speed) * radius;
-                    this.Position.Y = this.InitialPosition.Y + MathF.Sin((timer + (i + 1) * 0.4f) * _speed) * radius;
+                    this.Position.X = this.InitialPosition.X + MathF.Cos((timer + i * 0.4f) * _speed) * radius;
+                    this.Position.Y = this.InitialPosition.Y + MathF.Sin((timer + i * 0.4f) * _speed) * radius;
                     DrawSprite(spriteBatch);
                 }
             }

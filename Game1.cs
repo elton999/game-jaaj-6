@@ -45,15 +45,15 @@ namespace game_jaaj_6
             AssetManagement.Set<Gameplay.Spike>("spikes", "MIDDLEGROUND");
             AssetManagement.Set<Gameplay.DemageArea>("demage", "MIDDLEGROUND");
 
-            AssetManagement.Set<Gameplay.Actors.Enemies.Fish>("fish", "ENEMIES");
+            AssetManagement.Set<Gameplay.Actors.Enemies.FireBall>("fireBall", "ENEMIES");
             // TODO: Sprites for enemies
             //AssetManagement.Set<Gameplay.Actors.Enemies.Soldier>("soldier", "ENEMIES");
-            Content.Load<SoundEffect>("Sound/explosionCrunch_002");
-            Content.Load<SoundEffect>("Sound/sfx_thouch_ground");
-            Content.Load<SoundEffect>("Sound/sfx_wpn_sword1");
-            Content.Load<SoundEffect>("Sound/door");
-            Content.Load<SoundEffect>("Sound/finish level");
-            Content.Load<SoundEffect>("Sound/key");
+            // Content.Load<SoundEffect>("Sound/explosionCrunch_002");
+            // Content.Load<SoundEffect>("Sound/sfx_thouch_ground");
+            // Content.Load<SoundEffect>("Sound/sfx_wpn_sword1");
+            // Content.Load<SoundEffect>("Sound/door");
+            // Content.Load<SoundEffect>("Sound/finish level");
+            // Content.Load<SoundEffect>("Sound/key");
 
 
             GameManagement = new GameManagement();

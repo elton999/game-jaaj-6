@@ -284,7 +284,7 @@ namespace game_jaaj_6.Gameplay.Actors
 
         private string[] _dangers = new string[4] {
             "demage area",
-            "fish",
+            "fire ball",
             "soldier",
             "spikes"
         };

@@ -4,15 +4,12 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace game_jaaj_6.Gameplay.Actors.Enemies
 {
-    public class Fish : Enemy
+    public class FireBall : Enemy
     {
         public override void Start()
         {
             base.Start();
-            this.tag = "fish";
-            this._box.SquareColor = Color.Green;
-            this._box.Start();
-
+            this.tag = "fire ball";
             this._speed = 1.5f;
 
             this.SetInitialPosition();
