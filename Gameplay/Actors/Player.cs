@@ -32,6 +32,7 @@ namespace game_jaaj_6.Gameplay.Actors
             this.CreateCirclePath();
             this.CreateGhost();
             this.CreateDeathFx();
+            this.CreateSmokeFX();
 
             DieSound = Content.Load<SoundEffect>("Sound/explosionCrunch_002");
             HitTheGroundSound = Content.Load<SoundEffect>("Sound/sfx_thouch_ground");
@@ -43,6 +44,14 @@ namespace game_jaaj_6.Gameplay.Actors
         SoundEffect DieSound;
         SoundEffect HitTheGroundSound;
         SoundEffect DashSound;
+
+        private PlayerSmoke PlayerSmoke;
+        private void CreateSmokeFX()
+        {
+            this.PlayerSmoke = new PlayerSmoke();
+            this.PlayerSmoke.Scene = this.Scene;
+            this.PlayerSmoke.Start();
+        }
 
         private PlayerGhost Ghost = new PlayerGhost();
         private void CreateGhost()
@@ -131,6 +140,8 @@ namespace game_jaaj_6.Gameplay.Actors
                 this.Input();
 
                 this.SetPositionCirclePath();
+
+                this.PlayerSmoke.AnimationUpdate(gameTime);
 
                 this.Animation(gameTime);
             }
@@ -340,6 +351,8 @@ namespace game_jaaj_6.Gameplay.Actors
             this.velocityDecrecentY = 0;
             if (this.isGrounded && this.cJump)
             {
+                this.PlayerSmoke.StartAnimation();
+                this.PlayerSmoke.Rotation = this.Rotation;
                 this.JumpPressedBtn = true;
                 this.JumpPressed = true;
                 this._Gravity2dTemp = this.GroundCheck;
@@ -508,12 +521,18 @@ namespace game_jaaj_6.Gameplay.Actors
                     this.Ghost.SpriteEffects.Add(this.spriteEffect);
                 }
 
+                if (!isGrounded)
+                {
+                    this.PlayerSmoke.Position = this.LastPostionOnGround;
+                    this.PlayerSmoke.Origin = Vector2.Subtract(this.Origin, new Vector2(5f, -13f));
+                    this.PlayerSmoke.Draw(spriteBatch);
+                }
 
                 BeginDraw(spriteBatch);
                 spriteBatch.Draw(
                     this.Sprite,
-                    new Rectangle((int)(this.Position.X - _PositionSmash.X), (int)(this.Position.Y - _PositionSmash.Y),
-                    this.Body.Width - _BobySmash.X, this.Body.Height - _BobySmash.Y),
+                    new Rectangle(Vector2.Subtract(this.Position, _PositionSmash).ToPoint(),
+                    new Point(this.Body.Width - _BobySmash.X, this.Body.Height - _BobySmash.Y)),
                     this.Body, this.SpriteColor * this.Transparent, this.Rotation, this.Origin, this.spriteEffect, 0);
                 EndDraw(spriteBatch);
             }

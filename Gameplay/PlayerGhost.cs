@@ -2,9 +2,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using UmbrellaToolKit;
-using UmbrellaToolKit.Sprite;
 
 namespace game_jaaj_6.Gameplay.Actors
 {
