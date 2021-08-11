@@ -23,8 +23,8 @@ namespace game_jaaj_6
 
         protected override void Initialize()
         {
-            _graphics.PreferredBackBufferWidth = 426 * 2;
-            _graphics.PreferredBackBufferHeight = 240 * 2;
+            _graphics.PreferredBackBufferWidth = 426 * 4;
+            _graphics.PreferredBackBufferHeight = 240 * 4;
             _graphics.ApplyChanges();
 
             base.Initialize();
@@ -37,6 +37,7 @@ namespace game_jaaj_6
             AssetManagement = new AssetManagement();
             AssetManagement.Set<Gameplay.Actors.Player>("player", "PLAYER");
             AssetManagement.Set<Gameplay.Actors.Items.Key>("key", "MIDDLEGROUND");
+            AssetManagement.Set<Gameplay.Actors.Items.Relic>("relic", "MIDDLEGROUND");
             AssetManagement.Set<Gameplay.Solids.Gate>("gate", "MIDDLEGROUND");
 
             AssetManagement.Set<Gameplay.Actors.EndLevel>("endLevel", "FOREGROUND");
@@ -46,15 +47,7 @@ namespace game_jaaj_6
             AssetManagement.Set<Gameplay.DemageArea>("demage", "MIDDLEGROUND");
 
             AssetManagement.Set<Gameplay.Actors.Enemies.FireBall>("fireBall", "ENEMIES");
-            // TODO: Sprites for enemies
-            //AssetManagement.Set<Gameplay.Actors.Enemies.Soldier>("soldier", "ENEMIES");
-            // Content.Load<SoundEffect>("Sound/explosionCrunch_002");
-            // Content.Load<SoundEffect>("Sound/sfx_thouch_ground");
-            // Content.Load<SoundEffect>("Sound/sfx_wpn_sword1");
-            // Content.Load<SoundEffect>("Sound/door");
-            // Content.Load<SoundEffect>("Sound/finish level");
-            // Content.Load<SoundEffect>("Sound/key");
-
+            AssetManagement.Set<Gameplay.Actors.Enemies.Soldier>("soldier", "ENEMIES");
 
             GameManagement = new GameManagement();
             GameManagement.Game = this;

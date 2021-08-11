@@ -11,6 +11,7 @@ namespace game_jaaj_6.Gameplay.Actors
         public override void Start()
         {
             base.Start();
+            this.gravity2D = new Vector2(0, 0);
             this.size = new Point(16, 16);
             this.CreateBox();
             this.InitialPosition = this.Position;

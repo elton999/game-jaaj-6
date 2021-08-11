@@ -35,6 +35,14 @@ namespace game_jaaj_6.UI
             this.Font = this.Scene.Content.Load<SpriteFont>("Kenney_Rocket");
         }
 
+        public void DrawKeyboardInfo(SpriteBatch spriteBatch)
+        {
+            spriteBatch.DrawString(Font, "Z - jump", new Vector2(100, 5), Color.White);
+            spriteBatch.DrawString(Font, "R - Restart", new Vector2(100, 15), Color.White);
+
+            spriteBatch.DrawString(Font, "Arrows - Move", new Vector2(190, 5), Color.White);
+        }
+
         public override void Draw(SpriteBatch spriteBatch)
         {
             BeginDraw(spriteBatch, false);
@@ -46,6 +54,8 @@ namespace game_jaaj_6.UI
 
             int level = this.Scene.GameManagement.SceneManagement.CurrentScene;
             spriteBatch.DrawString(this.Font, $"- LEVEL {level}", new Vector2(25, 10), Color.White);
+
+            this.DrawKeyboardInfo(spriteBatch);
 
             EndDraw(spriteBatch);
         }

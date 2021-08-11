@@ -104,7 +104,7 @@ namespace game_jaaj_6
         {
             if (this.CurrentStatus != UmbrellaToolKit.GameManagement.Status.LOADING)
                 this.SceneManagement.Draw(spriteBatch);
-            //base.Draw(spriteBatch);
+            base.Draw(spriteBatch);
         }
     }
 }

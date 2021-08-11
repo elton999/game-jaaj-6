@@ -12,6 +12,7 @@
   <PropertyGroup>
     <ApplicationIcon>Icon.ico</ApplicationIcon>
     <EnableNETAnalyzers>false</EnableNETAnalyzers>
+    <StartupObject>game_jaaj_6.Program</StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -36,7 +37,6 @@
     <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.0.1641" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\umbrella\UmbrellaToolKit.Pipeline\MonoGame.ContentPipeline.UmbrellaToolKit2\MonoGame.ContentPipeline.UmbrellaToolKit2\Game1\Game1\Game1.csproj" />
-    <ProjectReference Include="..\..\..\umbrella\UmbrellaToolsKit3\UmbrellaToolsKit\UmbrellaToolsKit\UmbrellaToolsKit.csproj" />
+    <ProjectReference Include="..\..\umbrella\UmbrellaToolsKit3\UmbrellaToolsKit\UmbrellaToolsKit\UmbrellaToolsKit.csproj" />
   </ItemGroup>
 </Project>

@@ -125,7 +125,7 @@ namespace game_jaaj_6.Gameplay.Actors
         public bool isPaused { get => this.Scene.GameManagement.Values["freeze"] || this.Scene.GameManagement.CurrentStatus == UmbrellaToolKit.GameManagement.Status.PAUSE; }
         public override void Update(GameTime gameTime)
         {
-            if (!isPaused)
+            if (!isPaused && !this.isDead)
             {
                 if (isGrounded)
                     this.LastPostionOnGround = Vector2.Subtract(this.Position, Vector2.Multiply(GroundCheck, -16f));
