@@ -19,11 +19,22 @@ namespace game_jaaj_6
             this.SceneManagement.MainScene.updateDataTime = 1f / 60f;
             this.SceneManagement.MainScene.SetBackgroundColor = new Color(Vector3.Divide(new Vector3(65, 146, 195), 255.0f));
 
+            if(this.SceneManagement.CurrentScene == 1)
+                this.CreateMenu();
+
             this.CreateTransitionObject();
             this.CreateParallax();
             this.CreateLevelDisplay();
             this.CreateHUD();
             this.SetValues();
+        }
+
+        public void CreateMenu()
+        {
+            var menu = new UI.Menu();
+            menu.Scene = this.SceneManagement.MainScene;
+            this.CurrentStatus = Status.MENU;
+            menu.Start();
         }
 
         private void CreateFinalCredtis()

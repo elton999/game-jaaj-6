@@ -34,7 +34,6 @@ float4 MainPS(VertexShaderOutput input) : COLOR
 	if(distance < Radius && distance > Radius - 0.0009f && (angle % 8 >= 2 || angle % 8 <= -2))
 		color = float4(1,1,1,0.0f);
 
-
 	return color;
 }
 

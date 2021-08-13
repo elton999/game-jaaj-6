@@ -37,32 +37,35 @@ namespace game_jaaj_6.UI
 
         public override void Update(GameTime gameTime)
         {
-            if (!AnimationEnd)
+            if (this.Scene.GameManagement.CurrentStatus != UmbrellaToolKit.GameManagement.Status.MENU)
             {
-                timer += (float)gameTime.ElapsedGameTime.Milliseconds;
-                if (!ShowLevel)
+                if (!AnimationEnd)
                 {
-                    float moveTo = AnimationStart ? 270f : 426f;
-                    this.Position.X = EaseOutQuad(timer, this.InitialPosition.X, moveTo, 1000.0f);
-                }
-                else if (ShowLevel)
-                    Background.Position.Y = LinearTween(timer, 0, -426.0f, 1000.0f);
+                    timer += (float)gameTime.ElapsedGameTime.Milliseconds;
+                    if (!ShowLevel)
+                    {
+                        float moveTo = AnimationStart ? 270f : 426f;
+                        this.Position.X = EaseOutQuad(timer, this.InitialPosition.X, moveTo, 1000.0f);
+                    }
+                    else if (ShowLevel)
+                        Background.Position.Y = LinearTween(timer, 0, -426.0f, 1000.0f);
 
-                if (timer > 1000.0f)
-                {
-                    if (AnimationStart)
+                    if (timer > 1000.0f)
                     {
-                        AnimationStart = false;
-                        this.InitialPosition.X = this.Position.X;
+                        if (AnimationStart)
+                        {
+                            AnimationStart = false;
+                            this.InitialPosition.X = this.Position.X;
+                        }
+                        else if (!AnimationStart && !ShowLevel)
+                            ShowLevel = true;
+                        else if (!AnimationStart && ShowLevel)
+                        {
+                            AnimationEnd = true;
+                            this.Scene.GameManagement.CurrentStatus = UmbrellaToolKit.GameManagement.Status.PLAYING;
+                        }
+                        timer = 0;
                     }
-                    else if (!AnimationStart && !ShowLevel)
-                        ShowLevel = true;
-                    else if (!AnimationStart && ShowLevel)
-                    {
-                        AnimationEnd = true;
-                        this.Scene.GameManagement.CurrentStatus = UmbrellaToolKit.GameManagement.Status.PLAYING;
-                    }
-                    timer = 0;
                 }
             }
         }
