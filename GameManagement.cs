@@ -44,7 +44,7 @@ namespace game_jaaj_6
             credits.Scene = this.SceneManagement.MainScene;
             credits.Scene.UI.Add(credits);
             credits.Start();
-            this.CurrentStatus = UmbrellaToolKit.GameManagement.Status.PAUSE;
+            this.CurrentStatus = GameManagement.Status.PAUSE;
         }
 
         private void CreateLevelDisplay()
@@ -104,16 +104,16 @@ namespace game_jaaj_6
                 transition.Close();
                 wait(1f, () => { transition.Open(); });
             }
-            if (this.CurrentStatus != UmbrellaToolKit.GameManagement.Status.LOADING)
-                this.SceneManagement.Update(gameTime);
 
-            if (this.CurrentStatus == UmbrellaToolKit.GameManagement.Status.CREDITS)
+            this.SceneManagement.Update(gameTime);
+
+            if (this.CurrentStatus == GameManagement.Status.CREDITS)
                 this.CreateFinalCredtis();
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            if (this.CurrentStatus != UmbrellaToolKit.GameManagement.Status.LOADING)
+            if (this.CurrentStatus != GameManagement.Status.LOADING)
                 this.SceneManagement.Draw(spriteBatch);
             base.Draw(spriteBatch);
         }

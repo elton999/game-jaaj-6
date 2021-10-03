@@ -1,5 +1,4 @@
 using System;
-using System.Threading;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -14,7 +13,6 @@ namespace game_jaaj_6.Gameplay.Actors
     public class Player : Actor
     {
         # region start
-        private Square _box;
         public override void Start()
         {
             base.Start();
@@ -28,15 +26,11 @@ namespace game_jaaj_6.Gameplay.Actors
             this.Sprite = this.Scene.Content.Load<Texture2D>("Sprites/player");
             this.Anima = new AsepriteAnimation(this.Content.Load<AsepriteDefinitions>("Sprites/player_animation"));
 
-            this.CreateBox();
             this.CreateCirclePath();
             this.CreateGhost();
             this.CreateDeathFx();
             this.CreateSmokeFX();
-
-            DieSound = Content.Load<SoundEffect>("Sound/explosionCrunch_002");
-            HitTheGroundSound = Content.Load<SoundEffect>("Sound/sfx_thouch_ground");
-            DashSound = Content.Load<SoundEffect>("Sound/sfx_wpn_sword1");
+            this.LoadSounds();
 
             this.Scene.Camera.Position = this.Position;
         }
@@ -44,6 +38,13 @@ namespace game_jaaj_6.Gameplay.Actors
         SoundEffect DieSound;
         SoundEffect HitTheGroundSound;
         SoundEffect DashSound;
+
+        private void LoadSounds()
+        {
+            DieSound = Content.Load<SoundEffect>("Sound/explosionCrunch_002");
+            HitTheGroundSound = Content.Load<SoundEffect>("Sound/sfx_thouch_ground");
+            DashSound = Content.Load<SoundEffect>("Sound/sfx_wpn_sword1");
+        }
 
         private PlayerSmoke PlayerSmoke;
         private void CreateSmokeFX()
@@ -96,7 +97,6 @@ namespace game_jaaj_6.Gameplay.Actors
                     this.Scene.GameManagement.CurrentGameplayStatus = UmbrellaToolKit.GameManagement.GameplayStatus.DEATH;
                 });
                 wait(2f, () => { this.Restart(); });
-
             }
         }
 
@@ -108,43 +108,47 @@ namespace game_jaaj_6.Gameplay.Actors
             _circlePath.Start();
             _circlePath.Player = this;
         }
-
-        private void CreateBox()
-        {
-            _box = new Square();
-            _box.Scene = this.Scene;
-            _box.size = new Point(32, 32);
-            _box.SquareColor = Color.Red;
-            _box.Position = this.Position;
-            _box.Start();
-        }
         #endregion
 
         private CirclePath _circlePath;
         public bool isMoving = false;
-        public bool isPaused { get => this.Scene.GameManagement.Values["freeze"] || this.Scene.GameManagement.CurrentStatus == UmbrellaToolKit.GameManagement.Status.PAUSE; }
+        public bool isPaused { get =>
+                canRender ||
+                this.Scene.GameManagement.CurrentStatus == UmbrellaToolKit.GameManagement.Status.PAUSE;
+        }
+
+        public bool canRender {
+            get => this.Scene.GameManagement.Values["freeze"] ||
+                this.Scene.GameManagement.CurrentStatus == UmbrellaToolKit.GameManagement.Status.MENU ||
+                this.Scene.GameManagement.CurrentStatus == UmbrellaToolKit.GameManagement.Status.LOADING;
+        }
         public override void Update(GameTime gameTime)
         {
-            if (!isPaused && !this.isDead)
-            {
-                if (isGrounded)
-                    this.LastPostionOnGround = Vector2.Subtract(this.Position, Vector2.Multiply(GroundCheck, -16f));
+            if (isGrounded)
+                this.LastPostionOnGround = Vector2.Subtract(this.Position, Vector2.Multiply(GroundCheck, -16f));
+            
+            Animation(gameTime);
 
-                if (this.isMoving)
-                    this.Scene.Camera.Target = new Vector2(this.Position.X + this.size.X / 2, this.Position.Y + this.size.Y / 2);
-                else
-                    this.Scene.Camera.Target = new Vector2(this.LastPostionOnGround.X + this.size.X / 2, this.LastPostionOnGround.Y + this.size.Y / 2);
+            if (isPaused || isDead) 
+                return;
 
-                this.Jump();
+            SetCameraPostion();
 
-                this.Input();
+            this.Jump();
 
-                this.SetPositionCirclePath();
+            this.Input();
 
-                this.PlayerSmoke.AnimationUpdate(gameTime);
+            this.SetPositionCirclePath();
 
-                this.Animation(gameTime);
-            }
+            this.PlayerSmoke.AnimationUpdate(gameTime);
+        }
+
+        private void SetCameraPostion()
+        {
+            if (this.isMoving)
+                this.Scene.Camera.Target = Vector2.Add(this.Position, Vector2.Divide(this.size.ToVector2(), 2f));
+            else
+                this.Scene.Camera.Target = Vector2.Add(this.LastPostionOnGround, Vector2.Divide(this.size.ToVector2(), 2f));
         }
 
         private void SetPositionCirclePath()
@@ -198,72 +202,66 @@ namespace game_jaaj_6.Gameplay.Actors
         private Vector2 _moveDirection = new Vector2(1, 0);
         public override void UpdateData(GameTime gameTime)
         {
+            this.Origin = new Vector2(16, 16);
+            if (isPaused || isDead) return;
 
-            if (!isPaused)
+            if (isMoving)
             {
+                this.cJump = false;
+                timer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+
+                var correctPosition = Vector2.Subtract(this.Position, LastPostionOnGround);
+
+
+                float newPositionX = 0;
+                float newPositionY = 0;
+
+                if (this.GroundCheck.Y == 1)
+                {
+                    newPositionX = this.LastPostionOnGround.X - _getSinPosition * -this._moveDirection.X * _distance;
+                    newPositionY = this.LastPostionOnGround.Y - _getCosPosition * _distance;
+                }
+
+                if (this.GroundCheck.Y == -1)
+                {
+                    newPositionX = this.LastPostionOnGround.X + _getSinPosition * this._moveDirection.X * _distance;
+                    newPositionY = this.LastPostionOnGround.Y + _getCosPosition * _distance;
+                }
+
+                if (this.GroundCheck.X == 1)
+                {
+                    newPositionX = this.LastPostionOnGround.X - _getCosPosition * _distance;
+                    newPositionY = this.LastPostionOnGround.Y - _getSinPosition * this._moveDirection.X * _distance;
+                }
+
+                if (this.GroundCheck.X == -1)
+                {
+                    newPositionX = this.LastPostionOnGround.X + _getCosPosition * _distance;
+                    newPositionY = this.LastPostionOnGround.Y + _getSinPosition * this._moveDirection.X * _distance;
+                }
+
+                moveY(newPositionY - this.Position.Y, SetNewGravity);
                 if (isMoving)
-                {
-                    this.cJump = false;
-                    timer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+                    moveX(newPositionX - this.Position.X, SetNewGravity);
 
-                    var correctPosition = new Vector2(this.Position.X - this.LastPostionOnGround.X, this.Position.Y - this.LastPostionOnGround.Y);
-
-
-                    float newPositionX = 0;
-                    float newPositionY = 0;
-
-                    if (this.GroundCheck.Y == 1)
-                    {
-                        newPositionX = this.LastPostionOnGround.X - _getSinPosition * -this._moveDirection.X * _distance;
-                        newPositionY = this.LastPostionOnGround.Y - _getCosPosition * _distance;
-                    }
-
-                    if (this.GroundCheck.Y == -1)
-                    {
-                        newPositionX = this.LastPostionOnGround.X + _getSinPosition * this._moveDirection.X * _distance;
-                        newPositionY = this.LastPostionOnGround.Y + _getCosPosition * _distance;
-                    }
-
-                    if (this.GroundCheck.X == 1)
-                    {
-                        newPositionX = this.LastPostionOnGround.X - _getCosPosition * _distance;
-                        newPositionY = this.LastPostionOnGround.Y - _getSinPosition * this._moveDirection.X * _distance;
-                    }
-
-                    if (this.GroundCheck.X == -1)
-                    {
-                        newPositionX = this.LastPostionOnGround.X + _getCosPosition * _distance;
-                        newPositionY = this.LastPostionOnGround.Y + _getSinPosition * this._moveDirection.X * _distance;
-                    }
-
-                    moveY(newPositionY - this.Position.Y, SetNewGravity);
-                    if (isMoving)
-                        moveX(newPositionX - this.Position.X, SetNewGravity);
-
-                    this.RotateSprite(correctPosition);
-
-
-
-                }
-
-                if (!isMoving)
-                {
-                    this.Rotation = 0.0f;
-                    this.Origin = new Vector2(16, 16);
-                    this._box.Position = this.Position;
-                    this.isGrounded = this.CheckGrounded(this.GroundCheck);
-                    base.UpdateData(gameTime);
-
-                    if (_distance > 200 && !isDead && !isGrounded)
-                        this.Die();
-                }
-
-                this.SmashEfx();
-
-                this.gravity2D = Vector2.Multiply(this.GroundCheck, this.GravityForce);
-                this.SliderUpdate();
+                this.RotateSprite(correctPosition);
             }
 
+            if (!isMoving)
+            {
+                this.Rotation = 0.0f;
+                this.Origin = new Vector2(16, 16);
+                this.isGrounded = this.CheckGrounded(this.GroundCheck);
+                base.UpdateData(gameTime);
+
+                if (_distance > 200 && !isDead && !isGrounded)
+                    this.Die();
+            }
+
+            this.SmashEfx();
+
+            this.gravity2D = Vector2.Multiply(this.GroundCheck, this.GravityForce);
+            this.SliderUpdate();
         }
 
         private void SliderUpdate()
@@ -284,11 +282,11 @@ namespace game_jaaj_6.Gameplay.Actors
             CheckWalls();
         }
 
-        private void RotateSprite(Vector2 correctPosition)
+        private void RotateSprite(Vector2 position)
         {
-            float angle = MathF.Atan2(correctPosition.Y - 16, correctPosition.X - 16) / 360 * MathF.PI;
-            this.Rotation = angle * 360 / (MathF.PI * 2);
-            this.Origin = new Vector2(16, 16);
+            float angle = MathF.Atan2(position.Y, position.X);// / 180 * MathF.PI;
+            this.Rotation = angle + ( 180.0f / MathF.PI * 180);
+            this.Origin = new Vector2(34, 34);
         }
 
         #endregion
@@ -312,7 +310,6 @@ namespace game_jaaj_6.Gameplay.Actors
             _gravityDown = false;
             this.Origin = new Vector2(0, 0);
             this.Rotation = 0.0f;
-            this._box.Position = this.Position;
             timer = 0;
         }
 
@@ -441,6 +438,8 @@ namespace game_jaaj_6.Gameplay.Actors
                 this.Anima.Play(gameTime, "landing", AsepriteAnimation.AnimationDirection.FORWARD);
             else
                 this.Anima.Play(gameTime, "idle", AsepriteAnimation.AnimationDirection.LOOP);
+
+            this.Body = this.Anima.Body;
         }
 
         #region smashEFX
@@ -490,52 +489,57 @@ namespace game_jaaj_6.Gameplay.Actors
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            if (!isDead)
+            if (isDead || canRender) return;
+
+            if (!isMoving)
             {
-
-                this._box.Scene = this.Scene;
-                this.Body = this.Anima.Body;
-
-                if (!isMoving)
+                if (this.GroundCheck.X != 0)
                 {
-                    if (this.GroundCheck.X != 0)
-                    {
-                        this.Origin = this.GroundCheck.X == -1 ? new Vector2(16, 64 - 16) : this.Origin;
-                        this.Origin = this.GroundCheck.X == 1 ? new Vector2(32, 16) : this.Origin;
+                    this.Origin = this.GroundCheck.X == -1 ? new Vector2(16, 64 - 16) : this.Origin;
+                    this.Origin = this.GroundCheck.X == 1 ? new Vector2(32, 16) : this.Origin;
 
-                        this.Rotation = -1.55f * this.GroundCheck.X;
-                    }
-
-                    if (this.GroundCheck.Y == -1)
-                    {
-                        this.Origin = new Vector2(64 - 16, 64 - 16);
-                        this.Rotation = -3.1f;
-                    }
-                }
-                else if (!isPaused)
-                {
-                    this.Ghost.Frames.Add(this.Body);
-                    this.Ghost.Positions.Add(this.Position);
-                    this.Ghost.Rotations.Add(this.Rotation);
-                    this.Ghost.Origins.Add(this.Origin);
-                    this.Ghost.SpriteEffects.Add(this.spriteEffect);
+                    this.Rotation = -1.55f * this.GroundCheck.X;
                 }
 
-                if (!isGrounded)
+                if (this.GroundCheck.Y == -1)
                 {
-                    this.PlayerSmoke.Position = this.LastPostionOnGround;
-                    this.PlayerSmoke.Origin = Vector2.Subtract(this.Origin, new Vector2(5f, -13f));
-                    this.PlayerSmoke.Draw(spriteBatch);
+                    this.Origin = new Vector2(64 - 16, 64 - 16);
+                    this.Rotation = -3.1f;
                 }
-
-                BeginDraw(spriteBatch);
-                spriteBatch.Draw(
-                    this.Sprite,
-                    new Rectangle(Vector2.Subtract(this.Position, _PositionSmash).ToPoint(),
-                    new Point(this.Body.Width - _BobySmash.X, this.Body.Height - _BobySmash.Y)),
-                    this.Body, this.SpriteColor * this.Transparent, this.Rotation, this.Origin, this.spriteEffect, 0);
-                EndDraw(spriteBatch);
             }
+            else if (!isPaused)
+            {
+                ApplyGhost();
+            }
+
+            DrawSmoke(spriteBatch);
+
+            BeginDraw(spriteBatch);
+            spriteBatch.Draw(
+                this.Sprite,
+                new Rectangle(Vector2.Subtract(this.Position, _PositionSmash).ToPoint(),
+                new Point(this.Body.Width - _BobySmash.X, this.Body.Height - _BobySmash.Y)),
+                this.Body, this.SpriteColor * this.Transparent, this.Rotation, this.Origin, this.spriteEffect, 0);
+            EndDraw(spriteBatch);
+        }
+
+        private void DrawSmoke(SpriteBatch spriteBatch)
+        {
+            if (!isGrounded)
+            {
+                this.PlayerSmoke.Position = this.LastPostionOnGround;
+                this.PlayerSmoke.Origin = Vector2.Subtract(this.Origin, new Vector2(5f, -13f));
+                this.PlayerSmoke.Draw(spriteBatch);
+            }
+        }
+
+        private void ApplyGhost()
+        {
+            this.Ghost.Frames.Add(this.Body);
+            this.Ghost.Positions.Add(this.Position);
+            this.Ghost.Rotations.Add(this.Rotation);
+            this.Ghost.Origins.Add(this.Origin);
+            this.Ghost.SpriteEffects.Add(this.spriteEffect);
         }
     }
 }
