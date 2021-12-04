@@ -1,4 +1,8 @@
-﻿using static Retyped.dom;
+﻿using Bridge;
+using System;
+using System.IO;
+using static Retyped.dom;
+using Console = System.Console;
 using Microsoft.Xna.Framework;
 
 namespace webgl

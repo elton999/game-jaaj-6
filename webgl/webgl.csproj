@@ -36,6 +36,14 @@
     <ProjectReference Include="..\GameProject\game_jaaj_6.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="System">
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="System.Configuration">
+      <Private>true</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
     <None Update="index.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
