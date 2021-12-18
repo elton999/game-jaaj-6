@@ -5,7 +5,7 @@ using UmbrellaToolsKit.Sprite;
 
 namespace game_jaaj_6.UI
 {
-    public class LevelDisplay : GameObject
+    public class TitleLevelDisplay : GameObject
     {
         SpriteFont Font;
         Square Background;

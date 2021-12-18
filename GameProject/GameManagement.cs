@@ -6,6 +6,7 @@ namespace game_jaaj_6
 {
     public class GameManagement : UmbrellaToolsKit.GameManagement
     {
+        UI.LevelSelect levelSelectMenu;
         public override void Start()
         {
             base.Start();
@@ -18,6 +19,10 @@ namespace game_jaaj_6
             this.SceneManagement.MainScene.GameManagement = this;
             this.SceneManagement.MainScene.updateDataTime = 1f / 60f;
             this.SceneManagement.MainScene.SetBackgroundColor = new Color(Vector3.Divide(new Vector3(65, 146, 195), 255.0f));
+
+            levelSelectMenu = new UI.LevelSelect();
+            levelSelectMenu.GameManagement = this;
+            levelSelectMenu.Start();
 
             if (this.SceneManagement.CurrentScene == 1)
                 this.CreateMenu();
@@ -49,10 +54,10 @@ namespace game_jaaj_6
 
         private void CreateLevelDisplay()
         {
-            var levelDisplay = new UI.LevelDisplay();
-            levelDisplay.Scene = this.SceneManagement.MainScene;
-            levelDisplay.Scene.UI.Add(levelDisplay);
-            levelDisplay.Start();
+            var levelTitle = new UI.TitleLevelDisplay();
+            levelTitle.Scene = this.SceneManagement.MainScene;
+            levelTitle.Scene.UI.Add(levelTitle);
+            levelTitle.Start();
 
         }
 
@@ -115,6 +120,8 @@ namespace game_jaaj_6
         {
             if (this.CurrentStatus != GameManagement.Status.LOADING)
                 this.SceneManagement.Draw(spriteBatch);
+
+            levelSelectMenu.Draw(spriteBatch);
         }
     }
 }

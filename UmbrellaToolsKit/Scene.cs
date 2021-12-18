@@ -83,17 +83,23 @@ namespace UmbrellaToolsKit
         public Ogmo.TileSet tileSet;
         public GameManagement GameManagement;
 
-        public string MapLevelPath = "Maps/level_";
+        public string LevelPath = "level_";
+        public string MapPath = "Maps/";
         public string TileMapPath = "Sprites/tilemap";
 
         public Vector2 LevelSize;
 
         public void SetLevel(int level)
         {
-            System.Console.WriteLine($"Level: {this.MapLevelPath + level}");
+            SetLevelByName(LevelPath+level);
+        }
+
+        public void SetLevelByName(string name)
+        {
+            System.Console.WriteLine($"Level: {MapPath + name}");
             this.CreateCamera();
 
-            this.tileMap = Content.Load<Ogmo.TileMap>(this.MapLevelPath + level);
+            this.tileMap = Content.Load<Ogmo.TileMap>(MapPath + name);
 
             Texture2D _tilemapSprite = Content.Load<Texture2D>(this.TileMapPath);
 
