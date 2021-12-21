@@ -38,6 +38,7 @@ namespace game_jaaj_6.UI
             Background.SquareColor = Color.Black;
             Background.size = ScreenSize;
             Background.Start();
+            InputHelper = new Input();
         }
         private bool ShowMenu = false;
         private List<string> MenuItems;
@@ -47,58 +48,38 @@ namespace game_jaaj_6.UI
 
         public override void Update(GameTime gameTime)
         {
-            Input();
-            var keyboardState = Keyboard.GetState();
-            if (keyboardState.GetPressedKeys().Length > 0)
+            InputCheck();
+
+            if (InputHelper.PressAnyButton())
+            {
                 ShowMenu = true;
+                InputHelper.ResetStatus();
+            }
         }
 
         int itemSelected = 0;
-        bool CUp = false;
-        bool UpPressed = false;
-        bool CDown = false;
-        bool DownPressed = false;
-        bool CComfirm = false;
-        private void Input()
+        Input InputHelper;
+        private void InputCheck()
         {
-            if (!_isOnMenu) return;
-            var keyboardState = Keyboard.GetState();
+            if (!ShowMenu || !_isOnMenu) return;
 
-            CUp = false;
-            if (keyboardState.IsKeyDown(Keys.Up))
+            if (InputHelper.KeyPress(Input.Button.UP) && itemSelected > 0) itemSelected -= 1;
+            if (InputHelper.KeyPress(Input.Button.DOWN) && itemSelected < MenuItems.Count - 1) itemSelected += 1;
+
+            if (InputHelper.KeyPress(Input.Button.CONFIRM)) executeSelectedItem();
+        }
+
+        private void executeSelectedItem()
+        {
+            switch (itemSelected)
             {
-                if (!UpPressed) CUp = true;
-                UpPressed = true;
+                case 0:
+                    Scene.GameManagement.CurrentStatus = UmbrellaToolsKit.GameManagement.Status.LEVEL_SELECT;
+                    break;
+                case 3:
+                    Scene.GameManagement.Game.Exit();
+                    break;
             }
-            else if (keyboardState.IsKeyUp(Keys.Up))
-                UpPressed = false;
-
-            CDown = false;
-            if (keyboardState.IsKeyDown(Keys.Down))
-            {
-                if (!DownPressed) CDown = true;
-                DownPressed = true;
-            }
-            else if (keyboardState.IsKeyUp(Keys.Down))
-                DownPressed = false;
-
-            if (!ShowMenu) return;
-
-            if (CUp && itemSelected > 0) itemSelected -= 1;
-            if (CDown && itemSelected < MenuItems.Count - 1) itemSelected += 1;
-
-            if (keyboardState.IsKeyDown(Keys.Enter) && CComfirm)
-            {
-                switch (itemSelected) {
-                    case 0:
-                        Scene.GameManagement.CurrentStatus = UmbrellaToolsKit.GameManagement.Status.LEVEL_SELECT;
-                        break;
-                    case 3:
-                        Scene.GameManagement.Game.Exit();
-                        break;
-                }
-            }
-            CComfirm = keyboardState.IsKeyUp(Keys.Enter);
         }
 
         private Vector2 CenterPosition()
@@ -110,7 +91,7 @@ namespace game_jaaj_6.UI
 
         private bool _isOnMenu
         {
-            get => this.Scene.GameManagement.CurrentStatus == UmbrellaToolsKit.GameManagement.Status.MENU;
+            get => Scene.GameManagement.CurrentStatus == UmbrellaToolsKit.GameManagement.Status.MENU;
         }
 
         public override void Draw(SpriteBatch spriteBatch)

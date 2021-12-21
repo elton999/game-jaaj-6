@@ -17,47 +17,25 @@ namespace game_jaaj_6.UI
             bodyUnlucked = new Rectangle(new Point(48, 112), new Point(8,8));
 
             SetPositionsOfMapLevelSelect();
+            InputHelper = new Input();
+            InputHelper.ResetStatus();
         }
 
-        bool RightPressed = false;
-        bool LeftPressed = false;
-        bool CRight = false;
-        bool CLeft = false;
-        bool CComfirm = false;
+        Input InputHelper;
         public override void Update(GameTime gameTime)
         {
             if (!_isOnLevelSelect) return;
 
-            var keyboardState = Keyboard.GetState();
-
-            CRight = false;
-            if (keyboardState.IsKeyDown(Keys.Right))
-            {
-                if(!RightPressed) CRight = true;
-                RightPressed = true;
-            }
-            else if (keyboardState.IsKeyUp(Keys.Right))
-                RightPressed = false;
-
-            CLeft = false;
-            if (keyboardState.IsKeyDown(Keys.Left))
-            {
-                if (!LeftPressed) CLeft = true;
-                LeftPressed = true;
-            }
-            else if (keyboardState.IsKeyUp(Keys.Left))
-                LeftPressed = false;
-
-
-            if (CRight && LevelSelected < UnluckLevels)
+            if (InputHelper.KeyPress(Input.Button.RIGHT) && LevelSelected < UnluckLevels)
                 LevelSelected += 1;
-            if (CLeft && LevelSelected > 0)
+            if (InputHelper.KeyPress(Input.Button.LEFT) && LevelSelected > 0)
                 LevelSelected -= 1;
 
-            if (keyboardState.IsKeyDown(Keys.Enter) && CComfirm)
-                Scene.GameManagement.CurrentStatus = UmbrellaToolsKit.GameManagement.Status.PLAYING;
-            CComfirm = keyboardState.IsKeyUp(Keys.Enter);
-
+            if (InputHelper.KeyPress(Input.Button.CONFIRM))
+            {
+                Scene.GameManagement.restart();
+                Scene.GameManagement.CurrentStatus = UmbrellaToolsKit.GameManagement.Status.LOADING;
+            }
         }
 
         private List<Vector2> MenuMapPositions;

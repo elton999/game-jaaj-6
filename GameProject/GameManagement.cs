@@ -10,7 +10,7 @@ namespace game_jaaj_6
         {
             base.Start();
             CreateMenu();
-            this.restart();
+            //this.restart();
         }
 
         public override void restart()
@@ -25,6 +25,7 @@ namespace game_jaaj_6
             this.CreateLevelDisplay();
             this.CreateHUD();
             this.SetValues();
+            CurrentStatus = Status.LOADING;
         }
 
         UI.Menu Menu;
@@ -93,8 +94,8 @@ namespace game_jaaj_6
         }
 
         private bool _canShowMenu { get => 
-                CurrentStatus == GameManagement.Status.MENU || 
-                CurrentStatus == GameManagement.Status.LEVEL_SELECT; 
+            CurrentStatus == GameManagement.Status.MENU || 
+            CurrentStatus == GameManagement.Status.LEVEL_SELECT; 
         }
 
         public override void Update(GameTime gameTime)
@@ -102,7 +103,6 @@ namespace game_jaaj_6
             base.Update(gameTime);
             if (CurrentStatus != GameManagement.Status.LOADING)
             {
-                
                 if (this.CurrentGameplayStatus == GameManagement.GameplayStatus.DEATH)
                 {
                     this.CurrentGameplayStatus = GameManagement.GameplayStatus.ALIVE;
@@ -115,8 +115,8 @@ namespace game_jaaj_6
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            if (this.CurrentStatus != GameManagement.Status.LOADING)
-                this.SceneManagement.Draw(spriteBatch);
+            //if (this.CurrentStatus != GameManagement.Status.LOADING)
+            this.SceneManagement.Draw(spriteBatch);
 
             if(_canShowMenu) Menu.Draw(spriteBatch);
         }

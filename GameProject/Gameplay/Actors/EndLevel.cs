@@ -31,7 +31,6 @@ namespace game_jaaj_6.Gameplay.Actors
                 float updateDataTime = this.Scene.GameManagement.SceneManagement.MainScene.updateDataTime;
                 if (nextScene < 5)
                 {
-
                     this.Scene.GameManagement.CurrentStatus = UmbrellaToolsKit.GameManagement.Status.PAUSE;
                     wait(2.0f, () =>
                     {
