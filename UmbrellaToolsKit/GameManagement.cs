@@ -9,7 +9,7 @@ namespace UmbrellaToolsKit
     {
         public Dictionary<String, dynamic> Values = new Dictionary<string, dynamic>();
 
-        public enum Status { LOADING, CREDITS, MENU, PAUSE, STOP, PLAYING };
+        public enum Status { LOADING, CREDITS, MENU, LEVEL_SELECT, SETTINGS, PAUSE, STOP, PLAYING };
         public Status CurrentStatus;
 
         public enum GameplayStatus { ALIVE, DEATH, };

@@ -1,66 +1,60 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
+﻿using System.Collections.Generic;
 using UmbrellaToolsKit;
-using UmbrellaToolsKit.Sprite;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace game_jaaj_6.UI
 {
-    class Menu : GameObject
+    public class Menu
     {
-        SpriteFont Font;
-        Point TextSize;
-        string Text = "- press any key to start -";
-        Square Background;
-        Point ScreenSize = new Point(426, 240);
-        public override void Start()
+        Scene mainScene;
+        public GameManagement GameManagement;
+        public void Start()
         {
-            base.Start();
-            this.tag = "menu";
-            this.Scene.UI.Add(this);
-            this.Font = this.Scene.Content.Load<SpriteFont>("Kenney_Rocket");
-            TextSize = this.Font.MeasureString(Text).ToPoint();
-
-
-            Background = new Square();
-            Background.Scene = this.Scene;
-            Background.SquareColor = Color.Black;
-            Background.size = ScreenSize;
-            Background.Start();
+            createScene();
+            showLevelSelect();
+            ShowMainMenu();
+            GameManagement.CurrentStatus = UmbrellaToolsKit.GameManagement.Status.MENU;
         }
 
-        public override void Update(GameTime gameTime)
+        private void createScene()
         {
-            if (Keyboard.GetState().GetPressedKeys().Length > 0 && _isOnMenu)
-                this.Scene.GameManagement.CurrentStatus = UmbrellaToolsKit.GameManagement.Status.PLAYING;
+            mainScene = new Scene(GameManagement.Game.GraphicsDevice, GameManagement.Game.Content);
+            mainScene.GameManagement = GameManagement;
         }
 
-        private Vector2 CenterPosition()
+        private void showLevelSelect()
         {
-            var originText = Vector2.Divide(TextSize.ToVector2(), 2f);
-            var centerScreen = Vector2.Divide(ScreenSize.ToVector2(), 2f);
-            return Vector2.Subtract(centerScreen, originText);
+            mainScene.SetLevelByName("map");
+            mainScene.Camera.Position = mainScene.Camera.Origin;
+            var levelSelectItem = new LevelSelectItem();
+            levelSelectItem.Content = GameManagement.Content;
+            levelSelectItem.Scene = mainScene;
+            mainScene.Middleground.Add(levelSelectItem);
+            levelSelectItem.Start();
         }
 
-        private bool _isOnMenu
+        private void ShowMainMenu()
         {
-            get => this.Scene.GameManagement.CurrentStatus == UmbrellaToolsKit.GameManagement.Status.MENU;
+            var mainMenu = new MainMenu();
+            mainMenu.Scene = mainScene;
+            mainMenu.Start();
+            mainScene.UI.Add(mainMenu);
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
+        public void Update(GameTime gameTime)
         {
-            if (_isOnMenu)
-            {
-                BeginDraw(spriteBatch, false);
-                Background.DrawSprite(spriteBatch);
-                spriteBatch.DrawString(
-                    this.Font,
-                    Text,
-                    CenterPosition(),
-                    Color.White
-                );
-                EndDraw(spriteBatch);
-            }
+            mainScene.Update(gameTime);   
+        }
+
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            mainScene.Draw(spriteBatch,
+                GameManagement.Game.GraphicsDevice,
+                new Vector2(
+                    GameManagement.Game.GraphicsDevice.Viewport.Width,
+                    GameManagement.Game.GraphicsDevice.Viewport.Height
+                ));
         }
     }
 }
