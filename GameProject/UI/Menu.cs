@@ -13,8 +13,8 @@ namespace game_jaaj_6.UI
         {
             createScene();
             showLevelSelect();
+            CreateFinalCredtis();
             ShowMainMenu();
-            GameManagement.CurrentStatus = UmbrellaToolsKit.GameManagement.Status.MENU;
         }
 
         private void createScene()
@@ -40,6 +40,15 @@ namespace game_jaaj_6.UI
             mainMenu.Scene = mainScene;
             mainMenu.Start();
             mainScene.UI.Add(mainMenu);
+            GameManagement.CurrentStatus = UmbrellaToolsKit.GameManagement.Status.MENU;
+        }
+
+        private void CreateFinalCredtis()
+        {
+            var credits = new Credits();
+            credits.Scene = mainScene;
+            credits.Scene.UI.Add(credits);
+            credits.Start();
         }
 
         public void Update(GameTime gameTime)

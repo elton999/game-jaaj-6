@@ -27,11 +27,15 @@ namespace game_jaaj_6.UI
             if (!_isOnLevelSelect) return;
 
             if (InputHelper.KeyPress(Input.Button.RIGHT) && LevelSelected < UnluckLevels)
-                LevelSelected += 1;
-            if (InputHelper.KeyPress(Input.Button.LEFT) && LevelSelected > 0)
-                LevelSelected -= 1;
-
-            if (InputHelper.KeyPress(Input.Button.CONFIRM))
+                LevelSelected++;
+            else if (InputHelper.KeyPress(Input.Button.LEFT) && LevelSelected > 0)
+                LevelSelected--;
+            else if (InputHelper.KeyPress(Input.Button.ESC))
+            {
+                Scene.GameManagement.CurrentStatus = UmbrellaToolsKit.GameManagement.Status.MENU;
+                InputHelper.ResetStatus();
+            }
+            else if (InputHelper.KeyPress(Input.Button.CONFIRM))
             {
                 Scene.GameManagement.restart();
                 Scene.GameManagement.CurrentStatus = UmbrellaToolsKit.GameManagement.Status.LOADING;
@@ -43,7 +47,7 @@ namespace game_jaaj_6.UI
         private Rectangle bodylucked;
         private Rectangle bodyUnlucked;
 
-        public int LevelSelected = 1;
+        public int LevelSelected = 0;
         public int UnluckLevels = 4;
         
         private void SetPositionsOfMapLevelSelect()

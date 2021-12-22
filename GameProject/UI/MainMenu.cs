@@ -1,8 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using UmbrellaToolsKit;
-using UmbrellaToolsKit.Sprite;
 using System.Collections.Generic;
 
 namespace game_jaaj_6.UI
@@ -12,7 +10,6 @@ namespace game_jaaj_6.UI
         SpriteFont Font;
         Point TextSize;
         string Text = "- press any key to start -";
-        Square Background;
         Point ScreenSize = new Point(426, 240);
         public override void Start()
         {
@@ -33,13 +30,9 @@ namespace game_jaaj_6.UI
             SpriteSelectBody = new Rectangle(new Point(56, 112), new Point(8, 8));
             SpriteSelecPosition = new Vector2(142, 171);
 
-            Background = new Square();
-            Background.Scene = this.Scene;
-            Background.SquareColor = Color.Black;
-            Background.size = ScreenSize;
-            Background.Start();
             InputHelper = new Input();
         }
+
         private bool ShowMenu = false;
         private List<string> MenuItems;
         private Texture2D SpriteSelect;
@@ -76,6 +69,9 @@ namespace game_jaaj_6.UI
                 case 0:
                     Scene.GameManagement.CurrentStatus = UmbrellaToolsKit.GameManagement.Status.LEVEL_SELECT;
                     break;
+                case 1:
+                    Scene.GameManagement.CurrentStatus = UmbrellaToolsKit.GameManagement.Status.CREDITS;
+                    break;
                 case 3:
                     Scene.GameManagement.Game.Exit();
                     break;
@@ -97,8 +93,8 @@ namespace game_jaaj_6.UI
         public override void Draw(SpriteBatch spriteBatch)
         {
             if (!_isOnMenu) return;
+            Scene.ScreemGraphicsDevice.Clear(Color.Black);
             BeginDraw(spriteBatch, false);
-            Background.DrawSprite(spriteBatch);
             if(!ShowMenu)
                 spriteBatch.DrawString(this.Font, Text, CenterPosition(), Color.White);
             else

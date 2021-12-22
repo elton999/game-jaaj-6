@@ -32,23 +32,21 @@ namespace game_jaaj_6.UI
 
         SpriteFont BigFont;
         SpriteFont SmallFont;
-        Square Background;
         private CreditsText _creditsList;
 
         public override void Start()
         {
-            this.tag = "Display Level";
+            tag = "Display Level";
             base.Start();
-            this.BigFont = this.Scene.Content.Load<SpriteFont>("Kenney_Rocket_Big");
-            this.SmallFont = this.Scene.Content.Load<SpriteFont>("Kenney_Rocket");
+            BigFont = Scene.Content.Load<SpriteFont>("Kenney_Rocket_Big");
+            SmallFont = Scene.Content.Load<SpriteFont>("Kenney_Rocket");
 
 
-            this.Position = new Vector2(-100, this.Scene.Sizes.Y / 2f);
-            this.InitialPosition = this.Position;
+            Position = new Vector2(-100, Scene.Sizes.Y / 2f);
+            InitialPosition = this.Position;
 
-            this.CreateBackground();
-
-            this.SetAllCredits();
+            SetAllCredits();
+            InputHelper = new Input();
         }
 
         private void SetAllCredits()
@@ -64,19 +62,23 @@ namespace game_jaaj_6.UI
             _creditsList.Add(SmallFont, "Gustavo Albuquerque", 30);
         }
 
-        public void CreateBackground()
+        private bool _isOnCredits { get => Scene.GameManagement.CurrentStatus == UmbrellaToolsKit.GameManagement.Status.CREDITS; }
+
+        Input InputHelper;
+        public override void Update(GameTime gameTime)
         {
-            this.Background = new Square();
-            this.Background.Scene = this.Scene;
-            this.Background.size = this.Scene.Sizes;
-            this.Background.SquareColor = Color.Black;
-            this.Background.Start();
+            
+            if (!_isOnCredits) return;
+            if (InputHelper.KeyDown(Input.Button.ESC))
+                Scene.GameManagement.CurrentStatus = UmbrellaToolsKit.GameManagement.Status.MENU;
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
+            if (!_isOnCredits) return;
+
+            Scene.ScreemGraphicsDevice.Clear(Color.Black);
             BeginDraw(spriteBatch, false);
-            this.Background.DrawSprite(spriteBatch);
             for(int i = 0; i < this._creditsList.CreditList.Count; i++)
             {
                 var credit = this._creditsList.CreditList[i];

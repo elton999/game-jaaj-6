@@ -10,7 +10,6 @@ namespace game_jaaj_6
         {
             base.Start();
             CreateMenu();
-            //this.restart();
         }
 
         public override void restart()
@@ -34,16 +33,6 @@ namespace game_jaaj_6
             Menu = new UI.Menu();
             Menu.GameManagement = this;
             Menu.Start();
-        }
-
-        private void CreateFinalCredtis()
-        {
-            SceneManagement.MainScene.UI.Clear();
-            var credits = new UI.Credits();
-            credits.Scene = SceneManagement.MainScene;
-            credits.Scene.UI.Add(credits);
-            credits.Start();
-            CurrentStatus = GameManagement.Status.PAUSE;
         }
 
         private void CreateLevelDisplay()
@@ -95,7 +84,8 @@ namespace game_jaaj_6
 
         private bool _canShowMenu { get => 
             CurrentStatus == GameManagement.Status.MENU || 
-            CurrentStatus == GameManagement.Status.LEVEL_SELECT; 
+            CurrentStatus == GameManagement.Status.LEVEL_SELECT ||
+            CurrentStatus == GameManagement.Status.CREDITS; 
         }
 
         public override void Update(GameTime gameTime)
@@ -103,9 +93,9 @@ namespace game_jaaj_6
             base.Update(gameTime);
             if (CurrentStatus != GameManagement.Status.LOADING)
             {
-                if (this.CurrentGameplayStatus == GameManagement.GameplayStatus.DEATH)
+                if (CurrentGameplayStatus == GameManagement.GameplayStatus.DEATH)
                 {
-                    this.CurrentGameplayStatus = GameManagement.GameplayStatus.ALIVE;
+                    CurrentGameplayStatus = GameManagement.GameplayStatus.ALIVE;
                     transition.Close();
                     wait(1f, () => { transition.Open(); });
                 }
@@ -115,8 +105,7 @@ namespace game_jaaj_6
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            //if (this.CurrentStatus != GameManagement.Status.LOADING)
-            this.SceneManagement.Draw(spriteBatch);
+            SceneManagement.Draw(spriteBatch);
 
             if(_canShowMenu) Menu.Draw(spriteBatch);
         }
