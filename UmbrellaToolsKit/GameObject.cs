@@ -54,7 +54,6 @@ namespace UmbrellaToolsKit
         public Vector2 TextureSize;
 
         public MouseManager _Mouse;
-        public ScreemController _Screem;
 
         public SpriteSortMode SpriteSortMode = SpriteSortMode.Immediate;
         public SamplerState SamplerState = SamplerState.PointClamp;

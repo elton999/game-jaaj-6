@@ -55,7 +55,6 @@ namespace UmbrellaToolsKit
         public ContentManager Content;
 
         private Color BackgroundColor = Color.CornflowerBlue;
-        public ScreemController Screem { get; set; }
 
         //Camera
         public Point ScreemOffset;
@@ -185,11 +184,9 @@ namespace UmbrellaToolsKit
         {
             Vector2 _gameObjectPosition = gameObject.Position;
 
-            if (Screem != null)
-            {
                 bool overlay_x = false;
                 bool overlay_y = false;
-                Vector2 CameraPosition = -this.Screem.CameraManagement.Position;
+                Vector2 CameraPosition = -Camera.Position;
 
                 if (CameraPosition.X - (ScreemOffset.X / 2f) < _gameObjectPosition.X && CameraPosition.X + (ScreemOffset.X / 2f) > _gameObjectPosition.X)
                     overlay_x = true;
@@ -199,7 +196,6 @@ namespace UmbrellaToolsKit
 
                 if (overlay_x && overlay_y)
                     return true;
-            }
 
             return false;
         }

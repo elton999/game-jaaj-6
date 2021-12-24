@@ -19,7 +19,7 @@ namespace game_jaaj_6.UI
         private Rectangle SpriteSelectBody;
         private Vector2 SpriteSelecPosition;
         private List<ItemsSetting> MenuItems;
-        private int[] currentItemOption = new int[] { 0, 0 };
+        private int[] currentItemOption = new int[] { 0, 5 };
 
         public override void Start()
         {
@@ -32,6 +32,15 @@ namespace game_jaaj_6.UI
             SpriteSelectBody = new Rectangle(new Point(56, 112), new Point(8, 8));
             SpriteSelecPosition = new Vector2(142, 151);
 
+            setAllMenuItems();
+
+            UpdateScreenSettings();
+
+            InputHelper = new Input();
+        }
+
+        private void setAllMenuItems()
+        {
             MenuItems = new List<ItemsSetting>();
             var item = new ItemsSetting();
             item.Name = "Window mode";
@@ -42,10 +51,9 @@ namespace game_jaaj_6.UI
             item = new ItemsSetting();
             item.Name = "Resolution";
             item.options = new List<string>();
-            item.options.AddRange(new string[] { "1080 : 720", "fullscreen" });
+            foreach (Vector2 resolution in ScreenController.instance.Resolutions)
+                item.options.Add($"{resolution.X} x {resolution.Y}");
             MenuItems.Add(item);
-
-            InputHelper = new Input();
         }
 
         int itemSelected = 0;
@@ -86,7 +94,9 @@ namespace game_jaaj_6.UI
 
         private void UpdateScreenSettings()
         {
-
+            ScreenController.instance.fullScreen = currentItemOption[0] == 1;
+            ScreenController.instance.Resolution = currentItemOption[1];
+            ScreenController.instance.Update();
         }
 
         private bool _isOnSettings

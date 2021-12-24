@@ -13,6 +13,7 @@ namespace game_jaaj_6
         private SpriteBatch _spriteBatch;
         public AssetManagement AssetManagement;
         public GameManagement GameManagement;
+        public ScreenController ScreenController;
 
         public Game1()
         {
@@ -25,9 +26,10 @@ namespace game_jaaj_6
 
         protected override void Initialize()
         {
-            _graphics.PreferredBackBufferWidth = 426 * 4;
-            _graphics.PreferredBackBufferHeight = 240 * 4;
-            _graphics.ApplyChanges();
+            ScreenController = new ScreenController(_graphics, 0);
+            //_graphics.PreferredBackBufferWidth = 426 * 4;
+            //_graphics.PreferredBackBufferHeight = 240 * 4;
+            //_graphics.ApplyChanges();
 
             base.Initialize();
         }
