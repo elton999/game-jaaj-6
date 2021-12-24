@@ -14,6 +14,7 @@ namespace game_jaaj_6.UI
             createScene();
             showLevelSelect();
             CreateFinalCredtis();
+            ShowSettingsMenu();
             ShowMainMenu();
         }
 
@@ -41,6 +42,15 @@ namespace game_jaaj_6.UI
             mainMenu.Start();
             mainScene.UI.Add(mainMenu);
             GameManagement.CurrentStatus = UmbrellaToolsKit.GameManagement.Status.MENU;
+        }
+
+        private void ShowSettingsMenu()
+        {
+            var settingsMenu = new MenuSettings();
+            settingsMenu.Scene = mainScene;
+            settingsMenu.Start();
+            mainScene.UI.Add(settingsMenu);
+            GameManagement.CurrentStatus = UmbrellaToolsKit.GameManagement.Status.SETTINGS;
         }
 
         private void CreateFinalCredtis()

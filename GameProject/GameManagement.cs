@@ -85,6 +85,7 @@ namespace game_jaaj_6
         private bool _canShowMenu { get => 
             CurrentStatus == GameManagement.Status.MENU || 
             CurrentStatus == GameManagement.Status.LEVEL_SELECT ||
+            CurrentStatus == GameManagement.Status.SETTINGS ||
             CurrentStatus == GameManagement.Status.CREDITS; 
         }
 

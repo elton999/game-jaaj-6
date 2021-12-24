@@ -8,31 +8,32 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace UmbrellaToolsKit
 {
-    public class ScreemController : GameObject
+    public class ScreemController
     {
         public GraphicsDeviceManager graphics;
-        public GraphicsAdapter graphicsAdapter;
-        public CameraManagement CameraManagement;
-        public Matrix TransformMatrix;
-        public Scene Scene;
-        private RenderTarget2D screem;
 
-        public ScreemController(GraphicsDeviceManager graphics, GraphicsAdapter graphicsAdapter, GraphicsDevice graphicsDevice, int resolution = 0)
+        public ScreemController(GraphicsDeviceManager graphics, int resolution = 0)
         {
             this.graphics = graphics;
-            this.graphicsAdapter = graphicsAdapter;
             this.SetResolutions();
             this.Resolution = resolution;
-
-            this.screem = new RenderTarget2D(graphicsDevice, (int)this.Resolutions[0].X, (int)this.Resolutions[0].Y);
+            Update();
         }
 
         public List<Vector2> Resolutions = new List<Vector2>();
         public int Resolution { get; set; }
         private void SetResolutions()
         {
+            this.Resolutions.Add(new Vector2(384, 216));
+            this.Resolutions.Add(new Vector2(768, 432));
+            this.Resolutions.Add(new Vector2(1152, 648));
+            this.Resolutions.Add(new Vector2(1176, 664));
             this.Resolutions.Add(new Vector2(1280, 720));
-            this.Resolutions.Add(new Vector2(this.graphicsAdapter.CurrentDisplayMode.Width, this.graphicsAdapter.CurrentDisplayMode.Height));
+            this.Resolutions.Add(new Vector2(1360, 768));
+            this.Resolutions.Add(new Vector2(1366, 768));
+            this.Resolutions.Add(new Vector2(1600, 900));
+            this.Resolutions.Add(new Vector2(1768, 992));
+            this.Resolutions.Add(new Vector2(1920, 1080));
         }
 
         public Vector2 getCurrentResolutionSize { get => this.Resolutions[this.Resolution]; }
@@ -41,57 +42,11 @@ namespace UmbrellaToolsKit
             get => new Vector2(this.Resolutions[this.Resolution].X / 2f, this.Resolutions[this.Resolution].Y / 2f);
         }
 
-        public override void Update(GameTime gameTime)
+        public void Update()
         {
-            float _screemWidth = graphics.PreferredBackBufferWidth;
-            float _screemHeight = graphics.PreferredBackBufferHeight;
-
-            // set new resolutions
-            if (_screemHeight != (int)this.Resolutions[this.Resolution].Y || _screemWidth != (int)this.Resolutions[this.Resolution].X)
-            {
-                graphics.PreferredBackBufferHeight = (int)this.Resolutions[this.Resolution].Y;
-                graphics.PreferredBackBufferWidth = (int)this.Resolutions[this.Resolution].X;
-                graphics.ApplyChanges();
-            }
-
-            float _width = this.graphics.GraphicsDevice.Viewport.Width;
-            float _height = this.graphics.GraphicsDevice.Viewport.Height;
-
-            this.Position = new Vector2((_width * this.Scale / 2f) - ((float)this.screem.Width / 2f),
-                (_height * this.Scale / 2f) - ((float)this.screem.Height / 2f));
-
-            if (CameraManagement != null && Scene != null)
-            {
-                this.Scale = this.getCurrentResolutionSize.X / Scene.ScreemOffset.X;
-                //CameraManagement.ScreemSize = Scene.ScreemOffset;
-                CameraManagement.Scale = this.Scale;
-                CameraManagement.update(gameTime);
-            }
+            graphics.PreferredBackBufferHeight = (int)this.Resolutions[this.Resolution].Y;
+            graphics.PreferredBackBufferWidth = (int)this.Resolutions[this.Resolution].X;
+            graphics.ApplyChanges();
         }
-
-
-        public void BeginDraw(GraphicsDevice GraphicsDevice, SpriteBatch spriteBatch, bool cut = false)
-        {
-            if (CameraManagement != null) TransformMatrix = CameraManagement.TransformMatrix();
-            else TransformMatrix = Matrix.CreateRotationZ(0f) * Matrix.CreateTranslation(0, 0, 0);
-
-            GraphicsDevice.Clear(Color.Transparent);
-            GraphicsDevice.SetRenderTarget(this.screem);
-            spriteBatch.Begin(SpriteSortMode.Immediate, null, SamplerState.PointClamp, null, null, null, TransformMatrix);
-        }
-
-        public void EndDraw(GraphicsDevice GraphicsDevice, SpriteBatch spriteBatch)
-        {
-            spriteBatch.End();
-            GraphicsDevice.SetRenderTarget(null);
-
-            GraphicsDevice.Clear(Color.White);
-            spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, null);
-            // render screem
-            this.Sprite = (Texture2D)this.screem;
-            this.DrawSprite(spriteBatch);
-            spriteBatch.End();
-        }
-
     }
 }

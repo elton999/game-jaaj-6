@@ -72,6 +72,9 @@ namespace game_jaaj_6.UI
                 case 1:
                     Scene.GameManagement.CurrentStatus = UmbrellaToolsKit.GameManagement.Status.CREDITS;
                     break;
+                case 2:
+                    Scene.GameManagement.CurrentStatus = UmbrellaToolsKit.GameManagement.Status.SETTINGS;
+                    break;
                 case 3:
                     Scene.GameManagement.Game.Exit();
                     break;
