@@ -14,6 +14,7 @@ namespace game_jaaj_6
 
         public override void restart()
         {
+            this.SceneManagement.CurrentScene = 1;
             this.SceneManagement.Start();
             this.SceneManagement.MainScene.GameManagement = this;
             this.SceneManagement.MainScene.updateDataTime = 1f / 60f;

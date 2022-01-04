@@ -15,6 +15,11 @@ namespace game_jaaj_6.Gameplay.Actors
             this.size = new Point(16, 16);
             this.CreateBox();
             this.InitialPosition = this.Position;
+
+            FeedBackFX = new UI.ItemFeedBackFX();
+            FeedBackFX.Scene = Scene;
+            FeedBackFX.Position = this.Position;
+            FeedBackFX.Start();
         }
 
         protected Square _box;
@@ -40,8 +45,11 @@ namespace game_jaaj_6.Gameplay.Actors
                 this.OnGetItem();
             }
         }
-
-        public virtual void OnGetItem() { }
+        public UI.ItemFeedBackFX FeedBackFX;
+        public virtual void OnGetItem() 
+        {
+            Scene.Foreground.Add(FeedBackFX);
+        }
 
         private float _speed = 2f;
         private void Animation(GameTime gameTime)

@@ -1,6 +1,6 @@
 { "frames": [
    {
-    "filename": "robot 0.aseprite",
+    "filename": "robot1 0.aseprite",
     "frame": { "x": 0, "y": 0, "w": 25, "h": 25 },
     "rotated": false,
     "trimmed": false,
@@ -9,35 +9,8 @@
     "duration": 100
    },
    {
-    "filename": "robot 1.aseprite",
+    "filename": "robot1 1.aseprite",
     "frame": { "x": 25, "y": 0, "w": 25, "h": 25 },
-    "rotated": false,
-    "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 25, "h": 25 },
-    "sourceSize": { "w": 25, "h": 25 },
-    "duration": 100
-   },
-   {
-    "filename": "robot 2.aseprite",
-    "frame": { "x": 50, "y": 0, "w": 25, "h": 25 },
-    "rotated": false,
-    "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 25, "h": 25 },
-    "sourceSize": { "w": 25, "h": 25 },
-    "duration": 100
-   },
-   {
-    "filename": "robot 3.aseprite",
-    "frame": { "x": 75, "y": 0, "w": 25, "h": 25 },
-    "rotated": false,
-    "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 25, "h": 25 },
-    "sourceSize": { "w": 25, "h": 25 },
-    "duration": 100
-   },
-   {
-    "filename": "robot 4.aseprite",
-    "frame": { "x": 100, "y": 0, "w": 25, "h": 25 },
     "rotated": false,
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 25, "h": 25 },
@@ -50,16 +23,16 @@
   "version": "1.2.30-x64",
   "image": "robot.png",
   "format": "RGBA8888",
-  "size": { "w": 125, "h": 25 },
+  "size": { "w": 50, "h": 25 },
   "scale": "1",
   "frameTags": [
-   { "name": "walk", "from": 0, "to": 4, "direction": "forward" }
+   { "name": "walk", "from": 1, "to": 1, "direction": "forward" }
   ],
   "layers": [
+   { "name": "bg", "opacity": 255, "blendMode": "normal" },
+   { "name": "Layer 1", "opacity": 255, "blendMode": "normal" },
    { "name": "Layer 2", "opacity": 255, "blendMode": "normal" },
-   { "name": "Layer 4", "opacity": 255, "blendMode": "normal" },
-   { "name": "right", "opacity": 255, "blendMode": "normal" },
-   { "name": "left", "opacity": 255, "blendMode": "normal" }
+   { "name": "Layer 3", "opacity": 255, "blendMode": "normal" }
   ],
   "slices": [
   ]

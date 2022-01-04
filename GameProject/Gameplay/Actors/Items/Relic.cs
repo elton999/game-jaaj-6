@@ -13,10 +13,11 @@ namespace game_jaaj_6.Gameplay.Actors.Items
         public override void Start()
         {
             tag = "relic";
-            base.Start();
             Sprite = Content.Load<Texture2D>("Sprites/relic");
             size = new Point(15, 12);
             Animation = new AsepriteAnimation(Content.Load<AsepriteDefinitions>("Sprites/relic animation"));
+            base.Start();
+            FeedBackFX.CurrentType = UI.ItemFeedBackFX.Type.RELIC;
         }
 
         public override void Update(GameTime gameTime)
