@@ -14,17 +14,17 @@ namespace game_jaaj_6
 
         public override void restart()
         {
-            this.SceneManagement.CurrentScene = 1;
-            this.SceneManagement.Start();
-            this.SceneManagement.MainScene.GameManagement = this;
-            this.SceneManagement.MainScene.updateDataTime = 1f / 60f;
-            this.SceneManagement.MainScene.SetBackgroundColor = new Color(Vector3.Divide(new Vector3(65, 146, 195), 255.0f));
+            //SceneManagement.CurrentScene = 3;
+            SceneManagement.Start();
+            SceneManagement.MainScene.GameManagement = this;
+            SceneManagement.MainScene.updateDataTime = 1f / 60f;
+            SceneManagement.MainScene.SetBackgroundColor = new Color(Vector3.Divide(new Vector3(65, 146, 195), 255.0f));
 
-            this.CreateTransitionObject();
-            this.CreateParallax();
-            this.CreateLevelDisplay();
-            this.CreateHUD();
-            this.SetValues();
+            CreateTransitionObject();
+            CreateParallax();
+            CreateLevelDisplay();
+            CreateHUD();
+            SetValues();
             CurrentStatus = Status.LOADING;
         }
 

@@ -20,10 +20,23 @@ namespace game_jaaj_6.Gameplay.Actors.Items
             FeedBackFX.CurrentType = UI.ItemFeedBackFX.Type.RELIC;
         }
 
+        public override void OnGetItem()
+        {
+            base.OnGetItem();
+            destroyAnimation = true;
+        }
+
+        bool destroyAnimation = false;
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            Animation.Play(gameTime, "idle", AsepriteAnimation.AnimationDirection.LOOP);
+            if(!destroyAnimation)
+                Animation.Play(gameTime, "idle", AsepriteAnimation.AnimationDirection.LOOP);
+            else
+            {
+                Animation.Play(gameTime, "destroy", AsepriteAnimation.AnimationDirection.FORWARD);
+                if (Animation.lastFrame) Destroy();
+            }
         }
 
         public override void Draw(SpriteBatch spriteBatch)

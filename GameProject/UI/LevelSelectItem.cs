@@ -16,12 +16,15 @@ namespace game_jaaj_6.UI
             bodylucked = new Rectangle(new Point(56, 104), new Point(8, 8));
             bodyUnlucked = new Rectangle(new Point(48, 112), new Point(8,8));
 
+            bodyHeadInfo = new Rectangle(new Point(48, 120), new Point(8,8));
+
             SetPositionsOfMapLevelSelect();
             InputHelper = new Input();
             InputHelper.ResetStatus();
         }
 
         Input InputHelper;
+        Rectangle bodyHeadInfo;
         public override void Update(GameTime gameTime)
         {
             if (!_isOnLevelSelect) return;
@@ -80,6 +83,13 @@ namespace game_jaaj_6.UI
                 Body = i <= UnluckLevels ? bodyUnlucked : bodylucked;
                 Body = LevelSelected == i ? bodySelected : Body;
                 DrawSprite(spriteBatch);
+
+                if (LevelSelected == i)
+                {
+                    Position.Y -= 8;
+                    Body = bodyHeadInfo;
+                    DrawSprite(spriteBatch);
+                }
             }
             EndDraw(spriteBatch);
         }

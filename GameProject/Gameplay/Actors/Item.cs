@@ -11,26 +11,26 @@ namespace game_jaaj_6.Gameplay.Actors
         public override void Start()
         {
             base.Start();
-            this.gravity2D = new Vector2(0, 0);
-            this.size = new Point(16, 16);
-            this.CreateBox();
-            this.InitialPosition = this.Position;
+            gravity2D = new Vector2(0, 0);
+            size = new Point(16, 16);
+            CreateBox();
+            InitialPosition = Position;
 
             FeedBackFX = new UI.ItemFeedBackFX();
             FeedBackFX.Scene = Scene;
-            FeedBackFX.Position = this.Position;
+            FeedBackFX.Position = Position - (Vector2.UnitY * 8);
             FeedBackFX.Start();
         }
 
-        protected Square _box;
+        protected Square box;
         private void CreateBox()
         {
-            this._box = new Square();
-            this._box.Scene = this.Scene;
-            this._box.size = this.size;
-            this._box.Position = this.Position;
-            this._box.SquareColor = Color.Orange;
-            this._box.Start();
+            box = new Square();
+            box.Scene = this.Scene;
+            box.size = this.size;
+            box.Position = this.Position;
+            box.SquareColor = Color.Orange;
+            box.Start();
         }
 
         public override void UpdateData(GameTime gameTime)
@@ -41,7 +41,7 @@ namespace game_jaaj_6.Gameplay.Actors
             if (this.overlapCheck(player))
             {
                 player.OnCollision(this.tag);
-                this.Destroy();
+                //this.Destroy();
                 this.OnGetItem();
             }
         }
@@ -60,8 +60,8 @@ namespace game_jaaj_6.Gameplay.Actors
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            this._box.Position = this.Position;
-            this._box.Draw(spriteBatch);
+            this.box.Position = this.Position;
+            this.box.Draw(spriteBatch);
             base.Draw(spriteBatch);
         }
     }

@@ -9,9 +9,9 @@ namespace game_jaaj_6.Gameplay.Actors.Items
     {
         public override void Start()
         {
-            this.tag = "key";
-            this.Sprite = this.Scene.Content.Load<Texture2D>("Sprites/tilemap");
-            this.Body = new Rectangle(new Point(40, 0), new Point(16, 16));
+            tag = "key";
+            Sprite = Scene.Content.Load<Texture2D>("Sprites/tilemap");
+            Body = new Rectangle(new Point(40, 0), new Point(16, 16));
 
             GetKeySound = Content.Load<SoundEffect>("Sound/key");
             base.Start();
@@ -22,8 +22,9 @@ namespace game_jaaj_6.Gameplay.Actors.Items
         public override void OnGetItem()
         {
             base.OnGetItem();
-            this.Scene.GameManagement.Values["key"] = true;
+            Scene.GameManagement.Values["key"] = true;
             GetKeySound.Play();
+            Destroy();
         }
 
         public override void Draw(SpriteBatch spriteBatch)

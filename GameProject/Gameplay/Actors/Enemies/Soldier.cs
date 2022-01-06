@@ -2,9 +2,6 @@ using System;
 using System.Threading;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using UmbrellaToolsKit;
-using UmbrellaToolsKit.Collision;
 using UmbrellaToolsKit.Sprite;
 
 namespace game_jaaj_6.Gameplay.Actors.Enemies
@@ -28,7 +25,7 @@ namespace game_jaaj_6.Gameplay.Actors.Enemies
         public override void Update(GameTime gameTime)
         {
             animation.Play(gameTime, "walk", AsepriteAnimation.AnimationDirection.LOOP);
-            spriteEffect = _speed > 0 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
+            spriteEffect = _speed > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             base.Update(gameTime);
         }
 
