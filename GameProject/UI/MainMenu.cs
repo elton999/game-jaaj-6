@@ -15,29 +15,44 @@ namespace game_jaaj_6.UI
         {
             base.Start();
             this.tag = "menu";
-            
+
             this.Scene.UI.Add(this);
             this.Font = this.Scene.Content.Load<SpriteFont>("Kenney_Rocket");
             TextSize = this.Font.MeasureString(Text).ToPoint();
+            
+            CreateMenuItems();
+            CreateLogo();
 
+            InputHelper = new Input();
+        }
+
+        private void CreateMenuItems()
+        {
             MenuItems = new List<string>();
             MenuItems.Add("Play");
             MenuItems.Add("Credits");
             MenuItems.Add("Settings");
             MenuItems.Add("Quit");
 
-            SpriteSelect = Scene.Content.Load<Texture2D>("Sprites/tilemap");
-            SpriteSelectBody = new Rectangle(new Point(56, 112), new Point(8, 8));
-            SpriteSelecPosition = new Vector2(142, 171);
+            SpriteArrow = Scene.Content.Load<Texture2D>("Sprites/tilemap");
+            SpriteArrowBody = new Rectangle(new Point(56, 112), new Point(8, 8));
+            SpriteArrowPosition = new Vector2(142, 171);
+        }
 
-            InputHelper = new Input();
+        private Vector2 positionLogo;
+        private Texture2D spriteLogo;
+        private void CreateLogo()
+        {
+            spriteLogo = Scene.Content.Load<Texture2D>("Sprites/logo");
+            float positionX = Scene.Sizes.X / 2f - spriteLogo.Width / 2f;
+            positionLogo = new Vector2(positionX, 30);
         }
 
         private bool ShowMenu = false;
         private List<string> MenuItems;
-        private Texture2D SpriteSelect;
-        private Rectangle SpriteSelectBody;
-        private Vector2 SpriteSelecPosition;
+        private Texture2D SpriteArrow;
+        private Rectangle SpriteArrowBody;
+        private Vector2 SpriteArrowPosition;
 
         public override void Update(GameTime gameTime)
         {
@@ -85,6 +100,7 @@ namespace game_jaaj_6.UI
         {
             var originText = Vector2.Divide(TextSize.ToVector2(), 2f);
             var centerScreen = Vector2.Divide(ScreenSize.ToVector2(), 2f);
+            centerScreen.Y += 50f;
             return Vector2.Subtract(centerScreen, originText);
         }
 
@@ -93,20 +109,38 @@ namespace game_jaaj_6.UI
             get => Scene.GameManagement.CurrentStatus == UmbrellaToolsKit.GameManagement.Status.MENU;
         }
 
+        private Vector2 GetArrowPosition()
+        {
+            return SpriteArrowPosition - ((MenuItems.Count - 1 - itemSelected) * new Vector2(0, 10));
+        }
+
         public override void Draw(SpriteBatch spriteBatch)
         {
             if (!_isOnMenu) return;
             Scene.ScreemGraphicsDevice.Clear(Color.Black);
             BeginDraw(spriteBatch, false);
+            DrawLogo(spriteBatch);
             if(!ShowMenu)
                 spriteBatch.DrawString(this.Font, Text, CenterPosition(), Color.White);
             else
-            {
-                spriteBatch.Draw(SpriteSelect, SpriteSelecPosition - ((MenuItems.Count - 1 - itemSelected) * new Vector2(0, 10)), SpriteSelectBody, Color.White);
-                for(int i = 0; i < MenuItems.Count; i++)
-                    spriteBatch.DrawString(this.Font, MenuItems[i], new Vector2(150, 140 + (i*10)), Color.White);
-            }
+                DrawMenuItems(spriteBatch);
             EndDraw(spriteBatch);
+
+            
         }
+
+        private void DrawLogo(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(spriteLogo, positionLogo, Color.White);
+        }
+
+        private void DrawMenuItems(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(SpriteArrow, GetArrowPosition(), SpriteArrowBody, Color.White);
+            for (int i = 0; i < MenuItems.Count; i++)
+                spriteBatch.DrawString(this.Font, MenuItems[i], new Vector2(150, 140 + (i * 10)), Color.White);
+        }
+
+
     }
 }

@@ -14,14 +14,13 @@ namespace game_jaaj_6.UI
             Sprite = Scene.Content.Load<Texture2D>("Sprites/tilemap");
         }
 
-        float speed = 0.002f;
-        float speedTransparent = 3f;
+        float speed = 5f;
+        float speedTransparent = 20f / 10000f;
         public override void Update(GameTime gameTime)
         {
-            float deltaTime = (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+            float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             Position.Y -= speed * deltaTime;
-            Transparent = Transparent > 0f ? Transparent - (speedTransparent / 10000f * deltaTime) : 0f;
-            System.Console.WriteLine(Transparent);
+            Transparent = MathHelper.Clamp(Transparent - speedTransparent, 0.0f, 1f);
             if (Transparent == 0) Destroy();
         }
 
