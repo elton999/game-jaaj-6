@@ -10,6 +10,7 @@ namespace game_jaaj_6.Parallax
         {
             base.Start();
             this.Sprite = Scene.Content.Load<Texture2D>("Sprites/sky");
+            this.SamplerState = SamplerState.LinearWrap;
         }
 
         float _speed = 0.05f;
@@ -19,6 +20,18 @@ namespace game_jaaj_6.Parallax
             if(this.Scene.Camera != null)
                 this.Position = Vector2.Subtract(Vector2.Lerp(this.Position, this.Scene.Camera.Position, timer * _speed), new Vector2(300, 100));
             base.Update(gameTime);
+        }
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            BeginDraw(spriteBatch);
+            spriteBatch.Draw(
+                    Sprite,
+                    Scene.Camera.Position - Scene.Camera.Origin,
+                    new Rectangle(new Point((int)Scene.Camera.Position.X, 0), new Point(Sprite.Width, Sprite.Height)),
+                    SpriteColor
+                );
+            EndDraw(spriteBatch);
         }
     }
 }
