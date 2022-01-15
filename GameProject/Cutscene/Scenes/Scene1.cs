@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using UmbrellaToolsKit;
 using UmbrellaToolsKit.Sprite;
+using Microsoft.Xna.Framework.Input;
 
 namespace game_jaaj_6.Cutscene.Scenes
 {
@@ -18,10 +19,11 @@ namespace game_jaaj_6.Cutscene.Scenes
         float speedShip1 = 10f / 1000f;
         float speedShip2 = 10f / 1000f;
         float speedShip3 = 5f / 1000f;
-
+        bool canstart = false;
         public override void Update(GameTime gameTime)
         {
-            if (cutsceneManagement.CurrentScene != 0) return;
+            if (Keyboard.GetState().IsKeyDown(Keys.Enter)) canstart = true;
+            if (cutsceneManagement.CurrentScene != 0 || !canstart) return;
             base.Update(gameTime);
             float delta = (float)gameTime.ElapsedGameTime.TotalMilliseconds;
             ship1Animation.Play(gameTime, "idle", AsepriteAnimation.AnimationDirection.FORWARD);
@@ -31,23 +33,7 @@ namespace game_jaaj_6.Cutscene.Scenes
             setShip3PositionIncrement(-(speedShip3 * delta));
 
             if (ship1Position.Y > - 20f) cutsceneManagement.CurrentScene = 1;
-        }
-
-        void setShip2PositionIncrement(float increment)
-        {
-            for (int i = 0; i < ships2Positions.Length; i++)
-            {
-                ships2Positions[i] += Vector2.UnitY * increment;
-            }
-        }
-
-        void setShip3PositionIncrement(float increment)
-        {
-            for (int i = 0; i < ships3Positions.Length; i++)
-            {
-                ships3Positions[i] += Vector2.UnitY * increment;
-            }
-        }
+        } 
 
         public override void Draw(SpriteBatch spriteBatch)
         {

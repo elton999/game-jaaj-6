@@ -53,6 +53,22 @@ namespace game_jaaj_6.Cutscene
             ship3Animation = new AsepriteAnimation(animationSettings);
         }
 
+        public void setShip2PositionIncrement(float increment)
+        {
+            for (int i = 0; i < ships2Positions.Length; i++)
+            {
+                ships2Positions[i] += Vector2.UnitY * increment;
+            }
+        }
+
+        public void setShip3PositionIncrement(float increment)
+        {
+            for (int i = 0; i < ships3Positions.Length; i++)
+            {
+                ships3Positions[i] += Vector2.UnitY * increment;
+            }
+        }
+
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
