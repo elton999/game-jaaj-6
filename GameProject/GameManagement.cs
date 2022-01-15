@@ -10,11 +10,12 @@ namespace game_jaaj_6
         {
             base.Start();
             CreateMenu();
+            CreateCutScene();
         }
 
         public override void restart()
         {
-            //SceneManagement.CurrentScene = 3;
+            // SceneManagement.CurrentScene = 3;
             SceneManagement.Start();
             SceneManagement.MainScene.GameManagement = this;
             SceneManagement.MainScene.updateDataTime = 1f / 60f;
@@ -25,6 +26,7 @@ namespace game_jaaj_6
             CreateLevelDisplay();
             CreateHUD();
             SetValues();
+            
             CurrentStatus = Status.LOADING;
         }
 
@@ -34,6 +36,14 @@ namespace game_jaaj_6
             Menu = new UI.Menu();
             Menu.GameManagement = this;
             Menu.Start();
+        }
+
+        Cutscene.CutsceneManagement Cutscene;
+        private void CreateCutScene()
+        {
+            Cutscene = new Cutscene.CutsceneManagement();
+            Cutscene.GameManagement = this;
+            Cutscene.Start();
         }
 
         private void CreateLevelDisplay()
@@ -54,10 +64,10 @@ namespace game_jaaj_6
 
         private void CreateParallax()
         {
-            var clouds = new Parallax.Clouds();
-            clouds.Scene = SceneManagement.MainScene;
-            SceneManagement.MainScene.Backgrounds.Add(clouds);
-            clouds.Start();
+            var background = new Parallax.Background();
+            background.Scene = SceneManagement.MainScene;
+            SceneManagement.MainScene.Backgrounds.Add(background);
+            background.Start();
         }
 
         UI.Transition transition;
@@ -102,14 +112,21 @@ namespace game_jaaj_6
                     wait(1f, () => { transition.Open(); });
                 }
             }
-            if(_canShowMenu) Menu.Update(gameTime);
+            if (Cutscene.isShowingCutscene)
+                Cutscene.Update(gameTime);
+            else if (_canShowMenu)
+                Menu.Update(gameTime);
+            
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
             SceneManagement.Draw(spriteBatch);
 
-            if(_canShowMenu) Menu.Draw(spriteBatch);
+            if (Cutscene.isShowingCutscene)
+                Cutscene.Draw(spriteBatch);
+            else if (_canShowMenu) Menu.Draw(spriteBatch);
+            
         }
     }
 }

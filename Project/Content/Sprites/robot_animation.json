@@ -6,11 +6,29 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 25, "h": 25 },
     "sourceSize": { "w": 25, "h": 25 },
-    "duration": 100
+    "duration": 200
    },
    {
     "filename": "robot1 1.aseprite",
     "frame": { "x": 25, "y": 0, "w": 25, "h": 25 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 25, "h": 25 },
+    "sourceSize": { "w": 25, "h": 25 },
+    "duration": 200
+   },
+   {
+    "filename": "robot1 2.aseprite",
+    "frame": { "x": 50, "y": 0, "w": 25, "h": 25 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 25, "h": 25 },
+    "sourceSize": { "w": 25, "h": 25 },
+    "duration": 200
+   },
+   {
+    "filename": "robot1 3.aseprite",
+    "frame": { "x": 75, "y": 0, "w": 25, "h": 25 },
     "rotated": false,
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 25, "h": 25 },
@@ -23,10 +41,11 @@
   "version": "1.2.30-x64",
   "image": "robot.png",
   "format": "RGBA8888",
-  "size": { "w": 50, "h": 25 },
+  "size": { "w": 100, "h": 25 },
   "scale": "1",
   "frameTags": [
-   { "name": "walk", "from": 1, "to": 1, "direction": "forward" }
+   { "name": "walk", "from": 0, "to": 2, "direction": "forward" },
+   { "name": "turn", "from": 3, "to": 3, "direction": "forward" }
   ],
   "layers": [
    { "name": "Layer 1", "opacity": 255, "blendMode": "normal" },

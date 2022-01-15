@@ -4,7 +4,7 @@ using UmbrellaToolsKit;
 
 namespace game_jaaj_6.Parallax
 {
-    public class Clouds : GameObject
+    public class Background : GameObject
     {
         public override void Start()
         {

@@ -22,18 +22,28 @@ namespace game_jaaj_6.Gameplay.Actors.Enemies
             animation = new AsepriteAnimation(Content.Load<AsepriteDefinitions>("Sprites/robot_animation"));
         }
 
+        bool turn = false;
         public override void Update(GameTime gameTime)
         {
-            animation.Play(gameTime, "walk", AsepriteAnimation.AnimationDirection.LOOP);
-            spriteEffect = _speed > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+            if (!turn)
+            {
+                animation.Play(gameTime, "walk", AsepriteAnimation.AnimationDirection.LOOP);
+                spriteEffect = _speed > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+            } else
+            {
+                animation.Play(gameTime, "turn", AsepriteAnimation.AnimationDirection.FORWARD);
+                if (animation.lastFrame) turn = false;
+            }
             base.Update(gameTime);
         }
 
         public override void UpdateData(GameTime gameTime)
         {
+            if (turn) return;
             float timer = (float)gameTime.ElapsedGameTime.Milliseconds;
             moveX(timer * this._speed, (_) =>
             {
+                turn = true;
                 this._speed = -this._speed;
             });
             base.UpdateData(gameTime);

@@ -1,0 +1,113 @@
+{ "frames": [
+   {
+    "filename": "ship animations 0.aseprite",
+    "frame": { "x": 0, "y": 0, "w": 55, "h": 55 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 55, "h": 55 },
+    "sourceSize": { "w": 55, "h": 55 },
+    "duration": 100
+   },
+   {
+    "filename": "ship animations 1.aseprite",
+    "frame": { "x": 55, "y": 0, "w": 55, "h": 55 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 55, "h": 55 },
+    "sourceSize": { "w": 55, "h": 55 },
+    "duration": 100
+   },
+   {
+    "filename": "ship animations 2.aseprite",
+    "frame": { "x": 110, "y": 0, "w": 55, "h": 55 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 55, "h": 55 },
+    "sourceSize": { "w": 55, "h": 55 },
+    "duration": 100
+   },
+   {
+    "filename": "ship animations 3.aseprite",
+    "frame": { "x": 0, "y": 55, "w": 55, "h": 55 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 55, "h": 55 },
+    "sourceSize": { "w": 55, "h": 55 },
+    "duration": 100
+   },
+   {
+    "filename": "ship animations 4.aseprite",
+    "frame": { "x": 0, "y": 0, "w": 55, "h": 55 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 55, "h": 55 },
+    "sourceSize": { "w": 55, "h": 55 },
+    "duration": 100
+   },
+   {
+    "filename": "ship animations 5.aseprite",
+    "frame": { "x": 55, "y": 55, "w": 55, "h": 55 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 55, "h": 55 },
+    "sourceSize": { "w": 55, "h": 55 },
+    "duration": 100
+   },
+   {
+    "filename": "ship animations 6.aseprite",
+    "frame": { "x": 110, "y": 55, "w": 55, "h": 55 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 55, "h": 55 },
+    "sourceSize": { "w": 55, "h": 55 },
+    "duration": 100
+   },
+   {
+    "filename": "ship animations 7.aseprite",
+    "frame": { "x": 0, "y": 110, "w": 55, "h": 55 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 55, "h": 55 },
+    "sourceSize": { "w": 55, "h": 55 },
+    "duration": 100
+   },
+   {
+    "filename": "ship animations 8.aseprite",
+    "frame": { "x": 55, "y": 110, "w": 55, "h": 55 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 55, "h": 55 },
+    "sourceSize": { "w": 55, "h": 55 },
+    "duration": 100
+   },
+   {
+    "filename": "ship animations 9.aseprite",
+    "frame": { "x": 110, "y": 110, "w": 55, "h": 55 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 55, "h": 55 },
+    "sourceSize": { "w": 55, "h": 55 },
+    "duration": 100
+   }
+ ],
+ "meta": {
+  "app": "https://www.aseprite.org/",
+  "version": "1.2.32-x64",
+  "image": "cutscene2_1.png",
+  "format": "RGBA8888",
+  "size": { "w": 165, "h": 165 },
+  "scale": "1",
+  "frameTags": [
+   { "name": "idle", "from": 0, "to": 0, "direction": "forward" },
+   { "name": "attack", "from": 1, "to": 7, "direction": "forward" },
+   { "name": "ship1", "from": 8, "to": 8, "direction": "forward" },
+   { "name": "ship2", "from": 9, "to": 9, "direction": "forward" }
+  ],
+  "layers": [
+   { "name": "Layer 1", "opacity": 255, "blendMode": "normal" },
+   { "name": "Layer 2", "opacity": 255, "blendMode": "normal" }
+  ],
+  "slices": [
+  ]
+ }
+}

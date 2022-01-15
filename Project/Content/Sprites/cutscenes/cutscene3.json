@@ -1,0 +1,70 @@
+{ "frames": [
+   {
+    "filename": "cutscene 0.aseprite",
+    "frame": { "x": 0, "y": 0, "w": 213, "h": 120 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 213, "h": 120 },
+    "sourceSize": { "w": 213, "h": 120 },
+    "duration": 500
+   },
+   {
+    "filename": "cutscene 1.aseprite",
+    "frame": { "x": 213, "y": 0, "w": 213, "h": 120 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 213, "h": 120 },
+    "sourceSize": { "w": 213, "h": 120 },
+    "duration": 500
+   },
+   {
+    "filename": "cutscene 2.aseprite",
+    "frame": { "x": 426, "y": 0, "w": 213, "h": 120 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 213, "h": 120 },
+    "sourceSize": { "w": 213, "h": 120 },
+    "duration": 500
+   },
+   {
+    "filename": "cutscene 3.aseprite",
+    "frame": { "x": 639, "y": 0, "w": 213, "h": 120 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 213, "h": 120 },
+    "sourceSize": { "w": 213, "h": 120 },
+    "duration": 500
+   },
+   {
+    "filename": "cutscene 4.aseprite",
+    "frame": { "x": 852, "y": 0, "w": 213, "h": 120 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 213, "h": 120 },
+    "sourceSize": { "w": 213, "h": 120 },
+    "duration": 500
+   }
+ ],
+ "meta": {
+  "app": "https://www.aseprite.org/",
+  "version": "1.2.32-x64",
+  "image": "cutscene3.png",
+  "format": "RGBA8888",
+  "size": { "w": 1065, "h": 120 },
+  "scale": "1",
+  "frameTags": [
+   { "name": "explosion", "from": 0, "to": 4, "direction": "forward" }
+  ],
+  "layers": [
+   { "name": "Layer 1", "opacity": 255, "blendMode": "normal" },
+   { "name": "Layer 2", "opacity": 59, "blendMode": "normal" },
+   { "name": "Layer 3", "opacity": 255, "blendMode": "normal" },
+   { "name": "Layer 4", "opacity": 255, "blendMode": "normal" },
+   { "name": "Layer 6", "opacity": 255, "blendMode": "normal" },
+   { "name": "Layer 7", "opacity": 255, "blendMode": "normal" },
+   { "name": "Layer 8", "opacity": 255, "blendMode": "normal" }
+  ],
+  "slices": [
+  ]
+ }
+}

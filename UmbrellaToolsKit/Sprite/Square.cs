@@ -11,7 +11,7 @@ namespace UmbrellaToolsKit.Sprite
     public class Square : GameObject
     {
 
-        public Color SquareColor;
+        public Color SquareColor = Color.White;
         public override void Start()
         {
             base.Start();

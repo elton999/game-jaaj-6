@@ -120,6 +120,76 @@
 /processorParam:Quality=Best
 /build:Sound/sfx_wpn_sword1.wav
 
+#begin Sprites/cutscenes/cutscene1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/cutscenes/cutscene1.png
+
+#begin Sprites/cutscenes/cutscene1_2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/cutscenes/cutscene1_2.png
+
+#begin Sprites/cutscenes/cutscene2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/cutscenes/cutscene2.png
+
+#begin Sprites/cutscenes/cutscene2_1.json
+/importer:AsepriteImporter
+/processor:AsepriteProcessor
+/build:Sprites/cutscenes/cutscene2_1.json;Sprites/cutscenes/cutscene2_1_animation.json
+
+#begin Sprites/cutscenes/cutscene2_1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/cutscenes/cutscene2_1.png
+
+#begin Sprites/cutscenes/cutscene3.json
+/importer:AsepriteImporter
+/processor:AsepriteProcessor
+/build:Sprites/cutscenes/cutscene3.json;Sprites/cutscenes/cutscene3_animation.json
+
+#begin Sprites/cutscenes/cutscene3.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/cutscenes/cutscene3.png
+
 #begin Sprites/gate.png
 /importer:TextureImporter
 /processor:TextureProcessor
