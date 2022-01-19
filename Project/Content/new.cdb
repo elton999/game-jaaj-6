@@ -1,5 +1,50 @@
 {
-	"sheets": [],
+	"sheets": [
+		{
+			"name": "dialogues",
+			"columns": [
+				{
+					"typeStr": "6:characters",
+					"name": "character"
+				},
+				{
+					"typeStr": "1",
+					"name": "text"
+				}
+			],
+			"lines": [
+				{
+					"text": "Jim? Can you hear me? Can … hear m … You are in a plane called (name), this planet has a funny gravity. We can’t rescue you from your current position, so you should go to a nearby mountem.",
+					"character": "Josie"
+				},
+				{
+					"character": "Jim",
+					"text": "I got it. What do you mean with “funny gravity”? Josie? Josie are you there? Oh no …"
+				}
+			],
+			"separators": [],
+			"props": {}
+		},
+		{
+			"name": "characters",
+			"columns": [
+				{
+					"typeStr": "0",
+					"name": "name"
+				}
+			],
+			"lines": [
+				{
+					"name": "Jim"
+				},
+				{
+					"name": "Josie"
+				}
+			],
+			"separators": [],
+			"props": {}
+		}
+	],
 	"customTypes": [],
-	"compress": false
+	"compress": true
 }
