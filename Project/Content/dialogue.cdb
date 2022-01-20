@@ -14,12 +14,28 @@
 			],
 			"lines": [
 				{
-					"text": "Jim? Can you hear me? Can … hear m … You are in a plane called (name), this planet has a funny gravity. We can’t rescue you from your current position, so you should go to a nearby mountem.",
+					"text": "Jim? Can you hear me? Can ... hear m ...",
 					"character": "Josie"
 				},
 				{
+					"character": "Josie",
+					"text": "You are in a plane called (name), this planet has a funny gravity."
+				},
+				{
+					"character": "Josie",
+					"text": "We cannot rescue you from your current position. So you should go to a nearby mountie."
+				},
+				{
 					"character": "Jim",
-					"text": "I got it. What do you mean with “funny gravity”? Josie? Josie are you there? Oh no …"
+					"text": "I got it."
+				},
+				{
+					"character": "Jim",
+					"text": "What do you mean with \"FUNNY GRAVITY\"?"
+				},
+				{
+					"character": "Jim",
+					"text": "Josie? Josie are you there? Oh no!"
 				}
 			],
 			"separators": [],

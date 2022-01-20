@@ -15,6 +15,9 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin dialogue.cdb
+/copy:dialogue.cdb
+
 #begin Kenney Rocket.ttf
 /copy:Kenney Rocket.ttf
 
@@ -61,9 +64,6 @@
 /importer:OgmoImporter
 /processor:OgmoProcessor
 /build:Maps/TileSettings.ogmo
-
-#begin new.cdb
-/copy:new.cdb
 
 #begin Shaders/circle.fx
 /importer:EffectImporter

@@ -62,7 +62,7 @@ namespace game_jaaj_6
         protected override void Update(GameTime gameTime)
         {
             //if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                //Exit();
+            //Exit();
 
             GameManagement.Update(gameTime);
 

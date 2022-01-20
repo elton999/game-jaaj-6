@@ -28,6 +28,9 @@ namespace game_jaaj_6
             SetValues();
             
             CurrentStatus = Status.LOADING;
+
+            if(SceneManagement.CurrentScene == 1)
+                Cutscene.CurrentScene = 7;
         }
 
         UI.Menu Menu;
@@ -103,6 +106,12 @@ namespace game_jaaj_6
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+            if (Cutscene.isShowingCutscene){
+                Cutscene.Update(gameTime);
+                return;
+            }else if (_canShowMenu)
+                Menu.Update(gameTime);
+                
             if (CurrentStatus != GameManagement.Status.LOADING)
             {
                 if (CurrentGameplayStatus == GameManagement.GameplayStatus.DEATH)
@@ -112,11 +121,6 @@ namespace game_jaaj_6
                     wait(1f, () => { transition.Open(); });
                 }
             }
-            if (Cutscene.isShowingCutscene)
-                Cutscene.Update(gameTime);
-            else if (_canShowMenu)
-                Menu.Update(gameTime);
-            
         }
 
         public override void Draw(SpriteBatch spriteBatch)

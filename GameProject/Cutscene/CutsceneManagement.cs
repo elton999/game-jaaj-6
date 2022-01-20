@@ -9,11 +9,12 @@ namespace game_jaaj_6.Cutscene
         public Scene mainScene;
         public GameManagement GameManagement;
         public int CurrentScene = 0;
-        public bool isShowingCutscene { get => CurrentScene < 5; }
+        public bool isShowingCutscene { get => CurrentScene < 5 || CurrentScene == 7; }
 
         public void Start()
         {
             CreateScene();
+            CreateCutscene6();
             CreateCutscene5();
             CreateCutscene4();
             CreateCutscene3();
@@ -75,6 +76,14 @@ namespace game_jaaj_6.Cutscene
         void CreateCutscene5()
         {
             var scene = new Scenes.Scene5();
+            scene.cutsceneManagement = this;
+            scene.Scene = mainScene;
+            scene.Start();
+        }
+
+        void CreateCutscene6()
+        {
+            var scene = new Scenes.Scene6();
             scene.cutsceneManagement = this;
             scene.Scene = mainScene;
             scene.Start();
