@@ -105,12 +105,13 @@ namespace game_jaaj_6
 
         public override void Update(GameTime gameTime)
         {
-            base.Update(gameTime);
             if (Cutscene.isShowingCutscene){
                 Cutscene.Update(gameTime);
                 return;
             }else if (_canShowMenu)
                 Menu.Update(gameTime);
+
+            base.Update(gameTime);
                 
             if (CurrentStatus != GameManagement.Status.LOADING)
             {

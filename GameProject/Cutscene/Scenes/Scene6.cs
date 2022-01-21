@@ -31,9 +31,15 @@ namespace game_jaaj_6.Cutscene.Scenes
             Dialogue = new Cutscene.Dialogue();
             Sprite = Scene.Content.Load<Texture2D>("Sprites/cutscenes/cutscene1");
             Font = Scene.Content.Load<SpriteFont>("Kenney_Rocket");
-            addText(currentText);
+
+            josieBody = new Rectangle(new Point(130,0), new Point(65, 120));
+            jimBody = new Rectangle(new Point(0,0), new Point(65, 120));
 
             InputHelper = new Input();
+            Position = Scene.Sizes.ToVector2() / 2f - josieBody.Size.ToVector2() / 2f;
+            Position = Position.ToPoint().ToVector2();
+
+            addText(currentText);
         }
 
         private void addText(int textIndex)
@@ -46,6 +52,9 @@ namespace game_jaaj_6.Cutscene.Scenes
             wordsPosition = new Vector2[numWords];
 
             setWords(textIndex, line);
+
+            if(line[textIndex].Character == "Jim") Body = jimBody;
+            else Body = josieBody;
         }
 
         private void setWords(int textIndex, Line[] line)
@@ -80,7 +89,7 @@ namespace game_jaaj_6.Cutscene.Scenes
 
             timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            if (timer > 0.2f && currentChar < allCharNumber)
+            if (timer > 0.12f && currentChar < allCharNumber)
             {
                 currentChar++;
                 timer = 0;
@@ -109,6 +118,7 @@ namespace game_jaaj_6.Cutscene.Scenes
             if (cutsceneManagement.CurrentScene != 7) return;
 
             BeginDraw(spriteBatch, false);
+            DrawSprite(spriteBatch);
             drawText(spriteBatch);
             EndDraw(spriteBatch);
         }
