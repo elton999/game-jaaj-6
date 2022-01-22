@@ -14,12 +14,12 @@
 			],
 			"lines": [
 				{
-					"text": "Jim? Can you hear me? Can ... hear m ...",
+					"text": "Jim? Can you hear me? Can ... hear m ... are y... ok?",
 					"character": "Josie"
 				},
 				{
 					"character": "Josie",
-					"text": "You are in a planet called (name), this planet has a funny gravity."
+					"text": "You're on Caju, this planet has a funny gravity."
 				},
 				{
 					"character": "Josie",

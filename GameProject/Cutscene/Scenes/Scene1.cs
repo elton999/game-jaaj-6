@@ -19,11 +19,9 @@ namespace game_jaaj_6.Cutscene.Scenes
         float speedShip1 = 10f / 1000f;
         float speedShip2 = 10f / 1000f;
         float speedShip3 = 5f / 1000f;
-        bool canstart = false;
         public override void Update(GameTime gameTime)
         {
-            if (Keyboard.GetState().IsKeyDown(Keys.Enter)) canstart = true;
-            if (cutsceneManagement.CurrentScene != 0 || !canstart) return;
+            if (cutsceneManagement.CurrentScene != 0) return;
             base.Update(gameTime);
             float delta = (float)gameTime.ElapsedGameTime.TotalMilliseconds;
             ship1Animation.Play(gameTime, "idle", AsepriteAnimation.AnimationDirection.FORWARD);

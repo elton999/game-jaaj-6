@@ -20,6 +20,7 @@ namespace game_jaaj_6.Cutscene.Scenes
 
             Position = Scene.Sizes.ToVector2() / 2f -  new Vector2(213, 120) / 2f;
             Position -= Scene.Camera.Origin;
+            Position = Position.ToPoint().ToVector2();
             Scene.Middleground.Add(this);
         }
 

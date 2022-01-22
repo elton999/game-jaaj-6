@@ -30,6 +30,10 @@ namespace game_jaaj_6.Cutscene
             backgroundColor = colors[currentColor];
         }
 
+        public void SetColor(int color){
+            backgroundColor = colors[color];
+        }
+
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);

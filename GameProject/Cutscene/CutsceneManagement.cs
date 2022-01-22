@@ -11,6 +11,8 @@ namespace game_jaaj_6.Cutscene
         public int CurrentScene = 0;
         public bool isShowingCutscene { get => CurrentScene < 5 || CurrentScene == 7; }
 
+        private Input Input;
+
         public void Start()
         {
             CreateScene();
@@ -20,6 +22,7 @@ namespace game_jaaj_6.Cutscene
             CreateCutscene3();
             CreateCutscene2();
             CreateCutscene1();
+            Input = new Input();
         }
 
         void CreateScene()
@@ -91,6 +94,7 @@ namespace game_jaaj_6.Cutscene
 
         public void Update(GameTime gameTime)
         {
+            if(CurrentScene < 4 && Input.KeyPress(Input.Button.CONFIRM)) CurrentScene++;
             mainScene.Update(gameTime);
         }
 

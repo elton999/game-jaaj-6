@@ -52,7 +52,7 @@ namespace game_jaaj_6.Cutscene.Scenes
             wordsPosition = new Vector2[numWords];
 
             setWords(textIndex, line);
-
+            
             if(line[textIndex].Character == "Jim") Body = jimBody;
             else Body = josieBody;
         }
@@ -96,6 +96,7 @@ namespace game_jaaj_6.Cutscene.Scenes
             }
 
             input();
+            cutsceneManagement.Background.SetColor(0);
         }
 
         private void input()
