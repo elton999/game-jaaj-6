@@ -37,7 +37,7 @@ namespace game_jaaj_6.Cutscene
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            Position = backgroundPosition;
+            Position = backgroundPosition.ToPoint().ToVector2();
             SpriteColor = backgroundColor;
         }
     }
