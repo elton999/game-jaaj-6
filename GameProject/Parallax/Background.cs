@@ -18,7 +18,10 @@ namespace game_jaaj_6.Parallax
         {
             float timer = (float)gameTime.ElapsedGameTime.TotalMilliseconds;
             if(this.Scene.Camera != null)
+            {
                 this.Position = Vector2.Subtract(Vector2.Lerp(this.Position, this.Scene.Camera.Position, timer * _speed), new Vector2(300, 100));
+                this.Position = this.Position.ToPoint().ToVector2();
+            }
             base.Update(gameTime);
         }
 
