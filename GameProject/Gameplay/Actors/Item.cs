@@ -41,7 +41,6 @@ namespace game_jaaj_6.Gameplay.Actors
             if (this.overlapCheck(player))
             {
                 player.OnCollision(this.tag);
-                //this.Destroy();
                 this.OnGetItem();
             }
         }

@@ -15,11 +15,7 @@
       "gridCellsX": 161,
       "gridCellsY": 57,
       "entities": [
-        {"name": "player", "id": 0, "_eid": "17388693", "x": 96, "y": 160, "originX": 0, "originY": 0},
-        {"name": "relic", "id": 1, "_eid": "52604338", "x": 160, "y": 160, "originX": 0, "originY": 0},
-        {"name": "relic", "id": 2, "_eid": "52604338", "x": 216, "y": 160, "originX": 0, "originY": 0},
-        {"name": "relic", "id": 3, "_eid": "52604338", "x": 272, "y": 96, "originX": 0, "originY": 0},
-        {"name": "relic", "id": 4, "_eid": "52604338", "x": 336, "y": 96, "originX": 0, "originY": 0}
+        {"name": "player", "id": 0, "_eid": "17388693", "x": 96, "y": 160, "originX": 0, "originY": 0}
       ]
     },
     {
