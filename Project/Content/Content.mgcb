@@ -70,6 +70,11 @@
 /processor:OgmoTileMapProcessor
 /build:Maps/level_7.json
 
+#begin Maps/level_8.json
+/importer:OgmoTileMapImporter
+/processor:OgmoTileMapProcessor
+/build:Maps/level_8.json
+
 #begin Maps/map.json
 /importer:OgmoTileMapImporter
 /processor:OgmoTileMapProcessor
