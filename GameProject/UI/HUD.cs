@@ -58,5 +58,11 @@ namespace game_jaaj_6.UI
 
             EndDraw(spriteBatch);
         }
+
+        public override void Dispose()
+        {
+            BlackBox.Dispose();
+            base.Dispose();
+        }
     }
 }

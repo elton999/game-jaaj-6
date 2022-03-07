@@ -15,6 +15,9 @@ namespace UmbrellaToolsKit
         public enum GameplayStatus { ALIVE, DEATH, };
         public GameplayStatus CurrentGameplayStatus;
 
+        public int LevelSelected = 0;
+        public int UnluckLevels = 0;
+
         public SceneManagement SceneManagement;
         public Game Game;
 
@@ -35,6 +38,15 @@ namespace UmbrellaToolsKit
         public override void Draw(SpriteBatch spriteBatch)
         {
             SceneManagement.Draw(spriteBatch);
+        }
+
+        public void UnluckNextLevel()
+        {
+            if(UnluckLevels == SceneManagement.CurrentScene -1)
+            {
+                UnluckLevels++;
+                LevelSelected++;
+            }
         }
     }
 }

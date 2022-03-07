@@ -541,5 +541,11 @@ namespace game_jaaj_6.Gameplay.Actors
             this.Ghost.Origins.Add(this.Origin);
             this.Ghost.SpriteEffects.Add(this.spriteEffect);
         }
+
+        public override void Dispose()
+        {
+            this._circlePath.Dispose();
+            base.Dispose();
+        }
     }
 }

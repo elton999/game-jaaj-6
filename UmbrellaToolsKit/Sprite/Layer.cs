@@ -40,5 +40,11 @@ namespace UmbrellaToolsKit.Sprite
             }
             EndDraw(spriteBatch);
         }
+
+        public override void Dispose()
+        {
+            tiles = null;
+            base.Dispose();
+        }
     }
 }

@@ -42,5 +42,11 @@ namespace game_jaaj_6.Gameplay
                 EndDraw(spriteBatch);
             }
         }
+
+        public override void Dispose()
+        {
+            _RenderTarget.Dispose();
+            base.Dispose();
+        }
     }
 }

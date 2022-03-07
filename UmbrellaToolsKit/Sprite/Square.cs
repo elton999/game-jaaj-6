@@ -31,5 +31,11 @@ namespace UmbrellaToolsKit.Sprite
             EndDraw(spriteBatch);
         }
 
+
+        public override void Dispose()
+        {
+            Sprite.Dispose();
+            base.Dispose();
+        }
     }
 }

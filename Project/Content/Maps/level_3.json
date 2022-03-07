@@ -4,6 +4,7 @@
   "height": 904,
   "offsetX": 0,
   "offsetY": 0,
+  "values": {"background": 1},
   "layers": [
     {
       "name": "Player",

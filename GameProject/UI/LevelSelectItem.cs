@@ -29,10 +29,10 @@ namespace game_jaaj_6.UI
         {
             if (!_isOnLevelSelect) return;
 
-            if (InputHelper.KeyPress(Input.Button.RIGHT) && LevelSelected < UnluckLevels)
-                LevelSelected++;
-            else if (InputHelper.KeyPress(Input.Button.LEFT) && LevelSelected > 0)
-                LevelSelected--;
+            if (InputHelper.KeyPress(Input.Button.RIGHT) && Scene.GameManagement.LevelSelected < Scene.GameManagement.UnluckLevels)
+                Scene.GameManagement.LevelSelected++;
+            else if (InputHelper.KeyPress(Input.Button.LEFT) && Scene.GameManagement.LevelSelected > 0)
+                Scene.GameManagement.LevelSelected--;
             else if (InputHelper.KeyPress(Input.Button.ESC))
             {
                 Scene.GameManagement.CurrentStatus = UmbrellaToolsKit.GameManagement.Status.MENU;
@@ -40,6 +40,7 @@ namespace game_jaaj_6.UI
             }
             else if (InputHelper.KeyPress(Input.Button.CONFIRM))
             {
+                Scene.GameManagement.SceneManagement.CurrentScene = Scene.GameManagement.LevelSelected + 1;
                 Scene.GameManagement.restart();
                 Scene.GameManagement.CurrentStatus = UmbrellaToolsKit.GameManagement.Status.LOADING;
             }
@@ -50,8 +51,7 @@ namespace game_jaaj_6.UI
         private Rectangle bodylucked;
         private Rectangle bodyUnlucked;
 
-        public int LevelSelected = 0;
-        public int UnluckLevels = 4;
+        
         
         private void SetPositionsOfMapLevelSelect()
         {
@@ -76,15 +76,16 @@ namespace game_jaaj_6.UI
         public override void Draw(SpriteBatch spriteBatch)
         {
             if (!_isOnLevelSelect) return;
+
             BeginDraw(spriteBatch);
             for (int i = 0; i < MenuMapPositions.Count; i++)
             {
                 Position = MenuMapPositions[i];
-                Body = i <= UnluckLevels ? bodyUnlucked : bodylucked;
-                Body = LevelSelected == i ? bodySelected : Body;
+                Body = i <= Scene.GameManagement.UnluckLevels ? bodyUnlucked : bodylucked;
+                Body = Scene.GameManagement.LevelSelected == i ? bodySelected : Body;
                 DrawSprite(spriteBatch);
 
-                if (LevelSelected == i)
+                if (Scene.GameManagement.LevelSelected == i)
                 {
                     Position.Y -= 8;
                     Body = bodyHeadInfo;

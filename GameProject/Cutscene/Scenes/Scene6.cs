@@ -101,17 +101,35 @@ namespace game_jaaj_6.Cutscene.Scenes
 
         private void input()
         {
-            if (InputHelper.KeyPress(Input.Button.CONFIRM))
+            if (!InputHelper.KeyPress(Input.Button.CONFIRM)) return;
+
+            if (currentChar < allCharNumber)
             {
-                if (currentChar < allCharNumber)
-                    currentChar = allCharNumber;
-                else {
-                    currentText++;
-                    if(currentText >= Dialogue.Castledb.Sheets[0].Lines.Length)
-                        cutsceneManagement.CurrentScene++;
-                    else addText(currentText);
-                }
+                currentChar = allCharNumber;
             }
+            else
+            {
+                CompleteAllText();
+            }
+        }
+
+        private void CompleteAllText()
+        {
+            currentText++;
+            if (currentText >= Dialogue.Castledb.Sheets[0].Lines.Length)
+            {
+                ResetText();
+                cutsceneManagement.CurrentScene++;
+            }
+            else addText(currentText);
+        }
+
+        private void ResetText()
+        {
+            currentText = 0;
+            currentChar = 0;
+            allCharNumber = 0;
+            addText(currentText);
         }
 
         public override void Draw(SpriteBatch spriteBatch)

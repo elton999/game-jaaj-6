@@ -11,7 +11,7 @@ namespace game_jaaj_6.Gameplay.Actors
 {
     public class EndLevel : Actor
     {
-        private int MaxNumberOfLevels = 5;
+        private int MaxNumberOfLevels = 10;
         public override void Start()
         {
             System.Console.WriteLine("start");
@@ -28,24 +28,27 @@ namespace game_jaaj_6.Gameplay.Actors
             {
                 FinishLevelSound.Play();
                 _isChangingLevel = true;
-                int nextScene = this.Scene.GameManagement.SceneManagement.CurrentScene + 1;
-                float updateDataTime = this.Scene.GameManagement.SceneManagement.MainScene.updateDataTime;
+                
+                Scene.GameManagement.UnluckNextLevel();
+
+                int nextScene = Scene.GameManagement.SceneManagement.CurrentScene + 1;
+                float updateDataTime = Scene.GameManagement.SceneManagement.MainScene.updateDataTime;
 
                 if (nextScene < MaxNumberOfLevels + 1)
                 {
-                    this.Scene.GameManagement.CurrentStatus = UmbrellaToolsKit.GameManagement.Status.PAUSE;
+                    Scene.GameManagement.CurrentStatus = UmbrellaToolsKit.GameManagement.Status.PAUSE;
                     wait(2.0f, () =>
                     {
-                        this.Scene.GameManagement.SceneManagement.CurrentScene = nextScene;
-                        this.Scene.GameManagement.restart();
+                        Scene.GameManagement.SceneManagement.MainScene.Dispose();
+                        Scene.GameManagement.CurrentStatus = UmbrellaToolsKit.GameManagement.Status.LEVEL_SELECT;
                     });
                 }
                 else
                 {
-                    this.Scene.GameManagement.CurrentStatus = UmbrellaToolsKit.GameManagement.Status.PAUSE;
+                    Scene.GameManagement.CurrentStatus = UmbrellaToolsKit.GameManagement.Status.PAUSE;
                     wait(2.0f, () =>
                     {
-                        this.Scene.GameManagement.CurrentStatus = UmbrellaToolsKit.GameManagement.Status.CREDITS;
+                        Scene.GameManagement.CurrentStatus = UmbrellaToolsKit.GameManagement.Status.CREDITS;
                     });
                 }
             }

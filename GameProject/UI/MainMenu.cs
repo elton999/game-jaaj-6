@@ -125,8 +125,6 @@ namespace game_jaaj_6.UI
             else
                 DrawMenuItems(spriteBatch);
             EndDraw(spriteBatch);
-
-            
         }
 
         private void DrawLogo(SpriteBatch spriteBatch)

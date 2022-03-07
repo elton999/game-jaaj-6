@@ -55,10 +55,10 @@ namespace UmbrellaToolsKit.Ogmo
                 }
                 else if (layer.entities.Count() > 0)
                 {
-                    System.Console.WriteLine($"Loading Entities: {layer.name} ");
+                    Console.WriteLine($"Loading Entities: {layer.name} ");
                     foreach (TileMapEntity entity in layer.entities)
                     {
-                        System.Console.Write(".");
+                        Console.Write(".");
                         if (AssetManagement.Instance != null)
                         {
                             AssetManagement.Instance.addEntityOnScene(
@@ -73,8 +73,8 @@ namespace UmbrellaToolsKit.Ogmo
                     }
                 }
             }
-
-
+            Content.Dispose();
+            Content.Unload();
         }
     }
 

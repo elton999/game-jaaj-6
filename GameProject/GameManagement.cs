@@ -15,7 +15,6 @@ namespace game_jaaj_6
 
         public override void restart()
         {
-            SceneManagement.CurrentScene = 5;
             SceneManagement.Start();
             SceneManagement.MainScene.GameManagement = this;
             SceneManagement.MainScene.updateDataTime = 1f / 60f;
@@ -34,7 +33,7 @@ namespace game_jaaj_6
         }
 
         UI.Menu Menu;
-        private void CreateMenu()
+        public void CreateMenu()
         {
             Menu = new UI.Menu();
             Menu.GameManagement = this;
@@ -49,20 +48,26 @@ namespace game_jaaj_6
             Cutscene.Start();
         }
 
+        UI.TitleLevelDisplay LevelTitle;
         private void CreateLevelDisplay()
         {
-            var levelTitle = new UI.TitleLevelDisplay();
-            levelTitle.Scene = SceneManagement.MainScene;
-            levelTitle.Scene.UI.Add(levelTitle);
-            levelTitle.Start();
+            if (LevelTitle != null)
+                LevelTitle.Dispose();
+            LevelTitle = new UI.TitleLevelDisplay();
+            LevelTitle.Scene = SceneManagement.MainScene;
+            LevelTitle.Scene.UI.Add(LevelTitle);
+            LevelTitle.Start();
         }
 
+        UI.HUD HUD;
         private void CreateHUD()
         {
-            var hud = new UI.HUD();
-            hud.Scene = SceneManagement.MainScene;
-            hud.Scene.UI.Add(hud);
-            hud.Start();
+            if(HUD != null)
+                HUD.Dispose();
+            HUD = new UI.HUD();
+            HUD.Scene = SceneManagement.MainScene;
+            HUD.Scene.UI.Add(HUD);
+            HUD.Start();
         }
 
         private void CreateParallax()

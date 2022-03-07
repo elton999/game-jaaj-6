@@ -12,7 +12,6 @@ namespace game_jaaj_6.UI
         public override void Start()
         {
             this.tag = "Display Level";
-            base.Start();
             this.Font = this.Scene.Content.Load<SpriteFont>("Kenney_Rocket_Big");
 
             this.Position = new Vector2(-100, this.Scene.Sizes.Y / 2f);
@@ -76,6 +75,13 @@ namespace game_jaaj_6.UI
             int level = this.Scene.GameManagement.SceneManagement.CurrentScene;
             spriteBatch.DrawString(this.Font, $"level {level}", this.Position, this.SpriteColor);
             EndDraw(spriteBatch);
+        }
+
+        public override void Dispose()
+        {
+
+            Background.Dispose();
+            base.Dispose();
         }
     }
 }

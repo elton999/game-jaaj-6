@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -10,7 +7,7 @@ using UmbrellaToolsKit.UI;
 
 namespace UmbrellaToolsKit
 {
-    public class GameObject
+    public class GameObject : IDisposable
     {
         public Vector2 Position = Vector2.Zero;
         public Vector2 Origin = Vector2.Zero;
@@ -47,7 +44,10 @@ namespace UmbrellaToolsKit
 
         public virtual void DrawBeforeScene(SpriteBatch spriteBatch){}
 
-
+        public virtual void Dispose()
+        {
+            GC.SuppressFinalize(this);
+        }
 
         public Vector2 _bodySize;
         public float Density = 0f;

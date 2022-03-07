@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Linq;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
@@ -7,7 +8,7 @@ using UmbrellaToolsKit.Collision;
 
 namespace UmbrellaToolsKit
 {
-    public class Scene
+    public class Scene : IDisposable
     {
         public Scene(GraphicsDevice ScreemGraphicsDevice, ContentManager Content)
         {
@@ -53,6 +54,7 @@ namespace UmbrellaToolsKit
         private int Height = 240;
         public GraphicsDevice ScreemGraphicsDevice;
         public ContentManager Content;
+        public ContentManager ContentTileMap;
 
         private Color BackgroundColor = Color.CornflowerBlue;
 
@@ -95,14 +97,17 @@ namespace UmbrellaToolsKit
 
         public void SetLevelByName(string name)
         {
-            System.Console.WriteLine($"Level: {MapPath + name}");
-            this.CreateCamera();
+            ContentTileMap = new ContentManager(GameManagement.Game.Services, "Content");
 
-            this.tileMap = Content.Load<Ogmo.TileMap>(MapPath + name);
+            System.Console.WriteLine($"Level: {MapPath + name}");
+            CreateCamera();
+
+            tileMap = ContentTileMap.Load<Ogmo.TileMap>(MapPath + name);
+            tileMap.Content = ContentTileMap;
 
             Texture2D _tilemapSprite = Content.Load<Texture2D>(this.TileMapPath);
 
-            this.tileMap.Create(this, this.tileMap, _tilemapSprite);
+            tileMap.Create(this, this.tileMap, _tilemapSprite);
             this.CreateBackBuffer();
 
             this.LevelReady = true;
@@ -304,5 +309,25 @@ namespace UmbrellaToolsKit
             spriteBatch.End();
         }
         #endregion
+
+        public void Dispose()
+        {
+            foreach(List<GameObject> layer in SortLayers)
+            {
+                foreach(GameObject gameObject in layer)
+                {
+                    gameObject.Dispose();
+                }
+            }
+
+            foreach (GameObject gameObject in UI)
+            {
+                gameObject.Dispose();
+            }
+
+            GC.SuppressFinalize(this);
+
+            LevelReady = false;
+        }
     }
 }
