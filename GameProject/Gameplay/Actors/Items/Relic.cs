@@ -18,11 +18,15 @@ namespace game_jaaj_6.Gameplay.Actors.Items
             Animation = new AsepriteAnimation(Content.Load<AsepriteDefinitions>("Sprites/relic animation"));
             base.Start();
             FeedBackFX.CurrentType = UI.ItemFeedBackFX.Type.RELIC;
+
+            Scene.GameManagement.Values["AllRelicsOnLevel"] = (int)Scene.GameManagement.Values["AllRelicsOnLevel"] + 1;
         }
 
         public override void OnGetItem()
         {
             base.OnGetItem();
+            if(!destroyAnimation)
+                Scene.GameManagement.Values["AllRelicsCollected"] = (int)Scene.GameManagement.Values["AllRelicsCollected"] + 1;
             destroyAnimation = true;
         }
 

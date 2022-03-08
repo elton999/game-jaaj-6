@@ -15,6 +15,7 @@ namespace game_jaaj_6
 
         public override void restart()
         {
+            SetValues();
             SceneManagement.Start();
             SceneManagement.MainScene.GameManagement = this;
             SceneManagement.MainScene.updateDataTime = 1f / 60f;
@@ -24,7 +25,6 @@ namespace game_jaaj_6
             CreateParallax();
             CreateLevelDisplay();
             CreateHUD();
-            SetValues();
             
             CurrentStatus = Status.LOADING;
 
@@ -93,12 +93,13 @@ namespace game_jaaj_6
             {
                 Values.Add("key", false);
                 Values.Add("freeze", false);
+                Values.Add("AllRelicsOnLevel", 0);
+                Values.Add("AllRelicsCollected", 0);
             }
-            else
-            {
-                Values["key"] = false;
-                Values["freeze"] = false;
-            }
+            Values["key"] = false;
+            Values["freeze"] = false;
+            Values["AllRelicsOnLevel"] = 0;
+            Values["AllRelicsCollected"] = 0;
         }
 
         private bool _canShowMenu { get => 
