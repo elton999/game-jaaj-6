@@ -138,6 +138,12 @@
 /processorParam:Quality=Best
 /build:Sound/key.ogg
 
+#begin Sound/on get relic.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sound/on get relic.wav
+
 #begin Sound/sfx_thouch_ground.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

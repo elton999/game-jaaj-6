@@ -6,10 +6,14 @@ namespace game_jaaj_6.Parallax
 {
     public class Background : GameObject
     {
+        private int _spriteBackground = 1;
+
         public override void Start()
         {
             base.Start();
-            this.Sprite = Scene.Content.Load<Texture2D>("Sprites/sky");
+            int currentLevel = Scene.GameManagement.SceneManagement.CurrentScene;
+            _spriteBackground = currentLevel > 5 ? 2 : 1;
+            this.Sprite = Scene.Content.Load<Texture2D>($"Sprites/sky{_spriteBackground}");
             this.SamplerState = SamplerState.LinearWrap;
         }
 

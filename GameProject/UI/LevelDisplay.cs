@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using UmbrellaToolsKit;
@@ -37,34 +38,32 @@ namespace game_jaaj_6.UI
         public override void Update(GameTime gameTime)
         {
             if (this.Scene.GameManagement.CurrentStatus != UmbrellaToolsKit.GameManagement.Status.LOADING) return;
-            if (!AnimationEnd)
-            {
-                timer += (float)gameTime.ElapsedGameTime.Milliseconds;
-                if (!ShowLevel)
-                {
-                    float moveTo = AnimationStart ? 270f : 426f;
-                    this.Position.X = EaseOutQuad(timer, this.InitialPosition.X, moveTo, 1000.0f);
-                }
-                else if (ShowLevel)
-                    Background.Position.Y = LinearTween(timer, 0, -426.0f, 1000.0f);
 
-                if (timer > 1000.0f)
-                {
-                    if (AnimationStart)
-                    {
-                        AnimationStart = false;
-                        this.InitialPosition.X = this.Position.X;
-                    }
-                    else if (!AnimationStart && !ShowLevel)
-                        ShowLevel = true;
-                    else if (!AnimationStart && ShowLevel)
-                    {
-                        AnimationEnd = true;
-                        this.Scene.GameManagement.CurrentStatus = UmbrellaToolsKit.GameManagement.Status.PLAYING;
-                    }
-                    timer = 0;
-                }
+            if (AnimationEnd) return;
+            
+            timer += (float)gameTime.ElapsedGameTime.Milliseconds;
+            if (!ShowLevel)
+            {
+                float moveTo = AnimationStart ? 270f : 426f;
+                this.Position.X = EaseOutQuad(timer, this.InitialPosition.X, moveTo, 1000.0f);
             }
+
+            Background.Position.Y = ShowLevel ? LinearTween(timer, 0, -426.0f, 1000.0f) : Background.Position.Y;
+
+            if (timer < 1000.0f) return;
+            if (AnimationStart)
+            {
+                AnimationStart = false;
+                this.InitialPosition.X = this.Position.X;
+            }
+            else if (!AnimationStart && !ShowLevel)
+                ShowLevel = true;
+            else if (!AnimationStart && ShowLevel)
+            {
+                AnimationEnd = true;
+                this.Scene.GameManagement.CurrentStatus = UmbrellaToolsKit.GameManagement.Status.PLAYING;
+            }
+            timer = 0;
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -79,7 +78,6 @@ namespace game_jaaj_6.UI
 
         public override void Dispose()
         {
-
             Background.Dispose();
             base.Dispose();
         }

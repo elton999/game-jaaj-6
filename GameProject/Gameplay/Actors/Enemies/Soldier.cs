@@ -14,8 +14,6 @@ namespace game_jaaj_6.Gameplay.Actors.Enemies
         {
             base.Start();
             this.tag = "soldier";
-            this._box.SquareColor = Color.Purple;
-            this._box.Start();
             this._speed = -0.10f;
             
             Sprite = Content.Load<Texture2D>("Sprites/robot");

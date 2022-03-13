@@ -312,7 +312,9 @@ namespace UmbrellaToolsKit
 
         public void Dispose()
         {
-            foreach(List<GameObject> layer in SortLayers)
+            this._BackBuffer.Dispose();
+
+            foreach (List<GameObject> layer in SortLayers)
             {
                 foreach(GameObject gameObject in layer)
                 {
@@ -326,6 +328,7 @@ namespace UmbrellaToolsKit
             }
 
             GC.SuppressFinalize(this);
+            GC.Collect();
 
             LevelReady = false;
         }

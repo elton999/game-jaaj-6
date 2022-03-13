@@ -1,5 +1,7 @@
 ﻿using System;
 using System.IO;
+using System.Collections;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -27,10 +29,6 @@ namespace game_jaaj_6
         protected override void Initialize()
         {
             ScreenController = new ScreenController(_graphics, 0);
-            //_graphics.PreferredBackBufferWidth = 426 * 4;
-            //_graphics.PreferredBackBufferHeight = 240 * 4;
-            //_graphics.ApplyChanges();
-
             base.Initialize();
         }
 
@@ -61,9 +59,6 @@ namespace game_jaaj_6
 
         protected override void Update(GameTime gameTime)
         {
-            //if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-            //Exit();
-
             GameManagement.Update(gameTime);
 
             base.Update(gameTime);
