@@ -116,7 +116,7 @@
 
 #begin Sound/door.ogg
 /importer:OggImporter
-/processor:SoundEffectProcessor
+/processor:SongProcessor
 /processorParam:Quality=Best
 /build:Sound/door.ogg
 
@@ -137,6 +137,12 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Sound/key.ogg
+
+#begin Sound/music.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Sound/music.mp3
 
 #begin Sound/on get relic.wav
 /importer:WavImporter

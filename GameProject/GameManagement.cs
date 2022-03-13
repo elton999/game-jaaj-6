@@ -1,14 +1,19 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Media;
 using UmbrellaToolsKit;
 
 namespace game_jaaj_6
 {
     public class GameManagement : UmbrellaToolsKit.GameManagement
     {
+        private Song _backgroundMusic;
         public override void Start()
         {
             base.Start();
+            _backgroundMusic = Game.Content.Load<Song>("Sound/music");
+            MediaPlayer.Play(_backgroundMusic, new System.TimeSpan(0, 0, 11));
+            MediaPlayer.IsRepeating = true;
             CreateMenu();
             CreateCutScene();
         }

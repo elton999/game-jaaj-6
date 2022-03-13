@@ -60,6 +60,12 @@ namespace game_jaaj_6.UI
             _creditsList.Add(SmallFont, "Mom and Dad", 30);
             _creditsList.Add(SmallFont, "Josue Cortes", 30);
             _creditsList.Add(SmallFont, "Gustavo Albuquerque", 30);
+            _creditsList.Add(SmallFont, "Fun l.mp3 by Eggy Toast is licensed under a", 40);
+            _creditsList.Add(SmallFont, "Attribution-NonCommercial-ShareAlike", 40);
+            _creditsList.Add(SmallFont, "4.0 International License", 40);
+            _creditsList.Add(SmallFont, "https://freemusicarchive.org/music/eggy-toast", 40);
+            _creditsList.Add(SmallFont, "/game-music/funmp3", 40);
+
         }
 
         private bool _isOnCredits { get => Scene.GameManagement.CurrentStatus == UmbrellaToolsKit.GameManagement.Status.CREDITS; }
