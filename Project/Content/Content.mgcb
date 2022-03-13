@@ -126,11 +126,11 @@
 /processorParam:Quality=Best
 /build:Sound/explosionCrunch_002.ogg
 
-#begin Sound/finish level.ogg
-/importer:OggImporter
+#begin Sound/finish level.wav
+/importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Sound/finish level.ogg
+/build:Sound/finish level.wav
 
 #begin Sound/key.ogg
 /importer:OggImporter
@@ -300,7 +300,7 @@
 /processor:AsepriteProcessor
 /build:Sprites/robot_animation.json
 
-#begin Sprites/sky.png
+#begin Sprites/sky1.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -310,7 +310,19 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Sprites/sky.png
+/build:Sprites/sky1.png
+
+#begin Sprites/sky2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/sky2.png
 
 #begin Sprites/tilemap.png
 /importer:TextureImporter
