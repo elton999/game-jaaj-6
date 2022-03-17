@@ -1,8 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System.Collections.Generic;
+using Microsoft.Xna.Framework.Audio;
 using UmbrellaToolsKit;
-using UmbrellaToolsKit.Sprite;
 
 namespace game_jaaj_6.Cutscene.Scenes
 {
@@ -10,19 +9,24 @@ namespace game_jaaj_6.Cutscene.Scenes
     {
         Rectangle josieBody;
         Rectangle jimBody;
+        
         string[] words;
         Vector2[] wordsPosition;
         int currentText = 0;
         int currentChar = 0;
         int allCharNumber = 0;
         int spaceBetweenWords = 8;
+        Dialogue Dialogue;
+
         Vector2 textPosition = new Vector2(106, 185);
-        Cutscene.Dialogue Dialogue;
+        
         SpriteFont Font;
 
-        public CutsceneManagement cutsceneManagement;
-
         Input InputHelper;
+
+        private SoundEffect _tone;
+
+        public CutsceneManagement cutsceneManagement;
 
         public override void Start()
         {
@@ -31,6 +35,7 @@ namespace game_jaaj_6.Cutscene.Scenes
             Dialogue = new Cutscene.Dialogue();
             Sprite = Scene.Content.Load<Texture2D>("Sprites/cutscenes/cutscene1");
             Font = Scene.Content.Load<SpriteFont>("Kenney_Rocket");
+            _tone = Scene.Content.Load<SoundEffect>("Sound/sfx_dialogue_tone");
 
             josieBody = new Rectangle(new Point(130,0), new Point(65, 120));
             jimBody = new Rectangle(new Point(0,0), new Point(65, 120));
@@ -93,6 +98,7 @@ namespace game_jaaj_6.Cutscene.Scenes
             {
                 currentChar++;
                 timer = 0;
+                _tone.Play();
             }
 
             input();

@@ -36,19 +36,19 @@ namespace game_jaaj_6.Gameplay.Actors
 
                 if (nextScene < MaxNumberOfLevels + 1)
                 {
-                    Scene.GameManagement.CurrentStatus = UmbrellaToolsKit.GameManagement.Status.PAUSE;
+                    Scene.GameManagement.CurrentStatus = GameManagement.Status.PAUSE;
                     wait(2.0f, () =>
                     {
                         Scene.GameManagement.SceneManagement.MainScene.Dispose();
-                        Scene.GameManagement.CurrentStatus = UmbrellaToolsKit.GameManagement.Status.LEVEL_SELECT;
+                        Scene.GameManagement.CurrentStatus = GameManagement.Status.LEVEL_SELECT;
                     });
                 }
                 else
                 {
-                    Scene.GameManagement.CurrentStatus = UmbrellaToolsKit.GameManagement.Status.PAUSE;
+                    Scene.GameManagement.CurrentStatus = GameManagement.Status.PAUSE;
                     wait(2.0f, () =>
                     {
-                        Scene.GameManagement.CurrentStatus = UmbrellaToolsKit.GameManagement.Status.CREDITS;
+                        Scene.GameManagement.CurrentStatus = GameManagement.Status.CREDITS;
                     });
                 }
             }

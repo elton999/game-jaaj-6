@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.Collections.Generic;
 using UmbrellaToolsKit;
 
@@ -119,8 +118,8 @@ namespace game_jaaj_6.UI
             for (int i = 0; i < MenuItems.Count; i++)
             {
                 int currentOption = currentItemOption[i];
-                spriteBatch.DrawString(this.Font, MenuItems[i].Name + ":", new Vector2(150, 140 + (i * 10)), Color.White);
-                spriteBatch.DrawString(this.Font, MenuItems[i].options[currentOption], new Vector2(240, 140 + (i * 10)), Color.Gray);
+                spriteBatch.DrawString(Font, MenuItems[i].Name + ":", new Vector2(150, 140 + (i * 10)), Color.White);
+                spriteBatch.DrawString(Font, MenuItems[i].options[currentOption], new Vector2(240, 140 + (i * 10)), Color.Gray);
             }
         }
 
@@ -131,7 +130,7 @@ namespace game_jaaj_6.UI
                 SpriteSelecPosition - ((MenuItems.Count - 1 - itemSelected) * new Vector2(0, 10)), 
                 SpriteSelectBody, 
                 Color.White
-                );
+            );
         }
     }
 }

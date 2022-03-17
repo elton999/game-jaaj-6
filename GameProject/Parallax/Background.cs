@@ -13,8 +13,8 @@ namespace game_jaaj_6.Parallax
             base.Start();
             int currentLevel = Scene.GameManagement.SceneManagement.CurrentScene;
             _spriteBackground = currentLevel > 5 ? 2 : 1;
-            this.Sprite = Scene.Content.Load<Texture2D>($"Sprites/sky{_spriteBackground}");
-            this.SamplerState = SamplerState.LinearWrap;
+            Sprite = Scene.Content.Load<Texture2D>($"Sprites/sky{_spriteBackground}");
+            SamplerState = SamplerState.LinearWrap;
         }
 
         float _speed = 0.05f;
@@ -23,8 +23,8 @@ namespace game_jaaj_6.Parallax
             float timer = (float)gameTime.ElapsedGameTime.TotalMilliseconds;
             if(this.Scene.Camera != null)
             {
-                this.Position = Vector2.Subtract(Vector2.Lerp(this.Position, this.Scene.Camera.Position, timer * _speed), new Vector2(300, 100));
-                this.Position = this.Position.ToPoint().ToVector2();
+                Position = Vector2.Lerp(Position, Scene.Camera.Position, timer * _speed) - new Vector2(300, 100);
+                Position = Position.ToPoint().ToVector2();
             }
             base.Update(gameTime);
         }

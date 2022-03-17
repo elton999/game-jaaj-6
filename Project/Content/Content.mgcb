@@ -116,7 +116,7 @@
 
 #begin Sound/door.ogg
 /importer:OggImporter
-/processor:SongProcessor
+/processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Sound/door.ogg
 
@@ -149,6 +149,18 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Sound/on get relic.wav
+
+#begin Sound/sfx_button_select.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sound/sfx_button_select.wav
+
+#begin Sound/sfx_dialogue_tone.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sound/sfx_dialogue_tone.ogg
 
 #begin Sound/sfx_thouch_ground.wav
 /importer:WavImporter

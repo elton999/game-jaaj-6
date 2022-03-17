@@ -68,7 +68,8 @@
         {"name": "demage", "id": 30, "_eid": "48625522", "x": 544, "y": 728, "width": 40, "height": 32, "originX": 0, "originY": 0},
         {"name": "demage", "id": 31, "_eid": "48625522", "x": 632, "y": 728, "width": 40, "height": 32, "originX": 0, "originY": 0},
         {"name": "demage", "id": 43, "_eid": "48625522", "x": 1128, "y": 328, "width": 8, "height": 304, "originX": 0, "originY": 0},
-        {"name": "endLevel", "id": 44, "_eid": "48171102", "x": 1055, "y": 327, "width": 40, "height": 16, "originX": 0, "originY": 0}
+        {"name": "endLevel", "id": 44, "_eid": "48171102", "x": 1055, "y": 327, "width": 40, "height": 16, "originX": 0, "originY": 0},
+        {"name": "light end game", "id": 45, "_eid": "47899995", "x": 1072, "y": 296, "originX": 0, "originY": 0}
       ]
     },
     {

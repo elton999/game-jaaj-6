@@ -55,7 +55,8 @@
         {"name": "demage", "id": 13, "_eid": "48625522", "x": 1792, "y": 248, "width": 8, "height": 96, "originX": 0, "originY": 0},
         {"name": "demage", "id": 14, "_eid": "48625522", "x": 1184, "y": 160, "width": 8, "height": 152, "originX": 0, "originY": 0},
         {"name": "demage", "id": 15, "_eid": "48625522", "x": 1224, "y": 256, "width": 72, "height": 8, "originX": 0, "originY": 0},
-        {"name": "demage", "id": 16, "_eid": "48625522", "x": 480, "y": 256, "width": 8, "height": 128, "originX": 0, "originY": 0}
+        {"name": "demage", "id": 16, "_eid": "48625522", "x": 480, "y": 256, "width": 8, "height": 128, "originX": 0, "originY": 0},
+        {"name": "light end game", "id": 17, "_eid": "47899995", "x": 560, "y": 440, "originX": 0, "originY": 0}
       ]
     },
     {

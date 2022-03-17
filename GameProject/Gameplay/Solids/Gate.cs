@@ -53,8 +53,6 @@ namespace game_jaaj_6.Gameplay.Solids
 
                 this.Anim.Play(gameTime, "idle", AsepriteAnimation.AnimationDirection.LOOP);
             }
-
-            base.UpdateData(gameTime);
         }
 
         public override void Destroy()

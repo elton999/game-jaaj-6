@@ -2,12 +2,27 @@
 using UmbrellaToolsKit;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
+using game_jaaj_6.Interfaces;
 
 namespace game_jaaj_6.UI
 {
-    public class LevelSelectItem : GameObject
+    public class LevelSelectItem : GameObject, IMenu
     {
+        private bool _isOnLevelSelect
+        {
+            get => this.Scene.GameManagement.CurrentStatus == GameManagement.Status.LEVEL_SELECT;
+        }
+
+        private Input InputHelper;
+        private Rectangle bodyHeadInfo;
+
+        private List<Vector2> MenuMapPositions;
+        private Rectangle bodySelected;
+        private Rectangle bodylucked;
+        private Rectangle bodyUnlucked;
+
+        public Menu Menu { get; set; }
+
         public override void Start()
         {
             base.Start();
@@ -23,8 +38,6 @@ namespace game_jaaj_6.UI
             InputHelper.ResetStatus();
         }
 
-        Input InputHelper;
-        Rectangle bodyHeadInfo;
         public override void Update(GameTime gameTime)
         {
             if (!_isOnLevelSelect) return;
@@ -35,24 +48,18 @@ namespace game_jaaj_6.UI
                 Scene.GameManagement.LevelSelected--;
             else if (InputHelper.KeyPress(Input.Button.ESC))
             {
-                Scene.GameManagement.CurrentStatus = UmbrellaToolsKit.GameManagement.Status.MENU;
+                Scene.GameManagement.CurrentStatus = GameManagement.Status.MENU;
                 InputHelper.ResetStatus();
             }
             else if (InputHelper.KeyPress(Input.Button.CONFIRM))
             {
                 Scene.GameManagement.SceneManagement.CurrentScene = Scene.GameManagement.LevelSelected + 1;
                 Scene.GameManagement.restart();
-                Scene.GameManagement.CurrentStatus = UmbrellaToolsKit.GameManagement.Status.LOADING;
+                Scene.GameManagement.CurrentStatus = GameManagement.Status.LOADING;
+                Menu.SelectedSound.Play();
             }
         }
 
-        private List<Vector2> MenuMapPositions;
-        private Rectangle bodySelected;
-        private Rectangle bodylucked;
-        private Rectangle bodyUnlucked;
-
-        
-        
         private void SetPositionsOfMapLevelSelect()
         {
             MenuMapPositions = new List<Vector2>();
@@ -66,11 +73,6 @@ namespace game_jaaj_6.UI
             MenuMapPositions.Add(new Vector2(37 * 8, 16 * 8));
             MenuMapPositions.Add(new Vector2(37 * 8, 10 * 8));
             MenuMapPositions.Add(new Vector2(37 * 8, 4 * 8));
-        }
-
-        private bool _isOnLevelSelect
-        {
-            get => this.Scene.GameManagement.CurrentStatus == UmbrellaToolsKit.GameManagement.Status.LEVEL_SELECT;
         }
 
         public override void Draw(SpriteBatch spriteBatch)

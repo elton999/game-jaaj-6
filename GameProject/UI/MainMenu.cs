@@ -1,16 +1,20 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using game_jaaj_6.Interfaces;
 using UmbrellaToolsKit;
 using System.Collections.Generic;
 
 namespace game_jaaj_6.UI
 {
-    class MainMenu : GameObject
+    class MainMenu : GameObject, IMenu
     {
         SpriteFont Font;
         Point TextSize;
         string Text = "- press any key to start -";
         Point ScreenSize = new Point(426, 240);
+
+        public Menu Menu { get; set; }
+
         public override void Start()
         {
             base.Start();
@@ -58,8 +62,9 @@ namespace game_jaaj_6.UI
         {
             InputCheck();
 
-            if (InputHelper.PressAnyButton())
+            if (InputHelper.PressAnyButton() && !ShowMenu)
             {
+                Menu.SelectedSound.Play();
                 ShowMenu = true;
                 InputHelper.ResetStatus();
             }
@@ -79,16 +84,17 @@ namespace game_jaaj_6.UI
 
         private void executeSelectedItem()
         {
+            Menu.SelectedSound.Play();
             switch (itemSelected)
             {
                 case 0:
-                    Scene.GameManagement.CurrentStatus = UmbrellaToolsKit.GameManagement.Status.LEVEL_SELECT;
+                    Scene.GameManagement.CurrentStatus = GameManagement.Status.LEVEL_SELECT;
                     break;
                 case 1:
-                    Scene.GameManagement.CurrentStatus = UmbrellaToolsKit.GameManagement.Status.CREDITS;
+                    Scene.GameManagement.CurrentStatus = GameManagement.Status.CREDITS;
                     break;
                 case 2:
-                    Scene.GameManagement.CurrentStatus = UmbrellaToolsKit.GameManagement.Status.SETTINGS;
+                    Scene.GameManagement.CurrentStatus = GameManagement.Status.SETTINGS;
                     break;
                 case 3:
                     Scene.GameManagement.Game.Exit();
@@ -106,7 +112,7 @@ namespace game_jaaj_6.UI
 
         private bool _isOnMenu
         {
-            get => Scene.GameManagement.CurrentStatus == UmbrellaToolsKit.GameManagement.Status.MENU;
+            get => Scene.GameManagement.CurrentStatus == GameManagement.Status.MENU;
         }
 
         private Vector2 GetArrowPosition()

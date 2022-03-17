@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UmbrellaToolsKit;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace game_jaaj_6.UI
@@ -9,8 +10,13 @@ namespace game_jaaj_6.UI
     {
         Scene mainScene;
         public GameManagement GameManagement;
+        public SoundEffect SelectedSound;
+
         public void Start()
         {
+            var content = GameManagement.Game.Content;
+            SelectedSound = content.Load<SoundEffect>("Sound/sfx_button_select");
+
             createScene();
             showLevelSelect();
             CreateFinalCredtis();
@@ -29,6 +35,7 @@ namespace game_jaaj_6.UI
             mainScene.SetLevelByName("map");
             mainScene.Camera.Position = mainScene.Camera.Origin;
             var levelSelectItem = new LevelSelectItem();
+            levelSelectItem.Menu = this;
             levelSelectItem.Content = GameManagement.Content;
             levelSelectItem.Scene = mainScene;
             mainScene.Middleground.Add(levelSelectItem);
@@ -38,6 +45,7 @@ namespace game_jaaj_6.UI
         private void ShowMainMenu()
         {
             var mainMenu = new MainMenu();
+            mainMenu.Menu = this;
             mainMenu.Scene = mainScene;
             mainMenu.Start();
             mainScene.UI.Add(mainMenu);

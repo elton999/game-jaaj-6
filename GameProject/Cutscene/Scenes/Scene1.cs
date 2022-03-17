@@ -1,8 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using UmbrellaToolsKit;
 using UmbrellaToolsKit.Sprite;
-using Microsoft.Xna.Framework.Input;
 
 namespace game_jaaj_6.Cutscene.Scenes
 {

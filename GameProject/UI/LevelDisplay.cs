@@ -12,22 +12,22 @@ namespace game_jaaj_6.UI
         Square Background;
         public override void Start()
         {
-            this.tag = "Display Level";
-            this.Font = this.Scene.Content.Load<SpriteFont>("Kenney_Rocket_Big");
+            tag = "Display Level";
+            Font = Scene.Content.Load<SpriteFont>("Kenney_Rocket_Big");
 
-            this.Position = new Vector2(-100, this.Scene.Sizes.Y / 2f);
-            this.InitialPosition = this.Position;
+            Position = new Vector2(-100, Scene.Sizes.Y / 2f);
+            InitialPosition = Position;
 
-            this.CreateBackground();
+            CreateBackground();
         }
 
         public void CreateBackground()
         {
-            this.Background = new Square();
-            this.Background.Scene = this.Scene;
-            this.Background.size = this.Scene.Sizes;
-            this.Background.SquareColor = Color.Black;
-            this.Background.Start();
+            Background = new Square();
+            Background.Scene = Scene;
+            Background.size = Scene.Sizes;
+            Background.SquareColor = Color.Black;
+            Background.Start();
         }
 
         float timer = 0;
@@ -37,7 +37,7 @@ namespace game_jaaj_6.UI
 
         public override void Update(GameTime gameTime)
         {
-            if (this.Scene.GameManagement.CurrentStatus != UmbrellaToolsKit.GameManagement.Status.LOADING) return;
+            if (Scene.GameManagement.CurrentStatus != GameManagement.Status.LOADING) return;
 
             if (AnimationEnd) return;
             
@@ -45,7 +45,7 @@ namespace game_jaaj_6.UI
             if (!ShowLevel)
             {
                 float moveTo = AnimationStart ? 270f : 426f;
-                this.Position.X = EaseOutQuad(timer, this.InitialPosition.X, moveTo, 1000.0f);
+                Position.X = EaseOutQuad(timer, InitialPosition.X, moveTo, 1000.0f);
             }
 
             Background.Position.Y = ShowLevel ? LinearTween(timer, 0, -426.0f, 1000.0f) : Background.Position.Y;
@@ -54,14 +54,14 @@ namespace game_jaaj_6.UI
             if (AnimationStart)
             {
                 AnimationStart = false;
-                this.InitialPosition.X = this.Position.X;
+                InitialPosition.X = Position.X;
             }
             else if (!AnimationStart && !ShowLevel)
                 ShowLevel = true;
             else if (!AnimationStart && ShowLevel)
             {
                 AnimationEnd = true;
-                this.Scene.GameManagement.CurrentStatus = UmbrellaToolsKit.GameManagement.Status.PLAYING;
+                Scene.GameManagement.CurrentStatus = GameManagement.Status.PLAYING;
             }
             timer = 0;
         }
@@ -71,8 +71,8 @@ namespace game_jaaj_6.UI
             BeginDraw(spriteBatch, false);
             Background.DrawSprite(spriteBatch);
 
-            int level = this.Scene.GameManagement.SceneManagement.CurrentScene;
-            spriteBatch.DrawString(this.Font, $"level {level}", this.Position, this.SpriteColor);
+            int level = Scene.GameManagement.SceneManagement.CurrentScene;
+            spriteBatch.DrawString(Font, $"level {level}", Position, SpriteColor);
             EndDraw(spriteBatch);
         }
 

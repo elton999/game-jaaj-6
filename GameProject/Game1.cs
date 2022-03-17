@@ -43,6 +43,7 @@ namespace game_jaaj_6
             AssetManagement.Set<Gameplay.Solids.Gate>("gate", "MIDDLEGROUND");
 
             AssetManagement.Set<Gameplay.Actors.EndLevel>("endLevel", "FOREGROUND");
+            AssetManagement.Set<Gameplay.LightOfEnd>("light end game", "FOREGROUND");
 
             AssetManagement.Set<Gameplay.Slider>("slider", "MIDDLEGROUND");
             AssetManagement.Set<Gameplay.Spike>("spikes", "MIDDLEGROUND");

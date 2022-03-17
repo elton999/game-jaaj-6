@@ -8,7 +8,6 @@ namespace game_jaaj_6.UI
 {
     public class Credits : GameObject
     {
-
         public class CreditsText
         {
             public SpriteFont SpriteFont;

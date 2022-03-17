@@ -97,7 +97,8 @@
           "originX": 0,
           "originY": 0,
           "values": {"directionX": 0, "directionY": -1}
-        }
+        },
+        {"name": "light end game", "id": 29, "_eid": "47899995", "x": 2000, "y": 760, "originX": 0, "originY": 0}
       ]
     },
     {
