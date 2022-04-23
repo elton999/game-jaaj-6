@@ -151,5 +151,13 @@ namespace UmbrellaToolsKit.Collision
                 }
             }
         }
+
+        public override void Dispose()
+        {
+            GridCollides.Clear();
+            Collides.Clear();
+            CollidesRamps.Clear();
+            base.Dispose();
+        }
     }
 }

@@ -315,17 +315,13 @@ namespace UmbrellaToolsKit
             this._BackBuffer.Dispose();
 
             foreach (List<GameObject> layer in SortLayers)
-            {
                 foreach(GameObject gameObject in layer)
-                {
                     gameObject.Dispose();
-                }
-            }
 
             foreach (GameObject gameObject in UI)
-            {
                 gameObject.Dispose();
-            }
+
+            Grid.Dispose();
 
             GC.SuppressFinalize(this);
             GC.Collect();

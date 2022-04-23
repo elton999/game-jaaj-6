@@ -43,7 +43,7 @@ namespace UmbrellaToolsKit.Sprite
 
         public override void Dispose()
         {
-            tiles = null;
+            tiles.Clear();
             base.Dispose();
         }
     }

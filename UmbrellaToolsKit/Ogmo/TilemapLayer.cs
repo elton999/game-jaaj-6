@@ -21,5 +21,11 @@ namespace UmbrellaToolsKit.Ogmo
             foreach(Tile tile in Items)
                tile.Draw(spriteBatch);
         }
+
+        public override void Dispose()
+        {
+            Items.Clear();
+            base.Dispose();
+        }
     }
 }
